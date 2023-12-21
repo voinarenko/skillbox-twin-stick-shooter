@@ -7,7 +7,7 @@ namespace Assets.Scripts
         private PlayerControls _controls;
         [SerializeField] private float _speed;
 
-        private Animator _animator;
+        private Animator Animator => GetComponent<Animator>();
         public int AnimIdVertical;
         public int AnimIdHorizontal;
         private int _animIdAiming;
@@ -17,12 +17,11 @@ namespace Assets.Scripts
             _controls = new PlayerControls();
             _controls.Enable();
 
-            _animator = GetComponent<Animator>();
             _animIdAiming = Animator.StringToHash("Aiming");
             AnimIdVertical = Animator.StringToHash("Y");
             AnimIdHorizontal = Animator.StringToHash("X");
 
-            _animator.SetBool(_animIdAiming, true);
+            Animator.SetBool(_animIdAiming, true);
         }
 
         private void Update()
@@ -35,8 +34,8 @@ namespace Assets.Scripts
             pos += new Vector3(move.x * _speed, 0, move.y * _speed);
             if (transform != null) transform.position = pos;
 
-            _animator.SetFloat(AnimIdVertical, Vector2.Dot(new Vector2(dir.x, dir.z), new Vector2(transform.forward.x, transform.forward.z)));
-            _animator.SetFloat(AnimIdHorizontal, Vector2.Dot(new Vector2(dir.x, dir.z), new Vector2(transform.right.x, transform.right.z)));
+            Animator.SetFloat(AnimIdVertical, Vector2.Dot(new Vector2(dir.x, dir.z), new Vector2(transform.forward.x, transform.forward.z)));
+            Animator.SetFloat(AnimIdHorizontal, Vector2.Dot(new Vector2(dir.x, dir.z), new Vector2(transform.right.x, transform.right.z)));
         }
     }
 }

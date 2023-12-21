@@ -15,13 +15,22 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Look",
-                    "type": "Value",
-                    "id": "43084435-da60-486a-b9c6-e242d2ec40f2",
-                    "expectedControlType": "Vector2",
+                    "name": "Shoot",
+                    "type": "Button",
+                    "id": "8cd92ab1-d583-457b-a7c1-d2fe50411be2",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Reload",
+                    "type": "Button",
+                    "id": "dc9f8035-fb02-452f-9129-42b8388d016d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -82,12 +91,23 @@
                 },
                 {
                     "name": "",
-                    "id": "c4618b18-858a-445b-b928-09abf13c62bd",
-                    "path": "<Pointer>/delta",
+                    "id": "43c6ba6f-3a15-485d-8321-39fd6c23c9bd",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
-                    "processors": "InvertVector2(invertX=false),ScaleVector2(x=0.05,y=0.05)",
+                    "processors": "",
                     "groups": "",
-                    "action": "Look",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c7caf515-abe8-47a0-8c67-84aa1543709c",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reload",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
