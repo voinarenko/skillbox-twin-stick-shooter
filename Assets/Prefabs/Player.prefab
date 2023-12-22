@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 6626854704176107528}
   - component: {fileID: 260558827018731696}
   - component: {fileID: 474166444400822356}
+  - component: {fileID: -1399214525289976826}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -105,8 +106,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 0.005
-  AnimIdVertical: 0
-  AnimIdHorizontal: 0
 --- !u!114 &6573835886847793561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +179,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shootDelay: 0.2
   _reloadDelay: 1
+--- !u!114 &-1399214525289976826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8003463601176902132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ec17239b1bdc64448b47a30e1f7f617, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimIdVertical: 0
+  AnimIdHorizontal: 0
 --- !u!1001 &8523166946269084640
 PrefabInstance:
   m_ObjectHideFlags: 0
