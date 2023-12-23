@@ -16,7 +16,7 @@ namespace Assets.Scripts.Player
 
         private void Update()
         {
-            var camRay = Camera.main.ScreenPointToRay(UnityEngine.Input.mousePosition);
+            var camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (!Physics.Raycast(camRay, out var groundHit, CamRayLength, _groundMask)) return;
             var playerToMouse = groundHit.point - transform.position;
             playerToMouse.y = 0f;

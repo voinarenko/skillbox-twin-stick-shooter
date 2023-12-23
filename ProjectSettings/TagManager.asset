@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - CinemachineTarget
+  - LoadingCurtain
+  - InitialPoint
+  - VirtualCamera
   layers:
   - Default
   - TransparentFX
