@@ -1,8 +1,5 @@
-﻿using Assets.Scripts.Infrastructure.Factory;
-using Assets.Scripts.Infrastructure.Services;
+﻿using Assets.Scripts.Logic;
 using System.Linq;
-using Assets.Scripts.Logic;
-using Assets.Scripts.Player;
 using UnityEngine;
 
 namespace Assets.Scripts.Enemy
@@ -17,21 +14,20 @@ namespace Assets.Scripts.Enemy
         public Transform HitPoint;
         public float Damage = 10f;
 
-        private IGameFactory _factory;
         private Transform _playerTransform;
         private float _attackCooldown;
         private bool _isAttacking;
         private int _layerMask;
         private readonly Collider[] _hits = new Collider[1];
+
         private bool _attackIsActive;
+        public float EffectiveDistance;
 
-        private void Awake()
-        {
-            _factory = AllServices.Container.Single<IGameFactory>();
-            _factory.PlayerCreated += OnPlayerCreated;
+        public void Construct(Transform playerTransform) => 
+            _playerTransform = playerTransform;
 
+        private void Awake() => 
             _layerMask = 1 << LayerMask.NameToLayer("Player");
-        }
 
         private void Update()
         {
@@ -41,6 +37,7 @@ namespace Assets.Scripts.Enemy
         }
 
 #pragma warning disable IDE0051
+
         private void OnAttack()
         {
             if (Hit(out var hit))
@@ -56,6 +53,7 @@ namespace Assets.Scripts.Enemy
             _isAttacking = false;
         }
 #pragma warning restore IDE0051
+
 
         public void EnableAttack() => 
             _attackIsActive = true;
@@ -89,8 +87,5 @@ namespace Assets.Scripts.Enemy
             if (!CooldownIsUp())
                 _attackCooldown -= Time.deltaTime;
         }
-
-        private void OnPlayerCreated() => 
-            _playerTransform = _factory.PlayerGameObject.transform;
     }
 }

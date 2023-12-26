@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Assets.Scripts.Infrastructure.Services;
+﻿using Assets.Scripts.Infrastructure.Services;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
-using Assets.Scripts.Logic;
+using Assets.Scripts.StaticData;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Infrastructure.Factory
@@ -11,11 +10,10 @@ namespace Assets.Scripts.Infrastructure.Factory
     {
         List<ISavedProgressReader> ProgressReaders { get; }
         List<ISavedProgress> ProgressWriters { get; }
-        GameObject PlayerGameObject { get; }
-        event Action PlayerCreated;
 
         GameObject CreatePlayer(GameObject at);
         GameObject CreateHud();
         void CleanUp();
+        GameObject CreateEnemy(EnemyTypeId typeId, Transform parent);
     }
 }
