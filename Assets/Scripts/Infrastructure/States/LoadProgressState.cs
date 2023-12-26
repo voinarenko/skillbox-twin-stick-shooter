@@ -33,7 +33,16 @@ namespace Assets.Scripts.Infrastructure.States
                 _saveLoadService.LoadProgress() 
                 ?? NewProgress();
 
-        private PlayerProgress NewProgress() => 
-            new("MainScene");
+        private PlayerProgress NewProgress()
+        {
+            var progress = new PlayerProgress("MainScene");
+            progress.PlayerState.MaxHealth = 50;
+            progress.PlayerStats.Damage = 5;
+            progress.PlayerStats.DamageRadius = 0.5f;
+
+            progress.PlayerState.ResetHealth();
+
+            return progress;
+        }
     }
 }

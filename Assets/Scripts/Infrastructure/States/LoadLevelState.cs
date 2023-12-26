@@ -2,6 +2,8 @@
 using Assets.Scripts.Infrastructure.Factory;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Logic;
+using Assets.Scripts.Player;
+using Assets.Scripts.UI;
 using Cinemachine;
 using UnityEngine;
 
@@ -49,13 +51,24 @@ namespace Assets.Scripts.Infrastructure.States
 
         private void InitGameWorld()
         {
-            var player = _gameFactory.CreatePlayer(GameObject.FindWithTag(InitialPointTag));
+            var player = InitPlayer();
+            CameraFollow(player);
+
+            InitHud();
+        }
+
+        private static void CameraFollow(GameObject player)
+        {
             var camera = GameObject.FindWithTag(CameraTag).GetComponent<CinemachineVirtualCamera>();
             camera.Follow = player.transform;
             camera.LookAt = player.transform;
-
-            _gameFactory.CreateHud();
         }
+
+        private void InitHud() => 
+            _gameFactory.CreateHud();
+
+        private GameObject InitPlayer() => 
+            _gameFactory.CreatePlayer(GameObject.FindWithTag(InitialPointTag));
 
         public void Exit() => 
             _curtain.Hide();

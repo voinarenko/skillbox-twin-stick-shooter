@@ -7,7 +7,7 @@ namespace Assets.Scripts.Enemy
 {
     public class EnemyMoveToPlayer : MonoBehaviour
     {
-        private const float MinimalDistance = 1;
+        private const float MinimalDistance = 3;
 
         public NavMeshAgent Agent;
 

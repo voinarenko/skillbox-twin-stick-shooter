@@ -1,9 +1,17 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Bullet;
+using Assets.Scripts.Data;
+using Assets.Scripts.Infrastructure.Services.PersistentProgress;
+using UnityEngine;
+using Zenject.SpaceFighter;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerShooter : MonoBehaviour
+    public class PlayerShooter : MonoBehaviour, ISavedProgressReader
     {
+        public GameObject ShootEffectPrefab;
+        public GameObject BulletPrefab;
+        public Transform ShootPoint;
+
         private PlayerAudio PlayerAudio => GetComponent<PlayerAudio>();
         private PlayerAnimation PlayerAnimation => GetComponent<PlayerAnimation>();
         private PlayerControls _controls;
@@ -13,6 +21,9 @@ namespace Assets.Scripts.Player
 
         private float _reloadTime = float.MinValue;
         [SerializeField] private float _reloadDelay;
+        private float _shoot;
+        private float _reload;
+        private Stats _stats;
 
         private void Start()
         {
@@ -22,38 +33,52 @@ namespace Assets.Scripts.Player
 
         private void Update()
         {
-            var shoot = _controls.Player.Shoot.ReadValue<float>();
-            var reload = _controls.Player.Reload.ReadValue<float>();
+            _shoot = _controls.Player.Shoot.ReadValue<float>();
+            _reload = _controls.Player.Reload.ReadValue<float>();
 
-            if (shoot > 0)
+            if (_shoot > 0)
+                Shoot();
+
+            else if (_reload > 0) 
+                Reload();
+        }
+
+#pragma warning disable IDE0051
+        private void OnAttack()
+        {            
+            if (ShootEffectPrefab != null) 
+                Instantiate(ShootEffectPrefab, ShootPoint.position, ShootPoint.rotation);
+            if (BulletPrefab != null)
             {
-                if (Time.time < _shootTime + _shootDelay) return;
-
-                _shootTime = Time.time;
-                PlayerAnimation.Shoot();
-                PlayerAudio.Shoot();
-                //if (_bullet != null)
-                //{
-                //    Instantiate(_bullet, _shootPoint.transform.position, transform.rotation);
-                //}
-#pragma warning disable IDE0059
-                shoot = 0;
-#pragma warning restore IDE0059
+                var bullet = Instantiate(BulletPrefab, ShootPoint.transform.position, transform.rotation);
+                bullet.GetComponent<BulletDamage>().Damage = _stats.Damage;
             }
+        }
+#pragma warning restore IDE0051
 
-            else if (reload > 0)
+        public void LoadProgress(PlayerProgress progress) => 
+            _stats = progress.PlayerStats;
+
+        private void Reload()
+        {
+            if (!(Time.time < _reloadTime + _reloadDelay))
             {
-                if (!(Time.time < _reloadTime + _reloadDelay))
-                {
-                    _reloadTime = Time.time;
-                    PlayerAnimation.Reload(true);
-                    PlayerAudio.Reload();
-#pragma warning disable IDE0059
-                    reload = 0;
-#pragma warning restore IDE0059
-                }
-                else PlayerAnimation.Reload(false);
+                _reloadTime = Time.time;
+                PlayerAnimation.Reload(true);
+                PlayerAudio.Reload();
+                _reload = 0;
             }
+            else PlayerAnimation.Reload(false);
+        }
+
+        private void Shoot()
+        {
+            if (Time.time < _shootTime + _shootDelay) return;
+
+            _shootTime = Time.time;
+            PlayerAnimation.Shoot();
+            PlayerAudio.Shoot();
+            _shoot = 0;
         }
     }
 }

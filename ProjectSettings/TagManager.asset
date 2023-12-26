@@ -8,6 +8,9 @@ TagManager:
   - LoadingCurtain
   - InitialPoint
   - VirtualCamera
+  - FxTemporaire
+  - Bullet
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -24,8 +27,8 @@ TagManager:
   - Player
   - Aggro
   - AttackZone
-  - 
-  - 
+  - Hittable
+  - PlayerBullet
   - 
   - 
   - 
