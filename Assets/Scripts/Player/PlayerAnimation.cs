@@ -5,6 +5,8 @@ namespace Assets.Scripts.Player
     public class PlayerAnimation : MonoBehaviour
     {
         private Animator Animator => GetComponent<Animator>();
+        private static readonly int HitHash = Animator.StringToHash("Hit");
+        private static readonly int DieHash = Animator.StringToHash("Die");
 
         public int AnimIdVertical;
         public int AnimIdHorizontal;
@@ -34,5 +36,11 @@ namespace Assets.Scripts.Player
 
         public void Reload(bool value) =>
             Animator.SetBool(_animIdReloading, value);
+
+        public void PlayHit() => 
+            Animator.SetTrigger(HitHash);
+
+        public void PlayDeath() => 
+            Animator.SetTrigger(DieHash);
     }
 }

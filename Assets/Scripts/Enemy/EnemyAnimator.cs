@@ -7,6 +7,7 @@ namespace Assets.Scripts.Enemy
     public class EnemyAnimator : MonoBehaviour, IAnimationStateReader
     {
         private static readonly int Die = Animator.StringToHash("Die");
+        private static readonly int Hit = Animator.StringToHash("Hit");
         private static readonly int IsMoving = Animator.StringToHash("IsMoving");
         private static readonly int Attack = Animator.StringToHash("Attack");
 
@@ -26,6 +27,7 @@ namespace Assets.Scripts.Enemy
             _animator = GetComponent<Animator>();
 
         public void PlayDeath() => _animator.SetTrigger(Die);
+        public void PlayHit() => _animator.SetTrigger(Hit);
 
         public void Move() => _animator.SetBool(IsMoving, true);
 

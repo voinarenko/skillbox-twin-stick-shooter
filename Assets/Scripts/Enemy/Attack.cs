@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts.Infrastructure.Factory;
 using Assets.Scripts.Infrastructure.Services;
 using System.Linq;
+using Assets.Scripts.Logic;
+using Assets.Scripts.Player;
 using UnityEngine;
 
 namespace Assets.Scripts.Enemy
@@ -13,6 +15,7 @@ namespace Assets.Scripts.Enemy
         public float AttackCooldown = 3f;
         public float Cleavage = 0.5f;
         public Transform HitPoint;
+        public float Damage = 10f;
 
         private IGameFactory _factory;
         private Transform _playerTransform;
@@ -40,9 +43,10 @@ namespace Assets.Scripts.Enemy
 #pragma warning disable IDE0051
         private void OnAttack()
         {
-            if (Hit(out _))
+            if (Hit(out var hit))
             {
                 PhysicsDebug.DrawDebug(HitPoint.position, Cleavage, 1);
+                hit.transform.GetComponent<IHealth>().TakeDamage(Damage);
             }
         }
 
