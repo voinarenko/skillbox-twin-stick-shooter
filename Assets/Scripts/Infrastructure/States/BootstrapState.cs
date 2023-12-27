@@ -61,7 +61,7 @@ namespace Assets.Scripts.Infrastructure.States
         private void RegisterStaticData()
         {
             var staticData = new StaticDataService();
-            staticData.LoadEnemies();
+            staticData.Load();
             _services.RegisterSingle<IStaticDataService>(staticData);
         }
     }

@@ -4,6 +4,7 @@ using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Logic;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Infrastructure.States
 {
@@ -11,13 +12,14 @@ namespace Assets.Scripts.Infrastructure.States
     {
         private const string InitialPointTag = "InitialPoint";
         private const string CameraTag = "VirtualCamera";
-        private const string EnemySpawnerTag = "EnemySpawner";
+        private const string EnemySpawnerTag = "SpawnPoint";
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _loader;
         private readonly AllServices _services;
         private IPersistentProgressService _progressService;
         private IGameFactory _gameFactory;
         private LoadingCurtain _curtain;
+        private IStaticDataService _staticData;
 
         public LoadSceneState(GameStateMachine stateMachine, SceneLoader sceneLoader, AllServices services)
         {
@@ -30,6 +32,7 @@ namespace Assets.Scripts.Infrastructure.States
         {
             _progressService = _services.Single<IPersistentProgressService>();
             _gameFactory = _services.Single<IGameFactory>();
+            _staticData = _services.Single<IStaticDataService>();
 
             EnsureCurtain();
             _curtain.Show();
@@ -61,10 +64,11 @@ namespace Assets.Scripts.Infrastructure.States
 
         private void InitSpawners()
         {
-            foreach (var spawnerObject in GameObject.FindGameObjectsWithTag(EnemySpawnerTag))
+            var sceneKey = SceneManager.GetActiveScene().name;
+            var levelData = _staticData.ForLevel(sceneKey);
+            foreach (var spawnerData in levelData.EnemySpawners)
             {
-                var spawner = spawnerObject.GetComponent<EnemySpawner>();
-                //_gameFactory.Register(spawner);
+                _gameFactory.CreateSpawner(spawnerData.Position, spawnerData.Id, spawnerData.EnemyTypeId);
             }
         }
 

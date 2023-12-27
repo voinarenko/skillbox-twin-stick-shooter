@@ -4,7 +4,8 @@ namespace Assets.Scripts.Infrastructure.Services
 {
     public interface IStaticDataService : IService
     {
-        void LoadEnemies();
+        void Load();
         EnemyStaticData ForEnemy(EnemyTypeId typeId);
+        LevelStaticData ForLevel(string sceneKey);
     }
 }

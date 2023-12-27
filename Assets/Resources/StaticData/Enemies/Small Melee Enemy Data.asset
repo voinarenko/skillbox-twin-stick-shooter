@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef89fce3168367c469102dd662a13a7f, type: 3}
+  m_Name: Small Melee Enemy Data
+  m_EditorClassIdentifier: 
+  EnemyTypeId: 0
+  Health: 30
+  Damage: 10
+  MinLoot: 0
+  MaxLoot: 0
+  MoveSpeed: 7
+  RotateSpeed: 1600
+  Acceleration: 15
+  StoppingDistance: 1
+  EffectiveDistance: 1
+  Cleavage: 0.625
+  AttackCooldown: 0
+  Prefab: {fileID: 6058307181923392003, guid: cef59e2fe12165d4089d5c3be0cd9ea7, type: 3}

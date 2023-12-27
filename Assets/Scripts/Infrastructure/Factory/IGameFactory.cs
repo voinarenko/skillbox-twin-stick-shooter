@@ -1,9 +1,8 @@
-﻿using Assets.Scripts.Infrastructure.Services;
+﻿using Assets.Scripts.Enemy;
+using Assets.Scripts.Infrastructure.Services;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.StaticData;
 using System.Collections.Generic;
-using Assets.Scripts.Enemy;
-using Assets.Scripts.Logic;
 using UnityEngine;
 
 namespace Assets.Scripts.Infrastructure.Factory
@@ -15,6 +14,7 @@ namespace Assets.Scripts.Infrastructure.Factory
 
         GameObject CreatePlayer(GameObject at);
         GameObject CreateHud();
+        void CreateSpawner(Vector3 at, string spawnerId, EnemyTypeId enemyTypeId);
         void CleanUp();
         GameObject CreateEnemy(EnemyTypeId typeId, Transform parent);
         LootPiece CreateLoot();

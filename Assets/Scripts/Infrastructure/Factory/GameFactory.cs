@@ -5,6 +5,7 @@ using Assets.Scripts.Infrastructure.Services;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.Randomizer;
 using Assets.Scripts.Logic;
+using Assets.Scripts.Logic.EnemySpawners;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI;
 using UnityEngine;
@@ -85,6 +86,15 @@ namespace Assets.Scripts.Infrastructure.Factory
             var lootPiece = InstantiateRegistered(AssetPath.Loot).GetComponent<LootPiece>();
             lootPiece.Construct(_progressService.Progress.WorldData);
             return lootPiece;
+        }
+
+        public void CreateSpawner(Vector3 at, string spawnerId, EnemyTypeId enemyTypeId)
+        {
+            var spawner = InstantiateRegistered(AssetPath.Spawner, at)
+                .GetComponent<SpawnPoint>();
+            spawner.Construct(this);
+            spawner.Id = spawnerId;
+            spawner.EnemyTypeId = enemyTypeId;
         }
 
         public void Register(ISavedProgressReader progressReader)
