@@ -3,6 +3,7 @@ using Assets.Scripts.Enemy;
 using Assets.Scripts.Infrastructure.AssetManagement;
 using Assets.Scripts.Infrastructure.Services;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
+using Assets.Scripts.Infrastructure.Services.Randomizer;
 using Assets.Scripts.Logic;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI;
@@ -16,16 +17,20 @@ namespace Assets.Scripts.Infrastructure.Factory
     {
         private readonly IAssets _assets;
         private readonly IStaticDataService _staticData;
+        private readonly IRandomService _randomService;
+        private readonly IPersistentProgressService _progressService;
 
         public List<ISavedProgressReader> ProgressReaders { get; } = new();
         public List<ISavedProgress> ProgressWriters { get; } = new();
 
         private GameObject PlayerGameObject { get; set; }
 
-        public GameFactory(IAssets assets, IStaticDataService staticData)
+        public GameFactory(IAssets assets, IStaticDataService staticData, IRandomService randomService, IPersistentProgressService progressService)
         {
             _assets = assets;
             _staticData = staticData;
+            _randomService = randomService;
+            _progressService = progressService;
         }
         public GameObject CreatePlayer(GameObject at)
         {
@@ -34,8 +39,14 @@ namespace Assets.Scripts.Infrastructure.Factory
         }
 
 
-        public GameObject CreateHud() => 
-            InstantiateRegistered(AssetPath.HudPath);
+        public GameObject CreateHud()
+        {
+            var hud = InstantiateRegistered(AssetPath.HudPath);
+            
+            hud.GetComponentInChildren<LootCounter>().Construct(_progressService.Progress.WorldData);
+            
+            return hud;
+        }
 
         public GameObject CreateEnemy(EnemyTypeId typeId, Transform parent)
         {
@@ -62,12 +73,32 @@ namespace Assets.Scripts.Infrastructure.Factory
             attack.EffectiveDistance = enemyData.EffectiveDistance;
             attack.AttackCooldown = enemyData.AttackCooldown;
 
+            var lootSpawner = enemy.GetComponentInChildren<LootSpawner>();
+            lootSpawner.SetLoot(enemyData.MinLoot, enemyData.MaxLoot);
+            lootSpawner.Construct(this, _randomService);
+
             return enemy;
         }
 
-        public void Register(EnemySpawner spawner)
+        public LootPiece CreateLoot()
         {
-            
+            var lootPiece = InstantiateRegistered(AssetPath.Loot).GetComponent<LootPiece>();
+            lootPiece.Construct(_progressService.Progress.WorldData);
+            return lootPiece;
+        }
+
+        public void Register(ISavedProgressReader progressReader)
+        {
+            if (progressReader is ISavedProgress progressPiece)
+            {
+                if (!ProgressWriters.Contains(progressPiece)) 
+                    ProgressWriters.Add(progressPiece);
+            }
+
+            if (!ProgressReaders.Contains(progressReader))
+            {
+                ProgressReaders.Add(progressReader);
+            }
         }
 
         public void CleanUp()
@@ -94,14 +125,6 @@ namespace Assets.Scripts.Infrastructure.Factory
         {
             foreach (var progressReader in gameObject.GetComponentsInChildren<ISavedProgressReader>())
                 Register(progressReader);
-        }
-
-        private void Register(ISavedProgressReader progressReader)
-        {
-            if (progressReader is ISavedProgress progressWriter) 
-                ProgressWriters.Add(progressWriter);
-
-            ProgressReaders.Add(progressReader);
         }
     }
 }

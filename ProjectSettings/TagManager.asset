@@ -30,7 +30,7 @@ TagManager:
   - AttackZone
   - Hittable
   - PlayerBullet
-  - 
+  - Pickup
   - 
   - 
   - 
