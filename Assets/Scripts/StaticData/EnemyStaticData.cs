@@ -12,6 +12,9 @@ namespace Assets.Scripts.StaticData
         [Range(1, 30)]
         public float Damage;
 
+        public int MinLoot;
+        public int MaxLoot;
+
         [Range(1, 10)]
         public float MoveSpeed;
         [Range(1, 2000)]
