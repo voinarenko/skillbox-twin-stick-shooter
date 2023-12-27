@@ -34,7 +34,7 @@ namespace Assets.Scripts.Logic
 
         public void UpdateProgress(PlayerProgress progress)
         {
-            if(Slain) 
+            if(Slain)
                 progress.KillData.ClearedSpawners.Add(_id);
         }
 

@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Logic;
+﻿using System.Collections.Generic;
+using Assets.Scripts.Logic;
 using System.Linq;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace Assets.Scripts.Enemy
 
         public float AttackCooldown = 3f;
         public float Cleavage = 0.5f;
-        public Transform HitPoint;
+        public List<Transform> HitPoints;
         public float Damage = 10f;
 
         private Transform _playerTransform;
@@ -40,10 +41,13 @@ namespace Assets.Scripts.Enemy
 
         private void OnAttack()
         {
-            if (Hit(out var hit))
+            foreach (var hitPoint in HitPoints)
             {
-                PhysicsDebug.DrawDebug(HitPoint.position, Cleavage, 1);
-                hit.transform.GetComponent<IHealth>().TakeDamage(Damage);
+                if (Hit(out var hit, hitPoint))
+                {
+                    PhysicsDebug.DrawDebug(hitPoint.position, Cleavage, 0.1f);
+                    hit.transform.GetComponent<IHealth>().TakeDamage(Damage);
+                }
             }
         }
 
@@ -69,9 +73,9 @@ namespace Assets.Scripts.Enemy
             _isAttacking = true;
         }
 
-        private bool Hit(out Collider hit)
+        private bool Hit(out Collider hit, Transform point)
         {
-            var hitsCount = Physics.OverlapSphereNonAlloc(HitPoint.transform.position, Cleavage, _hits, _layerMask);
+            var hitsCount = Physics.OverlapSphereNonAlloc(point.position, Cleavage, _hits, _layerMask);
             hit = _hits.FirstOrDefault();
             return hitsCount > 0;
         }

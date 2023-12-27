@@ -48,15 +48,26 @@ namespace Assets.Scripts.Infrastructure.Factory
 
             enemy.GetComponent<ActorUi>().Construct(health);
             enemy.GetComponent<EnemyMoveToPlayer>().Construct(PlayerGameObject.transform);
-            enemy.GetComponent<NavMeshAgent>().speed = enemyData.MoveSpeed;
+
+            var agent = enemy.GetComponent<NavMeshAgent>();
+            agent.speed = enemyData.MoveSpeed;
+            agent.stoppingDistance = enemyData.StoppingDistance;
+            agent.angularSpeed = enemyData.RotateSpeed;
+            agent.acceleration = enemyData.Acceleration;
 
             var attack = enemy.GetComponent<Attack>();
             attack.Construct(PlayerGameObject.transform);
             attack.Damage = enemyData.Damage;
             attack.Cleavage = enemyData.Cleavage;
             attack.EffectiveDistance = enemyData.EffectiveDistance;
+            attack.AttackCooldown = enemyData.AttackCooldown;
 
             return enemy;
+        }
+
+        public void Register(EnemySpawner spawner)
+        {
+            
         }
 
         public void CleanUp()

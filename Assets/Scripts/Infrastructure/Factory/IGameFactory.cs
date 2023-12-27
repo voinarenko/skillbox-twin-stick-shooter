@@ -2,6 +2,7 @@
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.StaticData;
 using System.Collections.Generic;
+using Assets.Scripts.Logic;
 using UnityEngine;
 
 namespace Assets.Scripts.Infrastructure.Factory
@@ -15,5 +16,6 @@ namespace Assets.Scripts.Infrastructure.Factory
         GameObject CreateHud();
         void CleanUp();
         GameObject CreateEnemy(EnemyTypeId typeId, Transform parent);
+        void Register(EnemySpawner spawner);
     }
 }
