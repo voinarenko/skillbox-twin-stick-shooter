@@ -4,6 +4,7 @@ using Assets.Scripts.Infrastructure.Services;
 using Assets.Scripts.Infrastructure.Services.Inputs;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.SaveLoad;
+using Assets.Scripts.StaticData;
 using UnityEngine;
 
 namespace Assets.Scripts.Infrastructure.States
@@ -35,10 +36,11 @@ namespace Assets.Scripts.Infrastructure.States
 
         private void RegisterServices()
         {
+            RegisterStaticData();
             _services.RegisterSingle<IInputService>(InputService());
             _services.RegisterSingle<IAssets>(new AssetProvider());
+            _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssets>(), _services.Single<IStaticDataService>()));
             _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
-            _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssets>()));
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IPersistentProgressService>(), _services.Single<IGameFactory>()));
         }
 
@@ -53,6 +55,13 @@ namespace Assets.Scripts.Infrastructure.States
                 return new StandaloneInputService();
             else
                 return new MobileInputService();
+        }
+
+        private void RegisterStaticData()
+        {
+            var staticData = new StaticDataService();
+            staticData.LoadEnemies();
+            _services.RegisterSingle<IStaticDataService>(staticData);
         }
     }
 }

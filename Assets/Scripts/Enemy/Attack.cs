@@ -1,8 +1,6 @@
-﻿using Assets.Scripts.Infrastructure.Factory;
-using Assets.Scripts.Infrastructure.Services;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Assets.Scripts.Logic;
-using Assets.Scripts.Player;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.Enemy
@@ -14,24 +12,23 @@ namespace Assets.Scripts.Enemy
 
         public float AttackCooldown = 3f;
         public float Cleavage = 0.5f;
-        public Transform HitPoint;
+        public List<Transform> HitPoints;
         public float Damage = 10f;
 
-        private IGameFactory _factory;
         private Transform _playerTransform;
         private float _attackCooldown;
         private bool _isAttacking;
         private int _layerMask;
         private readonly Collider[] _hits = new Collider[1];
+
         private bool _attackIsActive;
+        public float EffectiveDistance;
 
-        private void Awake()
-        {
-            _factory = AllServices.Container.Single<IGameFactory>();
-            _factory.PlayerCreated += OnPlayerCreated;
+        public void Construct(Transform playerTransform) => 
+            _playerTransform = playerTransform;
 
+        private void Awake() => 
             _layerMask = 1 << LayerMask.NameToLayer("Player");
-        }
 
         private void Update()
         {
@@ -41,12 +38,16 @@ namespace Assets.Scripts.Enemy
         }
 
 #pragma warning disable IDE0051
+
         private void OnAttack()
         {
-            if (Hit(out var hit))
+            foreach (var hitPoint in HitPoints)
             {
-                PhysicsDebug.DrawDebug(HitPoint.position, Cleavage, 1);
-                hit.transform.GetComponent<IHealth>().TakeDamage(Damage);
+                if (Hit(out var hit, hitPoint))
+                {
+                    PhysicsDebug.DrawDebug(hitPoint.position, Cleavage, 0.1f);
+                    hit.transform.GetComponent<IHealth>().TakeDamage(Damage);
+                }
             }
         }
 
@@ -56,6 +57,7 @@ namespace Assets.Scripts.Enemy
             _isAttacking = false;
         }
 #pragma warning restore IDE0051
+
 
         public void EnableAttack() => 
             _attackIsActive = true;
@@ -71,9 +73,9 @@ namespace Assets.Scripts.Enemy
             _isAttacking = true;
         }
 
-        private bool Hit(out Collider hit)
+        private bool Hit(out Collider hit, Transform point)
         {
-            var hitsCount = Physics.OverlapSphereNonAlloc(HitPoint.transform.position, Cleavage, _hits, _layerMask);
+            var hitsCount = Physics.OverlapSphereNonAlloc(point.position, Cleavage, _hits, _layerMask);
             hit = _hits.FirstOrDefault();
             return hitsCount > 0;
         }
@@ -89,8 +91,5 @@ namespace Assets.Scripts.Enemy
             if (!CooldownIsUp())
                 _attackCooldown -= Time.deltaTime;
         }
-
-        private void OnPlayerCreated() => 
-            _playerTransform = _factory.PlayerGameObject.transform;
     }
 }
