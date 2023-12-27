@@ -2,7 +2,6 @@
 using Assets.Scripts.Data;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using UnityEngine;
-using Zenject.SpaceFighter;
 
 namespace Assets.Scripts.Player
 {
