@@ -12,7 +12,7 @@ namespace Assets.Scripts.Infrastructure
 
         private void Awake()
         {
-            _game = new Game(this);
+            _game = new Game(this, Instantiate(CurtainPrefab));
             _game.StateMachine.Enter<BootstrapState>();
 
             DontDestroyOnLoad(this);

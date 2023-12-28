@@ -24,4 +24,4 @@ MonoBehaviour:
   EffectiveDistance: 1
   Cleavage: 0.625
   AttackCooldown: 0
-  Prefab: {fileID: 6058307181923392003, guid: cef59e2fe12165d4089d5c3be0cd9ea7, type: 3}
+  Prefab: {fileID: 6344807734724660034, guid: 66aa806679523be47bf7ee72329a56c7, type: 3}
