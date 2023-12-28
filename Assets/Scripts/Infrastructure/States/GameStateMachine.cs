@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.Scripts.Infrastructure.Factory;
 using Assets.Scripts.Infrastructure.Services;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.SaveLoad;
+using Assets.Scripts.Infrastructure.Services.StaticData;
+using Assets.Scripts.Logic;
+using Assets.Scripts.UI.Services.Factory;
 
 namespace Assets.Scripts.Infrastructure.States
 {
@@ -11,14 +15,14 @@ namespace Assets.Scripts.Infrastructure.States
         private readonly Dictionary<Type, IExitableState> _states;
         private IExitableState _activeState;
 
-        public GameStateMachine(SceneLoader sceneLoader, AllServices services)
+        public GameStateMachine(SceneLoader sceneLoader, LoadingCurtain loadingCurtain, AllServices services)
         {
             _states = new Dictionary<Type, IExitableState>
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
-                [typeof(LoadSceneState)] = new LoadSceneState(this, sceneLoader, services),
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader,services.Single<IPersistentProgressService>() , services.Single<IGameFactory>(), loadingCurtain, services.Single<IStaticDataService>(), services.Single<IUIFactory>()),
                 [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentProgressService>(), services.Single<ISaveLoadService>()),
-                [typeof(GameLoopState)] = new GameLoopState(this)
+                [typeof(GameLoopState)] = new GameLoopState(this),
             };
         }
 

@@ -1,55 +1,61 @@
 ﻿using Assets.Scripts.Infrastructure.Factory;
-using Assets.Scripts.Infrastructure.Services;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
+using Assets.Scripts.Infrastructure.Services.StaticData;
 using Assets.Scripts.Logic;
+using Assets.Scripts.UI.Services.Factory;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Infrastructure.States
 {
-    public class LoadSceneState : IPayloadedState<string>
+    public class LoadLevelState : IPayloadedState<string>
     {
         private const string InitialPointTag = "InitialPoint";
         private const string CameraTag = "VirtualCamera";
         private const string EnemySpawnerTag = "SpawnPoint";
         private readonly GameStateMachine _stateMachine;
-        private readonly SceneLoader _loader;
-        private readonly AllServices _services;
-        private IPersistentProgressService _progressService;
-        private IGameFactory _gameFactory;
-        private LoadingCurtain _curtain;
-        private IStaticDataService _staticData;
+        private readonly SceneLoader _sceneLoader;
+        private readonly IPersistentProgressService _progressService;
+        private readonly IGameFactory _gameFactory;
+        private readonly LoadingCurtain _loadingCurtain;
+        private readonly IStaticDataService _staticData;
+        private readonly IUIFactory _uiFactory;
 
-        public LoadSceneState(GameStateMachine stateMachine, SceneLoader sceneLoader, AllServices services)
+        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, IPersistentProgressService progressService, IGameFactory gameFactory, LoadingCurtain loadingCurtain, IStaticDataService staticData, IUIFactory uiFactory)
         {
             _stateMachine = stateMachine;
-            _loader = sceneLoader;
-            _services = services;
+            _sceneLoader = sceneLoader;
+            _progressService = progressService;
+            _gameFactory = gameFactory;
+            _loadingCurtain = loadingCurtain;
+            _staticData = staticData;
+            _uiFactory = uiFactory;
         }
 
-        public IExitableState Enter(string sceneToLoad)
+        public void Enter(string sceneName)
         {
-            _progressService = _services.Single<IPersistentProgressService>();
-            _gameFactory = _services.Single<IGameFactory>();
-            _staticData = _services.Single<IStaticDataService>();
-
-            EnsureCurtain();
-            _curtain.Show();
-
+            _loadingCurtain.Show();
             _gameFactory.CleanUp();
-            _loader.Load(sceneToLoad, OnLoaded);
-
-            return this;
+            _sceneLoader.Load(sceneName, OnLoaded);
         }
 
         public void Exit() => 
-            _curtain.Hide();
+            _loadingCurtain.Hide();
 
-        private void EnsureCurtain()
+        private void OnLoaded()
         {
-            if (_curtain == null) 
-                _curtain = Resources.Load<LoadingCurtain>("Curtain");
+            InitUIRoot();
+            InitGameWorld();
+            InformProgressReaders();
+
+            _loadingCurtain.Hide();
+            _stateMachine.Enter<GameLoopState>();
+        }
+
+        private void InitUIRoot()
+        {
+            _uiFactory.CreateUIRoot();
         }
 
         private void InitGameWorld()
@@ -84,15 +90,6 @@ namespace Assets.Scripts.Infrastructure.States
 
         private GameObject InitPlayer() => 
             _gameFactory.CreatePlayer(GameObject.FindWithTag(InitialPointTag));
-
-        private void OnLoaded()
-        {
-            InitGameWorld();
-            InformProgressReaders();
-
-            _curtain.Hide();
-            _stateMachine.Enter<GameLoopState>();
-        }
 
         private void InformProgressReaders() => 
             _gameFactory.ProgressReaders.ForEach(x=>x.LoadProgress(_progressService.Progress));

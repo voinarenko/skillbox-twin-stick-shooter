@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
-using Assets.Scripts.Enemy;
+﻿using Assets.Scripts.Enemy;
 using Assets.Scripts.Infrastructure.AssetManagement;
-using Assets.Scripts.Infrastructure.Services;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.Randomizer;
+using Assets.Scripts.Infrastructure.Services.StaticData;
 using Assets.Scripts.Logic;
 using Assets.Scripts.Logic.EnemySpawners;
 using Assets.Scripts.StaticData;
-using Assets.Scripts.UI;
+using Assets.Scripts.UI.Elements;
+using System.Collections.Generic;
+using Assets.Scripts.UI.Services.Windows;
 using UnityEngine;
 using UnityEngine.AI;
 using Object = UnityEngine.Object;
@@ -20,18 +21,20 @@ namespace Assets.Scripts.Infrastructure.Factory
         private readonly IStaticDataService _staticData;
         private readonly IRandomService _randomService;
         private readonly IPersistentProgressService _progressService;
+        private readonly IWindowService _windowService;
 
         public List<ISavedProgressReader> ProgressReaders { get; } = new();
         public List<ISavedProgress> ProgressWriters { get; } = new();
 
         private GameObject PlayerGameObject { get; set; }
 
-        public GameFactory(IAssets assets, IStaticDataService staticData, IRandomService randomService, IPersistentProgressService progressService)
+        public GameFactory(IAssets assets, IStaticDataService staticData, IRandomService randomService, IPersistentProgressService progressService, IWindowService windowService)
         {
             _assets = assets;
             _staticData = staticData;
             _randomService = randomService;
             _progressService = progressService;
+            _windowService = windowService;
         }
         public GameObject CreatePlayer(GameObject at)
         {
@@ -45,7 +48,10 @@ namespace Assets.Scripts.Infrastructure.Factory
             var hud = InstantiateRegistered(AssetPath.HudPath);
             
             hud.GetComponentInChildren<LootCounter>().Construct(_progressService.Progress.WorldData);
-            
+
+            foreach (var openWindowButton in hud.GetComponentsInChildren<OpenWindowButton>())
+                openWindowButton.Construct(_windowService);
+
             return hud;
         }
 

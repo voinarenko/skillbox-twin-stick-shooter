@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts.Logic;
 using UnityEngine;
 
-namespace Assets.Scripts.UI
+namespace Assets.Scripts.UI.Elements
 {
     public class ActorUi : MonoBehaviour
     {
