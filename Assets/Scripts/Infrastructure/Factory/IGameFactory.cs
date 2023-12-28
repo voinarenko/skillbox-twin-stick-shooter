@@ -12,7 +12,7 @@ namespace Assets.Scripts.Infrastructure.Factory
         List<ISavedProgressReader> ProgressReaders { get; }
         List<ISavedProgress> ProgressWriters { get; }
 
-        GameObject CreatePlayer(GameObject at);
+        GameObject CreatePlayer(Vector3 at);
         GameObject CreateHud();
         void CreateSpawner(Vector3 at, string spawnerId, EnemyTypeId enemyTypeId);
         void CleanUp();
