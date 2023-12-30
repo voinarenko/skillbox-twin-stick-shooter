@@ -18,7 +18,7 @@ namespace Assets.Scripts.UI.Services.Windows
                 case WindowId.Unknown:
                     break;
                 case WindowId.EndGame:
-                    _uiFactory.CreateEnGame();
+                    _uiFactory.CreateEndGame();
                     break;
             }
         }

@@ -13,10 +13,8 @@ namespace Assets.Scripts.UI.Elements
         {
             _worldData = worldData;
             _worldData.LootData.Changed += UpdateCounter;
-        }
-
-        private void Start() => 
             UpdateCounter();
+        }
 
         private void UpdateCounter() => 
             Counter.text = $"{_worldData.LootData.Collected}";

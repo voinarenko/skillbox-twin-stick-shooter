@@ -33,9 +33,9 @@ namespace Assets.Scripts.Logic.EnemySpawners
                 progress.KillData.ClearedSpawners.Add(Id);
         }
 
-        private void Spawn()
+        private async void Spawn()
         {
-            var enemy = _factory.CreateEnemy(EnemyTypeId, transform);
+            var enemy = await _factory.CreateEnemy(EnemyTypeId, transform);
             _enemyDeath = enemy.GetComponent<EnemyDeath>();
             _enemyDeath.Happened += Slay;
         }

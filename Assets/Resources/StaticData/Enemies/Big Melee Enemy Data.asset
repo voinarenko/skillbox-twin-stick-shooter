@@ -24,4 +24,8 @@ MonoBehaviour:
   EffectiveDistance: 3
   Cleavage: 0.75
   AttackCooldown: 3
-  Prefab: {fileID: 6058307181923392003, guid: cef59e2fe12165d4089d5c3be0cd9ea7, type: 3}
+  PrefabReference:
+    m_AssetGUID: cef59e2fe12165d4089d5c3be0cd9ea7
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

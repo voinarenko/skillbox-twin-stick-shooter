@@ -3,6 +3,7 @@ using Assets.Scripts.Infrastructure.Services;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.StaticData;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.Infrastructure.Factory
@@ -12,11 +13,12 @@ namespace Assets.Scripts.Infrastructure.Factory
         List<ISavedProgressReader> ProgressReaders { get; }
         List<ISavedProgress> ProgressWriters { get; }
 
-        GameObject CreatePlayer(GameObject at);
-        GameObject CreateHud();
-        void CreateSpawner(Vector3 at, string spawnerId, EnemyTypeId enemyTypeId);
+        Task<GameObject> CreatePlayer(Vector3 at);
+        Task<GameObject> CreateHud();
+        Task CreateSpawner(Vector3 at, string spawnerId, EnemyTypeId enemyTypeId);
         void CleanUp();
-        GameObject CreateEnemy(EnemyTypeId typeId, Transform parent);
-        LootPiece CreateLoot();
+        Task<GameObject> CreateEnemy(EnemyTypeId typeId, Transform parent);
+        Task<LootPiece> CreateLoot();
+        Task WarmUp();
     }
 }

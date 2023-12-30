@@ -22,9 +22,9 @@ namespace Assets.Scripts.Enemy
         private void Start() => 
             EnemyDeath.Happened += SpawnLoot;
 
-        private void SpawnLoot()
+        private async void SpawnLoot()
         {
-            var loot = _factory.CreateLoot();
+            var loot = await _factory.CreateLoot();
             loot.transform.position = transform.position;
 
             var lootItem = GenerateLoot();

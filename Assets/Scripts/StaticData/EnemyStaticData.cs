@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Assets.Scripts.StaticData
 {
@@ -32,6 +33,6 @@ namespace Assets.Scripts.StaticData
         [Range(1, 5)]
         public float AttackCooldown;
 
-        public GameObject Prefab;
+        public AssetReferenceGameObject PrefabReference;
     }
 }

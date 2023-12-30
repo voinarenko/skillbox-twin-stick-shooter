@@ -1,7 +1,9 @@
-﻿using Assets.Scripts.Infrastructure.Factory;
+﻿using System.Threading.Tasks;
+using Assets.Scripts.Infrastructure.Factory;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.StaticData;
 using Assets.Scripts.Logic;
+using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Services.Factory;
 using Cinemachine;
 using UnityEngine;
@@ -11,9 +13,7 @@ namespace Assets.Scripts.Infrastructure.States
 {
     public class LoadLevelState : IPayloadedState<string>
     {
-        private const string InitialPointTag = "InitialPoint";
         private const string CameraTag = "VirtualCamera";
-        private const string EnemySpawnerTag = "SpawnPoint";
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
         private readonly IPersistentProgressService _progressService;
@@ -37,46 +37,66 @@ namespace Assets.Scripts.Infrastructure.States
         {
             _loadingCurtain.Show();
             _gameFactory.CleanUp();
+            _gameFactory.WarmUp();
             _sceneLoader.Load(sceneName, OnLoaded);
         }
 
         public void Exit() => 
             _loadingCurtain.Hide();
 
-        private void OnLoaded()
+        private async void OnLoaded()
         {
-            InitUIRoot();
-            InitGameWorld();
+            await InitUIRoot();
+            await InitGameWorld();
             InformProgressReaders();
 
             _loadingCurtain.Hide();
             _stateMachine.Enter<GameLoopState>();
         }
 
-        private void InitUIRoot()
-        {
-            _uiFactory.CreateUIRoot();
-        }
+        private async Task InitUIRoot() => 
+            await _uiFactory.CreateUIRoot();
 
-        private void InitGameWorld()
+        private async Task InitGameWorld()
         {
-            InitSpawners();
-
-            var player = InitPlayer();
+            var levelData = LevelStaticData();
+            await InitSpawners(levelData);
+            //await InitDroppedLoot();
+            var player = await InitPlayer(levelData);
             CameraFollow(player);
 
-            InitHud();
+            await InitHud();
         }
 
-        private void InitSpawners()
+        private async Task InitSpawners(LevelStaticData levelData)
         {
-            var sceneKey = SceneManager.GetActiveScene().name;
-            var levelData = _staticData.ForLevel(sceneKey);
             foreach (var spawnerData in levelData.EnemySpawners)
-            {
-                _gameFactory.CreateSpawner(spawnerData.Position, spawnerData.Id, spawnerData.EnemyTypeId);
-            }
+                await _gameFactory.CreateSpawner(spawnerData.Position, spawnerData.Id, spawnerData.EnemyTypeId);
         }
+
+        private void InformProgressReaders() => 
+            _gameFactory.ProgressReaders.ForEach(x=>x.LoadProgress(_progressService.Progress));
+
+        private async Task InitHud() => 
+            await _gameFactory.CreateHud();
+
+        //private async Task InitDroppedLoot()
+        //{
+        //    var droppedLoot = _progressService.Progress.WorldData.DroppedLoot;
+        //    foreach (var drop in droppedLoot.Items)
+        //    {
+        //        var lootPiece = await _gameFactory.CreateLoot();
+        //        lootPiece.transform.position = drop.Position.AsUnityVector();
+        //        lootPiece.Initialize(drop.Loot);
+        //    }
+
+        //}
+
+        private async Task<GameObject> InitPlayer(LevelStaticData levelData) => 
+            await _gameFactory.CreatePlayer(levelData.InitialPlayerPosition);
+
+        private LevelStaticData LevelStaticData() => 
+            _staticData.ForLevel(SceneManager.GetActiveScene().name);
 
         private static void CameraFollow(GameObject player)
         {
@@ -84,14 +104,5 @@ namespace Assets.Scripts.Infrastructure.States
             camera.Follow = player.transform;
             camera.LookAt = player.transform;
         }
-
-        private void InitHud() => 
-            _gameFactory.CreateHud();
-
-        private GameObject InitPlayer() => 
-            _gameFactory.CreatePlayer(GameObject.FindWithTag(InitialPointTag));
-
-        private void InformProgressReaders() => 
-            _gameFactory.ProgressReaders.ForEach(x=>x.LoadProgress(_progressService.Progress));
     }
 }
