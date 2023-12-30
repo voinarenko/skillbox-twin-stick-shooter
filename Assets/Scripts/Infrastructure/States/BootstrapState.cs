@@ -6,7 +6,6 @@ using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.Randomizer;
 using Assets.Scripts.Infrastructure.Services.SaveLoad;
 using Assets.Scripts.Infrastructure.Services.StaticData;
-using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Services.Factory;
 using Assets.Scripts.UI.Services.Windows;
 using UnityEngine;
@@ -41,6 +40,7 @@ namespace Assets.Scripts.Infrastructure.States
         private void RegisterServices()
         {
             RegisterStaticData();
+            _services.RegisterSingle<IGameStateMachine>(_stateMachine);
             _services.RegisterSingle(InputService());
             _services.RegisterSingle<IAssets>(new AssetProvider());
             _services.RegisterSingle<IRandomService>(new RandomService());
