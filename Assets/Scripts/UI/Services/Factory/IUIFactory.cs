@@ -1,10 +1,11 @@
-﻿using Assets.Scripts.Infrastructure.Services;
+﻿using System.Threading.Tasks;
+using Assets.Scripts.Infrastructure.Services;
 
 namespace Assets.Scripts.UI.Services.Factory
 {
     public interface IUIFactory : IService
     {
-        void CreateEnGame();
-        void CreateUIRoot();
+        void CreateEndGame();
+        Task CreateUIRoot();
     }
 }

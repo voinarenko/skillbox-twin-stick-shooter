@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Infrastructure.Factory;
+﻿using System.Threading.Tasks;
+using Assets.Scripts.Infrastructure.Factory;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.StaticData;
 using Assets.Scripts.Logic;
@@ -36,64 +37,63 @@ namespace Assets.Scripts.Infrastructure.States
         {
             _loadingCurtain.Show();
             _gameFactory.CleanUp();
+            _gameFactory.WarmUp();
             _sceneLoader.Load(sceneName, OnLoaded);
         }
 
         public void Exit() => 
             _loadingCurtain.Hide();
 
-        private void OnLoaded()
+        private async void OnLoaded()
         {
-            InitUIRoot();
-            InitGameWorld();
+            await InitUIRoot();
+            await InitGameWorld();
             InformProgressReaders();
 
             _loadingCurtain.Hide();
             _stateMachine.Enter<GameLoopState>();
         }
 
-        private void InitUIRoot()
-        {
-            _uiFactory.CreateUIRoot();
-        }
+        private async Task InitUIRoot() => 
+            await _uiFactory.CreateUIRoot();
 
-        private void InitGameWorld()
+        private async Task InitGameWorld()
         {
             var levelData = LevelStaticData();
-            InitSpawners(levelData);
-
-            var player = InitPlayer(levelData);
+            await InitSpawners(levelData);
+            //await InitDroppedLoot();
+            var player = await InitPlayer(levelData);
             CameraFollow(player);
 
-            InitHud();
+            await InitHud();
         }
 
-        private void InitSpawners(LevelStaticData levelData)
+        private async Task InitSpawners(LevelStaticData levelData)
         {
             foreach (var spawnerData in levelData.EnemySpawners)
-                _gameFactory.CreateSpawner(spawnerData.Position, spawnerData.Id, spawnerData.EnemyTypeId);
+                await _gameFactory.CreateSpawner(spawnerData.Position, spawnerData.Id, spawnerData.EnemyTypeId);
         }
 
         private void InformProgressReaders() => 
             _gameFactory.ProgressReaders.ForEach(x=>x.LoadProgress(_progressService.Progress));
 
-        private void InitHud() => 
-            _gameFactory.CreateHud();
+        private async Task InitHud() => 
+            await _gameFactory.CreateHud();
 
-        //private void InitDroppedLoot()
+        //private async Task InitDroppedLoot()
         //{
         //    var droppedLoot = _progressService.Progress.WorldData.DroppedLoot;
         //    foreach (var drop in droppedLoot.Items)
         //    {
-        //        var lootPiece = _gameFactory.CreateLoot();
+        //        var lootPiece = await _gameFactory.CreateLoot();
         //        lootPiece.transform.position = drop.Position.AsUnityVector();
         //        lootPiece.Initialize(drop.Loot);
         //    }
 
         //}
 
-        private GameObject InitPlayer(LevelStaticData levelData) => 
-            _gameFactory.CreatePlayer(levelData.InitialPlayerPosition);
+        private async Task<GameObject> InitPlayer(LevelStaticData levelData) => 
+            await _gameFactory.CreatePlayer(levelData.InitialPlayerPosition);
 
         private LevelStaticData LevelStaticData() => 
             _staticData.ForLevel(SceneManager.GetActiveScene().name);

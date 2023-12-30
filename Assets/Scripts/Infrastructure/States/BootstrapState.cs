@@ -42,7 +42,7 @@ namespace Assets.Scripts.Infrastructure.States
             RegisterStaticData();
             _services.RegisterSingle<IGameStateMachine>(_stateMachine);
             _services.RegisterSingle(InputService());
-            _services.RegisterSingle<IAssets>(new AssetProvider());
+            RegisterAssetProvider();
             _services.RegisterSingle<IRandomService>(new RandomService());
             _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
             _services.RegisterSingle<IUIFactory>(new UiFactory(
@@ -59,6 +59,13 @@ namespace Assets.Scripts.Infrastructure.States
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(
                 _services.Single<IPersistentProgressService>(), 
                 _services.Single<IGameFactory>()));
+        }
+
+        private void RegisterAssetProvider()
+        {
+            var assetProvider = new AssetProvider();
+            assetProvider.Initialize();
+            _services.RegisterSingle<IAssets>(assetProvider);
         }
 
         public void Exit()
