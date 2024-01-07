@@ -1,11 +1,11 @@
-﻿using System.Threading.Tasks;
-using Assets.Scripts.Infrastructure.Factory;
+﻿using Assets.Scripts.Infrastructure.Factory;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.StaticData;
 using Assets.Scripts.Logic;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Services.Factory;
 using Cinemachine;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,13 +14,13 @@ namespace Assets.Scripts.Infrastructure.States
     public class LoadLevelState : IPayloadedState<string>
     {
         private const string CameraTag = "VirtualCamera";
-        private readonly GameStateMachine _stateMachine;
-        private readonly SceneLoader _sceneLoader;
         private readonly IPersistentProgressService _progressService;
         private readonly IGameFactory _gameFactory;
-        private readonly LoadingCurtain _loadingCurtain;
         private readonly IStaticDataService _staticData;
         private readonly IUIFactory _uiFactory;
+        private readonly GameStateMachine _stateMachine;
+        private readonly SceneLoader _sceneLoader;
+        private readonly LoadingCurtain _loadingCurtain;
 
         public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, IPersistentProgressService progressService, IGameFactory gameFactory, LoadingCurtain loadingCurtain, IStaticDataService staticData, IUIFactory uiFactory)
         {

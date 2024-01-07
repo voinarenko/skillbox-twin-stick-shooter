@@ -28,10 +28,12 @@ namespace Assets.Scripts.Infrastructure.States
             
         }
 
-        private void LoadProgressOrInitNew() => 
-            _progressService.Progress = 
-                _saveLoadService.LoadProgress() 
+        private void LoadProgressOrInitNew()
+        {
+            _progressService.Progress =
+                _saveLoadService.LoadProgress()
                 ?? NewProgress();
+        }
 
         private PlayerProgress NewProgress()
         {

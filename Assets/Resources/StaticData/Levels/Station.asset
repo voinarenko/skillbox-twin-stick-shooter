@@ -14,13 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelKey: MainScene
   EnemySpawners:
-  - Id: MainScene_d4112f17-31bf-48f3-9d47-359dfb9af35a
+  - Id: MainScene_0da318a1-0573-4606-935c-95e39031867b
     EnemyTypeId: 10
-    Position: {x: 16, y: 0, z: 0}
+    Position: {x: -44, y: 0, z: -24}
   - Id: MainScene_3c1fc597-2ff4-4af2-b818-5fae513c1fcf
     EnemyTypeId: 0
-    Position: {x: 8, y: 0, z: 0}
+    Position: {x: 40, y: 0, z: 36}
+  - Id: MainScene_d4112f17-31bf-48f3-9d47-359dfb9af35a
+    EnemyTypeId: 10
+    Position: {x: 52, y: 0, z: -48}
   - Id: _53713ed4-6aaa-462d-9577-d7c365e8f20d
     EnemyTypeId: 20
-    Position: {x: -8, y: 0, z: 0}
+    Position: {x: -56, y: 0, z: 48}
   InitialPlayerPosition: {x: 0, y: 0, z: 0}
