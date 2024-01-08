@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.UI.Services.Factory
 {
-    public class UiFactory : IUIFactory
+    public class UiFactory : IUiFactory
     {
         private const string UIRootPath = "UIRoot";
         private readonly IAssets _assets;
@@ -29,7 +29,7 @@ namespace Assets.Scripts.UI.Services.Factory
             window.Construct(_progressService);
         }
 
-        public async Task CreateUIRoot()
+        public async Task CreateUiRoot()
         {
             var root = await _assets.Instantiate(UIRootPath);
             _uiRoot = root.transform;

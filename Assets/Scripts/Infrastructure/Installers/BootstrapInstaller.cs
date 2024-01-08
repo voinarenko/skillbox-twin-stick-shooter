@@ -69,7 +69,7 @@ namespace Assets.Scripts.Infrastructure.Installers
 
         private void BindUiFactory() =>
             Container
-                .Bind<IUIFactory>()
+                .Bind<IUiFactory>()
                 .To<UiFactory>()
                 .AsSingle();
 

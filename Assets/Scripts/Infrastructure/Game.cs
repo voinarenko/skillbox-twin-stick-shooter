@@ -14,7 +14,7 @@ namespace Assets.Scripts.Infrastructure
 
         public Game(ICoroutineRunner coroutineRunner, LoadingCurtain curtain, IStaticDataService staticData,
             IPersistentProgressService progressService, ISaveLoadService saveLoadService, IGameFactory gameFactory,
-            IUIFactory uiFactory) =>
+            IUiFactory uiFactory) =>
             StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), curtain, staticData, progressService,
                 saveLoadService, gameFactory, uiFactory);
     }

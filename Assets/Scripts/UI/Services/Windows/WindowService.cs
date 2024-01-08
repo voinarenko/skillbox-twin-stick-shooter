@@ -4,9 +4,9 @@ namespace Assets.Scripts.UI.Services.Windows
 {
     public class WindowService : IWindowService
     {
-        private readonly IUIFactory _uiFactory;
+        private readonly IUiFactory _uiFactory;
 
-        public WindowService(IUIFactory uiFactory)
+        public WindowService(IUiFactory uiFactory)
         {
             _uiFactory = uiFactory;
         }

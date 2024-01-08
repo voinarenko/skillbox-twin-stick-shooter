@@ -17,12 +17,12 @@ namespace Assets.Scripts.Infrastructure.States
         private readonly IPersistentProgressService _progressService;
         private readonly IGameFactory _gameFactory;
         private readonly IStaticDataService _staticData;
-        private readonly IUIFactory _uiFactory;
+        private readonly IUiFactory _uiFactory;
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
         private readonly LoadingCurtain _loadingCurtain;
 
-        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, IPersistentProgressService progressService, IGameFactory gameFactory, LoadingCurtain loadingCurtain, IStaticDataService staticData, IUIFactory uiFactory)
+        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, IPersistentProgressService progressService, IGameFactory gameFactory, LoadingCurtain loadingCurtain, IStaticDataService staticData, IUiFactory uiFactory)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
@@ -55,7 +55,7 @@ namespace Assets.Scripts.Infrastructure.States
         }
 
         private async Task InitUIRoot() => 
-            await _uiFactory.CreateUIRoot();
+            await _uiFactory.CreateUiRoot();
 
         private async Task InitGameWorld()
         {

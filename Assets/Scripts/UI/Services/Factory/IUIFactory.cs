@@ -3,9 +3,9 @@ using Assets.Scripts.Infrastructure.Services;
 
 namespace Assets.Scripts.UI.Services.Factory
 {
-    public interface IUIFactory : IService
+    public interface IUiFactory : IService
     {
         void CreateEndGame();
-        Task CreateUIRoot();
+        Task CreateUiRoot();
     }
 }

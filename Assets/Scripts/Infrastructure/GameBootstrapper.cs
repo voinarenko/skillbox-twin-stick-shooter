@@ -15,7 +15,7 @@ namespace Assets.Scripts.Infrastructure
 
         private Game _game;
 
-        public void Construct(IStaticDataService staticData, IPersistentProgressService progressService, ISaveLoadService saveLoadService, IGameFactory gameFactory, IUIFactory uiFactory)
+        public void Construct(IStaticDataService staticData, IPersistentProgressService progressService, ISaveLoadService saveLoadService, IGameFactory gameFactory, IUiFactory uiFactory)
         {
             _game = new Game(this, Instantiate(CurtainPrefab), staticData, progressService, saveLoadService, gameFactory, uiFactory);
             _game.StateMachine.Enter<BootstrapState>();

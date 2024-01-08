@@ -15,10 +15,10 @@ namespace Assets.Scripts.Infrastructure
         private IPersistentProgressService _progressService;
         private ISaveLoadService _saveLoadService;
         private IGameFactory _gameFactory;
-        private IUIFactory _uiFactory;
+        private IUiFactory _uiFactory;
 
         [Inject]
-        public void Construct(IStaticDataService staticData, IPersistentProgressService progressService, ISaveLoadService saveLoadService, IGameFactory gameFactory, IUIFactory uiFactory)
+        public void Construct(IStaticDataService staticData, IPersistentProgressService progressService, ISaveLoadService saveLoadService, IGameFactory gameFactory, IUiFactory uiFactory)
         {
             _staticData = staticData;
             _progressService = progressService;
