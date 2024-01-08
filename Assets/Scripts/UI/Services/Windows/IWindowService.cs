@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using Assets.Scripts.Infrastructure.Services;
+﻿using Assets.Scripts.Infrastructure.Services;
+using System.Threading.Tasks;
 
 namespace Assets.Scripts.UI.Services.Windows
 {

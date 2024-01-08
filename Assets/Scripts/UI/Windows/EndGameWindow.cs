@@ -5,7 +5,6 @@ namespace Assets.Scripts.UI.Windows
     public class EndGameWindow : BaseWindow
     {
         public TextMeshProUGUI PointsText;
-
         protected override void Initialize() =>
             RefreshPointsText();
 
@@ -18,9 +17,7 @@ namespace Assets.Scripts.UI.Windows
             Progress.WorldData.LootData.Changed -= RefreshPointsText;
         }
 
-        private void RefreshPointsText()
-        {
+        private void RefreshPointsText() => 
             PointsText.text = $"{Progress.WorldData.LootData.Collected}";
-        }
     }
 }

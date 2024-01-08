@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Infrastructure.States;
 using Assets.Scripts.UI.Elements.Buttons;
-using UnityEngine;
 using Zenject;
 
 namespace Assets.Scripts.Infrastructure.Installers
@@ -11,7 +10,6 @@ namespace Assets.Scripts.Infrastructure.Installers
         {
             Container.Bind<IGameStateMachine>().To<GameStateMachine>().AsSingle();
             Container.Bind<PlayButton>().AsSingle();
-            Debug.Log("MenuInstaller");
         }
     }
 }

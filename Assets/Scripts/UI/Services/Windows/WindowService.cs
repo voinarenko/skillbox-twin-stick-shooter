@@ -1,6 +1,5 @@
-﻿using System.Threading.Tasks;
-using Assets.Scripts.UI.Services.Factory;
-using UnityEngine;
+﻿using Assets.Scripts.UI.Services.Factory;
+using System.Threading.Tasks;
 
 namespace Assets.Scripts.UI.Services.Windows
 {

@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Infrastructure.States;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEngine.UI.Button;
 
 namespace Assets.Scripts.UI.Elements.Buttons
 {
@@ -12,6 +12,8 @@ namespace Assets.Scripts.UI.Elements.Buttons
         [SerializeField] private Sprite _normal;
         [SerializeField] private Sprite _pressed;
         [SerializeField] private Sprite _hover;
+
+        public virtual void Construct(IGameStateMachine stateMachine) { }
 
         public virtual void OnPointerClick(PointerEventData eventData) { }
 
@@ -26,6 +28,5 @@ namespace Assets.Scripts.UI.Elements.Buttons
 
         public void OnPointerExit(PointerEventData eventData) => 
             Image.sprite = _normal;
-
     }
 }
