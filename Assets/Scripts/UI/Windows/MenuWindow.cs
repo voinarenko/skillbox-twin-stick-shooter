@@ -5,15 +5,16 @@ namespace Assets.Scripts.UI.Windows
 {
     public class MenuWindow : BaseWindow
     {
-        public Button PlayButton;
-        public Button SettingsButton;
-        public Button QuitButton;
+        //public Button PlayButton;
+        //public Button SettingsButton;
+        //public Button QuitButton;
 
-        protected override void OnAwake()
-        {
-            PlayButton.onClick.AddListener(()=>{});
-            SettingsButton.onClick.AddListener(()=>{});
-            QuitButton.onClick.AddListener(Application.Quit);
-        }
+        //protected override void OnAwake()
+        //{
+        //    Debug.Log("Awake");
+        //    PlayButton.onClick.AddListener(()=>{Debug.Log("Play");});
+        //    SettingsButton.onClick.AddListener(()=>{Debug.Log("Settings");});
+        //    QuitButton.onClick.AddListener(Application.Quit);
+        //}
     }
 }

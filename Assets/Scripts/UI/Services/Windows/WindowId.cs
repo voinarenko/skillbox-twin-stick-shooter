@@ -3,6 +3,8 @@
     public enum WindowId
     {
         Unknown = 0,
-        EndGame = 1
+        MainMenu = 1,
+        Settings = 2,
+        EndGame = 3
     }
 }

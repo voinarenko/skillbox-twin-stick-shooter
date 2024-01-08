@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.UI.Services.Factory;
+﻿using System.Threading.Tasks;
+using Assets.Scripts.UI.Services.Factory;
+using UnityEngine;
 
 namespace Assets.Scripts.UI.Services.Windows
 {
@@ -11,11 +13,16 @@ namespace Assets.Scripts.UI.Services.Windows
             _uiFactory = uiFactory;
         }
 
-        public void Open(WindowId windowId)
+        public async Task Open(WindowId windowId)
         {
             switch (windowId)
             {
                 case WindowId.Unknown:
+                    break;
+                case WindowId.MainMenu:
+                    await _uiFactory.CreateMainMenu();
+                    break;
+                case WindowId.Settings:
                     break;
                 case WindowId.EndGame:
                     _uiFactory.CreateEndGame();

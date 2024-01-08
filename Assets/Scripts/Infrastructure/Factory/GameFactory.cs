@@ -57,8 +57,8 @@ namespace Assets.Scripts.Infrastructure.Factory
             
             hud.GetComponentInChildren<LootCounter>().Construct(_progressService.Progress.WorldData);
 
-            foreach (var openWindowButton in hud.GetComponentsInChildren<OpenWindowButton>())
-                openWindowButton.Construct(_windowService);
+            //foreach (var openWindowButton in hud.GetComponentsInChildren<OpenWindowButton>())
+                //openWindowButton.Construct(_windowService);
 
             return hud;
         }

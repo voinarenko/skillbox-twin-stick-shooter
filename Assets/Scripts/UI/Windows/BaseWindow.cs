@@ -9,13 +9,15 @@ namespace Assets.Scripts.UI.Windows
     {
         public Button CloseButton;
         protected IPersistentProgressService ProgressService;
+        //protected IGameStateMachine StateMachine;
         protected PlayerProgress Progress => ProgressService.Progress;
 
         public void Construct(IPersistentProgressService progressService) => 
             ProgressService = progressService;
+        //public void Construct(IGameStateMachine stateMachine) => 
+        //    StateMachine = stateMachine;
 
-        private void Awake() => 
-            OnAwake();
+        //private void Awake() => OnAwake();
 
         private void Start()
         {
@@ -26,8 +28,7 @@ namespace Assets.Scripts.UI.Windows
         private void OnDestroy() => 
             Cleanup();
 
-        protected virtual void OnAwake() => 
-            CloseButton.onClick.AddListener(() => Destroy(gameObject));
+        //protected virtual void OnAwake() => CloseButton.onClick.AddListener(() => Destroy(gameObject));
 
         protected virtual void Initialize(){}
         protected virtual void SubscribeUpdates(){}

@@ -2,12 +2,12 @@
 using Assets.Scripts.UI.Services.Factory;
 using Assets.Scripts.UI.Services.Windows;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Scripts.Infrastructure.States
 {
     public class LoadMenuState : IState
     {
-        public WindowId WindowId;
         private readonly IGameStateMachine _stateMachine;
         private readonly IUiFactory _uiFactory;
         private readonly IWindowService _windowService;
@@ -25,7 +25,7 @@ namespace Assets.Scripts.Infrastructure.States
         {
             _loadingCurtain.Show();
             await InitUiRoot();
-            _windowService.Open(WindowId);
+            await _windowService.Open(WindowId.MainMenu);
             _stateMachine.Enter<MenuLoopState>();
         }
         public void Exit() => 

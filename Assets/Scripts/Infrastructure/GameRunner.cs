@@ -3,6 +3,7 @@ using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.SaveLoad;
 using Assets.Scripts.Infrastructure.Services.StaticData;
 using Assets.Scripts.UI.Services.Factory;
+using Assets.Scripts.UI.Services.Windows;
 using UnityEngine;
 using Zenject;
 
@@ -16,15 +17,17 @@ namespace Assets.Scripts.Infrastructure
         private ISaveLoadService _saveLoadService;
         private IGameFactory _gameFactory;
         private IUiFactory _uiFactory;
+        private IWindowService _windowService;
 
         [Inject]
-        public void Construct(IStaticDataService staticData, IPersistentProgressService progressService, ISaveLoadService saveLoadService, IGameFactory gameFactory, IUiFactory uiFactory)
+        public void Construct(IStaticDataService staticData, IPersistentProgressService progressService, ISaveLoadService saveLoadService, IGameFactory gameFactory, IUiFactory uiFactory, IWindowService windowService)
         {
             _staticData = staticData;
             _progressService = progressService;
             _saveLoadService = saveLoadService;
             _gameFactory = gameFactory;
             _uiFactory = uiFactory;
+            _windowService = windowService;
         }
 
         private void Awake()
@@ -33,7 +36,7 @@ namespace Assets.Scripts.Infrastructure
             if (!bootstrapper)
             {
                 bootstrapper = Instantiate(BootstrapperPrefab);
-                bootstrapper.Construct(_staticData, _progressService, _saveLoadService, _gameFactory, _uiFactory);
+                bootstrapper.Construct(_staticData, _progressService, _saveLoadService, _gameFactory, _uiFactory, _windowService);
             }
         }
     }

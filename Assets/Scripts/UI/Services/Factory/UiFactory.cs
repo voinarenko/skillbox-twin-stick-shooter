@@ -1,15 +1,15 @@
-﻿using System.Threading.Tasks;
-using Assets.Scripts.Infrastructure.AssetManagement;
+﻿using Assets.Scripts.Infrastructure.AssetManagement;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.StaticData;
 using Assets.Scripts.UI.Services.Windows;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.UI.Services.Factory
 {
     public class UiFactory : IUiFactory
     {
-        private const string UIRootPath = "UIRoot";
+        private const string UiRootPath = "UIRoot";
         private readonly IAssets _assets;
         private readonly IStaticDataService _staticData;
         private readonly IPersistentProgressService _progressService;
@@ -22,6 +22,12 @@ namespace Assets.Scripts.UI.Services.Factory
             _progressService = progressService;
         }
 
+        public async Task CreateMainMenu()
+        {
+            var window = await _assets.Instantiate(AssetAddress.MainMenu);
+            window.transform.SetParent(_uiRoot);
+        }
+
         public void CreateEndGame()
         {
             var config = _staticData.ForWindow(WindowId.EndGame);
@@ -31,7 +37,7 @@ namespace Assets.Scripts.UI.Services.Factory
 
         public async Task CreateUiRoot()
         {
-            var root = await _assets.Instantiate(UIRootPath);
+            var root = await _assets.Instantiate(UiRootPath);
             _uiRoot = root.transform;
         }
     }

@@ -1,9 +1,10 @@
-﻿using Assets.Scripts.Infrastructure.Services;
+﻿using System.Threading.Tasks;
+using Assets.Scripts.Infrastructure.Services;
 
 namespace Assets.Scripts.UI.Services.Windows
 {
     public interface IWindowService : IService
     {
-        void Open(WindowId windowId);
+        Task Open(WindowId windowId);
     }
 }
