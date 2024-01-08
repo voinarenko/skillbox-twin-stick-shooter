@@ -9,7 +9,7 @@ namespace Assets.Scripts.Infrastructure.Installers
         public override void InstallBindings()
         {
             Container.Bind<IGameStateMachine>().To<GameStateMachine>().AsSingle();
-            Container.Bind<PlayButton>().AsSingle();
+            Container.Bind<IButtonService>().To<ButtonService>().AsSingle();
         }
     }
 }

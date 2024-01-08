@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-
-namespace Assets.Scripts.UI.Windows
+﻿namespace Assets.Scripts.UI.Windows
 {
     public class MenuWindow : BaseWindow
     {
