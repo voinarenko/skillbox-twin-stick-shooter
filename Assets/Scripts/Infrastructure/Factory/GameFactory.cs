@@ -7,7 +7,6 @@ using Assets.Scripts.Logic;
 using Assets.Scripts.Logic.EnemySpawners;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Elements;
-using Assets.Scripts.UI.Services.Windows;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -22,20 +21,18 @@ namespace Assets.Scripts.Infrastructure.Factory
         private readonly IStaticDataService _staticData;
         private readonly IRandomService _randomService;
         private readonly IPersistentProgressService _progressService;
-        private readonly IWindowService _windowService;
 
         public List<ISavedProgressReader> ProgressReaders { get; } = new();
         public List<ISavedProgress> ProgressWriters { get; } = new();
 
         private GameObject PlayerGameObject { get; set; }
 
-        public GameFactory(IAssets assets, IStaticDataService staticData, IRandomService randomService, IPersistentProgressService progressService, IWindowService windowService)
+        public GameFactory(IAssets assets, IStaticDataService staticData, IRandomService randomService, IPersistentProgressService progressService)
         {
             _assets = assets;
             _staticData = staticData;
             _randomService = randomService;
             _progressService = progressService;
-            _windowService = windowService;
         }
 
         public async Task WarmUp()
@@ -56,9 +53,6 @@ namespace Assets.Scripts.Infrastructure.Factory
             var hud = await InstantiateRegisteredAsync(AssetAddress.HudPath);
             
             hud.GetComponentInChildren<LootCounter>().Construct(_progressService.Progress.WorldData);
-
-            //foreach (var openWindowButton in hud.GetComponentsInChildren<OpenWindowButton>())
-                //openWindowButton.Construct(_windowService);
 
             return hud;
         }

@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts.UI.Elements.Buttons
 {
-    class ButtonService : IButtonService
+    public class ButtonService : IButtonService
     {
         private readonly IGameStateMachine _stateMachine;
 
