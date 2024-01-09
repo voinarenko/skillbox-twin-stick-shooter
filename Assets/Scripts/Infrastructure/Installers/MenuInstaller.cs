@@ -10,6 +10,7 @@ namespace Assets.Scripts.Infrastructure.Installers
         {
             Container.Bind<IGameStateMachine>().To<GameStateMachine>().AsSingle();
             Container.Bind<IButtonService>().To<ButtonService>().AsSingle();
+            Container.Bind<LoadMenuState>().AsSingle();
         }
     }
 }

@@ -2,7 +2,6 @@
 using Assets.Scripts.UI.Services.Factory;
 using Assets.Scripts.UI.Services.Windows;
 using System.Threading.Tasks;
-using UnityEngine;
 
 namespace Assets.Scripts.Infrastructure.States
 {
@@ -25,7 +24,7 @@ namespace Assets.Scripts.Infrastructure.States
         {
             _loadingCurtain.Show();
             await InitUiRoot();
-            await _windowService.Open(WindowId.MainMenu);
+            await _windowService.Open(WindowId.MainMenu, _stateMachine);
             _stateMachine.Enter<MenuLoopState>();
         }
         public void Exit() => 

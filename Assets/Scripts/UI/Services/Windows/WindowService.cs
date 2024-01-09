@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.UI.Services.Factory;
+﻿using Assets.Scripts.Infrastructure.States;
+using Assets.Scripts.UI.Services.Factory;
 using System.Threading.Tasks;
 
 namespace Assets.Scripts.UI.Services.Windows
@@ -12,14 +13,14 @@ namespace Assets.Scripts.UI.Services.Windows
             _uiFactory = uiFactory;
         }
 
-        public async Task Open(WindowId windowId)
+        public async Task Open(WindowId windowId, IGameStateMachine stateMachine)
         {
             switch (windowId)
             {
                 case WindowId.Unknown:
                     break;
                 case WindowId.MainMenu:
-                    await _uiFactory.CreateMainMenu();
+                    await _uiFactory.CreateMainMenu(stateMachine);
                     break;
                 case WindowId.Settings:
                     break;

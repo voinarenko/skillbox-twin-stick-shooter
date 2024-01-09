@@ -1,7 +1,9 @@
 ﻿using Assets.Scripts.Infrastructure.AssetManagement;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.StaticData;
+using Assets.Scripts.Infrastructure.States;
 using Assets.Scripts.UI.Services.Windows;
+using Assets.Scripts.UI.Windows;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -22,10 +24,11 @@ namespace Assets.Scripts.UI.Services.Factory
             _progressService = progressService;
         }
 
-        public async Task CreateMainMenu()
+        public async Task CreateMainMenu(IGameStateMachine stateMachine)
         {
             var window = await _assets.Instantiate(AssetAddress.MainMenu);
             window.transform.SetParent(_uiRoot);
+            window.GetComponent<MenuWindow>().PlayButton.Construct(stateMachine);
         }
 
         public void CreateEndGame()

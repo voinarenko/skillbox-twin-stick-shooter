@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Infrastructure.Services;
+using Assets.Scripts.Infrastructure.States;
 using System.Threading.Tasks;
 
 namespace Assets.Scripts.UI.Services.Factory
@@ -7,6 +8,6 @@ namespace Assets.Scripts.UI.Services.Factory
     {
         void CreateEndGame();
         Task CreateUiRoot();
-        Task CreateMainMenu();
+        Task CreateMainMenu(IGameStateMachine stateMachine);
     }
 }

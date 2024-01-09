@@ -1,8 +1,10 @@
-﻿namespace Assets.Scripts.UI.Windows
+﻿using Assets.Scripts.UI.Elements.Buttons;
+
+namespace Assets.Scripts.UI.Windows
 {
     public class MenuWindow : BaseWindow
     {
-        //public Button PlayButton;
+        public Button PlayButton;
         //public Button SettingsButton;
         //public Button QuitButton;
 
