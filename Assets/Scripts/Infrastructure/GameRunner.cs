@@ -48,7 +48,7 @@ namespace Assets.Scripts.Infrastructure
             if (!audioManager)
             {
                 audioManager = Instantiate(AudioManagerPrefab);
-                audioManager.Construct(_audioService);
+                audioManager.Construct(_audioService, _saveLoadService);
             }
         }
     }

@@ -9,10 +9,24 @@ namespace Assets.Scripts.Audio
         private IAudioService _audioService;
         private ISaveLoadService _saveLoadService;
 
-        public void Construct(IAudioService audioService)
+        public void Construct(IAudioService audioService, ISaveLoadService saveLoadService)
         {
             _audioService = audioService;
+            _saveLoadService = saveLoadService;
             DontDestroyOnLoad(this);
+        }
+
+        private void Awake()
+        {
+            _audioService.InitVca();
+            LoadSavedSettings();
+        }
+
+        private void LoadSavedSettings()
+        {
+            var settings = _saveLoadService.LoadSettings();
+            if (settings == null) return;
+            _audioService.SetVolume(settings);
         }
     }
 }

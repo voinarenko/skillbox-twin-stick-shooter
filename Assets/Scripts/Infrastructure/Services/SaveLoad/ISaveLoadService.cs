@@ -6,5 +6,7 @@ namespace Assets.Scripts.Infrastructure.Services.SaveLoad
     {
         void SaveProgress();
         PlayerProgress LoadProgress();
+        void SaveSettings();
+        Settings LoadSettings();
     }
 }
