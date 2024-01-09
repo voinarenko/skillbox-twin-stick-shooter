@@ -8,5 +8,6 @@ namespace Assets.Scripts.Infrastructure.Services.Audio
         void GetVolume();
         void SetVolume(Settings settings);
         void StoreVolume(Settings settings);
+        void CancelChanges();
     }
 }

@@ -43,5 +43,12 @@ namespace Assets.Scripts.Infrastructure.Services.Audio
             settings.Volume.MusicVolume = _musicVolume;
             settings.Volume.EffectsVolume = _effectsVolume;
         }
+
+        public void CancelChanges()
+        {
+            _masterVca.setVolume(_masterVolume);
+            _musicVca.setVolume(_musicVolume);
+            _effectsVca.setVolume(_effectsVolume);
+        }
     }
 }
