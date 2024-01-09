@@ -5,6 +5,5 @@ namespace Assets.Scripts.Infrastructure.Services.PersistentProgress
     public interface IPersistentProgressService : IService
     {
         PlayerProgress Progress { get; set; }
-        Settings Settings { get; set; }
     }
 }

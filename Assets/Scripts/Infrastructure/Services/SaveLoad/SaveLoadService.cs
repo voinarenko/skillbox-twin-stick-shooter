@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Data;
 using Assets.Scripts.Infrastructure.Factory;
+using Assets.Scripts.Infrastructure.Services.Parameters;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using UnityEngine;
 
@@ -11,12 +12,14 @@ namespace Assets.Scripts.Infrastructure.Services.SaveLoad
         private const string SettingsKey = "Settings";
 
         private readonly IPersistentProgressService _progressService;
+        private readonly ISettingsService _settingsService;
         private readonly IGameFactory _gameFactory;
 
-        public SaveLoadService(IPersistentProgressService progressService, IGameFactory gameFactory)
+        public SaveLoadService(IPersistentProgressService progressService, IGameFactory gameFactory, ISettingsService settingsService)
         {
             _progressService = progressService;
             _gameFactory = gameFactory;
+            _settingsService = settingsService;
         }
 
         public void SaveProgress()
@@ -32,9 +35,9 @@ namespace Assets.Scripts.Infrastructure.Services.SaveLoad
                 .ToDeserialized<PlayerProgress>();
 
         public void SaveSettings() => 
-            PlayerPrefs.SetString(SettingsKey, _progressService.Settings.ToJson());
+            PlayerPrefs.SetString(SettingsKey, _settingsService.Settings.ToJson());
 
-        public void LoadSettings() =>
+        public Settings LoadSettings() =>
             PlayerPrefs.GetString(SettingsKey)?.ToDeserialized<Settings>();
     }
 }

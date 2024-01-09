@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Infrastructure.AssetManagement;
 using Assets.Scripts.Infrastructure.Factory;
 using Assets.Scripts.Infrastructure.Services.Audio;
+using Assets.Scripts.Infrastructure.Services.Parameters;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.Randomizer;
 using Assets.Scripts.Infrastructure.Services.SaveLoad;
@@ -29,6 +30,7 @@ namespace Assets.Scripts.Infrastructure.Installers
             BindBootstrapper();
             BindLoadProgressState();
             BindAudioService();
+            BindSettingsService();
         }
 
         private void BindStaticData()
@@ -108,6 +110,12 @@ namespace Assets.Scripts.Infrastructure.Installers
             Container
                 .Bind<IAudioService>()
                 .To<AudioService>()
+                .AsSingle();
+
+        private void BindSettingsService() => 
+            Container
+                .Bind<ISettingsService>()
+                .To<SettingsService>()
                 .AsSingle();
     }
 }
