@@ -46,3 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BootstrapperPrefab: {fileID: 8585503058428654416, guid: c7a6c552a30417f4591c8fd5e7e7fbf9,
     type: 3}
+  AudioManagerPrefab: {fileID: 2256334800302314882, guid: 8cd574990546a9548ae43981d20bc271,
+    type: 3}

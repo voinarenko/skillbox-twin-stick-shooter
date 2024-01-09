@@ -8,6 +8,7 @@ namespace Assets.Scripts.Infrastructure.Services.SaveLoad
     public class SaveLoadService : ISaveLoadService
     {
         private const string ProgressKey = "Progress";
+        private const string SettingsKey = "Settings";
 
         private readonly IPersistentProgressService _progressService;
         private readonly IGameFactory _gameFactory;
@@ -29,5 +30,11 @@ namespace Assets.Scripts.Infrastructure.Services.SaveLoad
         public PlayerProgress LoadProgress() => 
             PlayerPrefs.GetString(ProgressKey)?
                 .ToDeserialized<PlayerProgress>();
+
+        public void SaveSettings() => 
+            PlayerPrefs.SetString(SettingsKey, _progressService.Settings.ToJson());
+
+        public void LoadSettings() =>
+            PlayerPrefs.GetString(SettingsKey)?.ToDeserialized<Settings>();
     }
 }
