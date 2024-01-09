@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Infrastructure.States;
+using UnityEngine;
 
 namespace Assets.Scripts.UI.Elements.Buttons
 {
@@ -23,7 +24,7 @@ namespace Assets.Scripts.UI.Elements.Buttons
 
         public void QuitGame()
         {
-            
+            Application.Quit();
         }
     }
 }
