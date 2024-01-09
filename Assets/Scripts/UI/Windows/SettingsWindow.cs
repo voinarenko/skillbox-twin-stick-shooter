@@ -1,0 +1,10 @@
+﻿using Assets.Scripts.UI.Elements.Buttons;
+
+namespace Assets.Scripts.UI.Windows
+{
+    public class SettingsWindow : BaseWindow
+    {
+        public Button ConfirmButton;
+        public Button CancelButton;
+    }
+}

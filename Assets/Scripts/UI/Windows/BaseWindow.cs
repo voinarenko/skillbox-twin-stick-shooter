@@ -1,19 +1,17 @@
 ﻿using Assets.Scripts.Data;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.Scripts.UI.Windows
 {
     public abstract class BaseWindow : MonoBehaviour
     {
-        public Button CloseButton;
-        protected IPersistentProgressService ProgressService;
+        private IPersistentProgressService _progressService;
         //protected IGameStateMachine StateMachine;
-        protected PlayerProgress Progress => ProgressService.Progress;
+        protected PlayerProgress Progress => _progressService.Progress;
 
         public void Construct(IPersistentProgressService progressService) => 
-            ProgressService = progressService;
+            _progressService = progressService;
         //public void Construct(IGameStateMachine stateMachine) => 
         //    StateMachine = stateMachine;
 
