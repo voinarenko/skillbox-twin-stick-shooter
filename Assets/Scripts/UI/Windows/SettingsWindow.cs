@@ -7,8 +7,9 @@ namespace Assets.Scripts.UI.Windows
         public Button ConfirmButton;
         public Button CancelButton;
 
-        private void Awake()
+        public void Init()
         {
+            AudioService.GetVolume();
             ConfirmButton.Construct(SaveLoadService, AudioService);
             CancelButton.Construct(AudioService);
         }

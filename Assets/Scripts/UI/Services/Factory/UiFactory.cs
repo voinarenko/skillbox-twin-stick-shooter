@@ -34,7 +34,9 @@ namespace Assets.Scripts.UI.Services.Factory
         {
             var window = await _assets.Instantiate(AssetAddress.MainMenu);
             window.transform.SetParent(_uiRoot);
-            window.GetComponent<MenuWindow>().PlayButton.Construct(stateMachine);
+            var buttons = window.GetComponent<MenuWindow>();
+            buttons.PlayButton.Construct(stateMachine);
+            buttons.SettingsButton.Construct(this);
         }
 
         public void CreateSettings()
@@ -42,6 +44,7 @@ namespace Assets.Scripts.UI.Services.Factory
             var config = _staticData.ForWindow(WindowId.Settings);
             var window = Object.Instantiate(config.Prefab, _uiRoot);
             window.Construct(_saveLoadService, _audioService);
+            window.GetComponent<SettingsWindow>().Init();
         }
 
         public void CreateEndGame()

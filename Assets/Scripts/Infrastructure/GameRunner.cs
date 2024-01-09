@@ -24,7 +24,9 @@ namespace Assets.Scripts.Infrastructure
         private IAudioService _audioService;
 
         [Inject]
-        public void Construct(IStaticDataService staticData, IPersistentProgressService progressService, ISaveLoadService saveLoadService, IGameFactory gameFactory, IUiFactory uiFactory, IWindowService windowService, IAudioService audioService)
+        public void Construct(IStaticDataService staticData, IPersistentProgressService progressService,
+            ISaveLoadService saveLoadService, IGameFactory gameFactory, IUiFactory uiFactory,
+            IWindowService windowService, IAudioService audioService)
         {
             _staticData = staticData;
             _progressService = progressService;

@@ -11,7 +11,6 @@ namespace Assets.Scripts.UI.Windows
         private IPersistentProgressService _progressService;
         protected ISaveLoadService SaveLoadService;
         protected IAudioService AudioService;
-        //protected IGameStateMachine StateMachine;
         protected PlayerProgress Progress => _progressService.Progress;
 
         public void Construct(IPersistentProgressService progressService) => 
@@ -22,10 +21,6 @@ namespace Assets.Scripts.UI.Windows
             SaveLoadService = saveLoadService;
             AudioService = audioService;
         }
-        //public void Construct(IGameStateMachine stateMachine) => 
-        //    StateMachine = stateMachine;
-
-        //private void Awake() => OnAwake();
 
         private void Start()
         {
@@ -35,8 +30,6 @@ namespace Assets.Scripts.UI.Windows
 
         private void OnDestroy() => 
             Cleanup();
-
-        //protected virtual void OnAwake() => CloseButton.onClick.AddListener(() => Destroy(gameObject));
 
         protected virtual void Initialize(){}
         protected virtual void SubscribeUpdates(){}

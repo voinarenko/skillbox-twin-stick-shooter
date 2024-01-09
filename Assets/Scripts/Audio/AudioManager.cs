@@ -13,13 +13,9 @@ namespace Assets.Scripts.Audio
         {
             _audioService = audioService;
             _saveLoadService = saveLoadService;
-            DontDestroyOnLoad(this);
-        }
-
-        private void Awake()
-        {
             _audioService.InitVca();
             LoadSavedSettings();
+            DontDestroyOnLoad(this);
         }
 
         private void LoadSavedSettings()

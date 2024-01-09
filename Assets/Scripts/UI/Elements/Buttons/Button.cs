@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Infrastructure.Services.Audio;
 using Assets.Scripts.Infrastructure.Services.SaveLoad;
 using Assets.Scripts.Infrastructure.States;
+using Assets.Scripts.UI.Services.Factory;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,12 +13,15 @@ namespace Assets.Scripts.UI.Elements.Buttons
         protected IGameStateMachine StateMachine;
         protected IAudioService AudioService;
         protected ISaveLoadService SaveLoadService;
+        protected IUiFactory UiFactory;
         private Image Image => GetComponent<Image>();
 
         [SerializeField] private Sprite _normal;
         [SerializeField] private Sprite _pressed;
         [SerializeField] private Sprite _hover;
 
+        public void Construct(IUiFactory uiFactory) =>
+            UiFactory = uiFactory;
         public void Construct(IGameStateMachine stateMachine) => 
             StateMachine = stateMachine;
         public void Construct(IAudioService audioService) => 

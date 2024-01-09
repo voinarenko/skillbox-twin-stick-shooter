@@ -9,5 +9,6 @@ namespace Assets.Scripts.UI.Services.Factory
         void CreateEndGame();
         Task CreateUiRoot();
         Task CreateMainMenu(IGameStateMachine stateMachine);
+        void CreateSettings();
     }
 }

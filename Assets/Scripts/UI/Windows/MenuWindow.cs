@@ -5,6 +5,7 @@ namespace Assets.Scripts.UI.Windows
     public class MenuWindow : BaseWindow
     {
         public Button PlayButton;
+        public Button SettingsButton;
         //public Button SettingsButton;
         //public Button QuitButton;
 

@@ -240,8 +240,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05768ea01bcafed469b9bf8cf4709a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConfirmButton: {fileID: 0}
-  CancelButton: {fileID: 0}
+  ConfirmButton: {fileID: 3574457708133285581}
+  CancelButton: {fileID: 5592646447145180731}
 --- !u!1 &3188537737658064553
 GameObject:
   m_ObjectHideFlags: 0
