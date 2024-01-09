@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Infrastructure.Factory;
+﻿using Assets.Scripts.Audio;
+using Assets.Scripts.Infrastructure.Factory;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.SaveLoad;
 using Assets.Scripts.Infrastructure.Services.StaticData;
@@ -12,6 +13,7 @@ namespace Assets.Scripts.Infrastructure
     public class GameRunner : MonoBehaviour
     {
         public GameBootstrapper BootstrapperPrefab;
+        public AudioManager AudioManagerPrefab;
         private IStaticDataService _staticData;
         private IPersistentProgressService _progressService;
         private ISaveLoadService _saveLoadService;

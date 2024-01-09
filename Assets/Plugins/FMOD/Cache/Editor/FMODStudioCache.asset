@@ -75,7 +75,7 @@ MonoBehaviour:
   - {fileID: 1152089476803478707}
   StringsBanks:
   - {fileID: 6223416008413774302}
-  cacheTime: 638386970119663719
+  cacheTime: 638404007355928980
   cacheVersion: 131609
 --- !u!114 &1152089476803478707
 MonoBehaviour:
@@ -93,7 +93,7 @@ MonoBehaviour:
     Twin Stick Shooter/Build/Desktop/Master.bank"
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638386970119663719
+  lastModified: 638404007355928980
   FileSizes: []
   Exists: 1
 --- !u!114 &6223416008413774302
@@ -112,10 +112,10 @@ MonoBehaviour:
     Twin Stick Shooter/Build/Desktop/Master.strings.bank"
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638386970119663719
+  lastModified: 638404007355928980
   FileSizes:
   - Name: 
-    Value: 898
+    Value: 1206
   Exists: 1
 --- !u!114 &6755787028546873046
 MonoBehaviour:
