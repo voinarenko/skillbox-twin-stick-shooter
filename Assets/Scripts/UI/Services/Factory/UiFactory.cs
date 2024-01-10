@@ -51,7 +51,6 @@ namespace Assets.Scripts.UI.Services.Factory
             var config = _staticData.ForWindow(WindowId.Settings);
             var window = Object.Instantiate(config.Prefab, _uiRoot);
             window.Construct(_saveLoadService, _audioService, _settingsService);
-            Debug.Log(_settingsService);
             window.Init();
         }
 
