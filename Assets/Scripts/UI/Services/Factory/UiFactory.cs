@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Assets.Scripts.Infrastructure.Services.Audio;
 using Assets.Scripts.Infrastructure.Services.Parameters;
 using Assets.Scripts.Infrastructure.Services.SaveLoad;
+using Assets.Scripts.UI.Elements;
 using UnityEngine;
 
 namespace Assets.Scripts.UI.Services.Factory
@@ -43,7 +44,7 @@ namespace Assets.Scripts.UI.Services.Factory
             var buttons = window.GetComponent<MenuWindow>();
             buttons.PlayButton.Construct(stateMachine);
             buttons.SettingsButton.Construct(this);
-            
+            window.GetComponent<PlayerSelector>().Construct(_staticData);
         }
 
         public void CreateSettings()

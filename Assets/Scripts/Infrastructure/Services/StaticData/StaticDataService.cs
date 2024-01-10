@@ -9,7 +9,7 @@ namespace Assets.Scripts.Infrastructure.Services.StaticData
 {
     public class StaticDataService : IStaticDataService
     {
-        private const string StaticDataPlayerPath = "StaticData/Players";
+        private const string StaticDataPlayerPath = "StaticData/Player";
         private const string StaticDataEnemiesPath = "StaticData/Enemies";
         private const string StaticDataLevelsPath = "StaticData/Levels";
         private const string StaticDataWindowsPath = "StaticData/UI/WindowStaticData";
