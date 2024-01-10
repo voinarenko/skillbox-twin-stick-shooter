@@ -46,8 +46,7 @@ namespace Assets.Scripts.Infrastructure.Factory
             PlayerGameObject = await InstantiateRegisteredAsync(AssetAddress.PlayerPath, at);
             return PlayerGameObject;
         }
-
-
+        
         public async Task<GameObject> CreateHud()
         {
             var hud = await InstantiateRegisteredAsync(AssetAddress.HudPath);
