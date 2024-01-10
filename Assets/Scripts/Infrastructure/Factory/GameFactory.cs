@@ -53,6 +53,7 @@ namespace Assets.Scripts.Infrastructure.Factory
             var hud = await InstantiateRegisteredAsync(AssetAddress.HudPath);
             
             hud.GetComponentInChildren<LootCounter>().Construct(_progressService.Progress.WorldData);
+            hud.GetComponent<ActorUi>().Construct(PlayerGameObject.GetComponent<IHealth>());
 
             return hud;
         }

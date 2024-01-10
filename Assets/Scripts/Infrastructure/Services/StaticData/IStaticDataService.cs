@@ -7,6 +7,7 @@ namespace Assets.Scripts.Infrastructure.Services.StaticData
     public interface IStaticDataService : IService
     {
         void Load();
+        PlayerStaticData ForPlayer(PlayerTypeId typeId);
         EnemyStaticData ForEnemy(EnemyTypeId typeId);
         LevelStaticData ForLevel(string sceneKey);
         WindowConfig ForWindow(WindowId endGame);

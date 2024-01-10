@@ -9,15 +9,20 @@ namespace Assets.Scripts.Infrastructure.Services.StaticData
 {
     public class StaticDataService : IStaticDataService
     {
+        private const string StaticDataPlayerPath = "StaticData/Players";
         private const string StaticDataEnemiesPath = "StaticData/Enemies";
         private const string StaticDataLevelsPath = "StaticData/Levels";
         private const string StaticDataWindowsPath = "StaticData/UI/WindowStaticData";
+        private Dictionary<PlayerTypeId, PlayerStaticData> _players;
         private Dictionary<EnemyTypeId, EnemyStaticData> _enemies;
         private Dictionary<string, LevelStaticData> _levels;
         private Dictionary<WindowId, WindowConfig> _windowConfigs;
-
+        
         public void Load()
         {
+            _players = Resources
+                .LoadAll<PlayerStaticData>(StaticDataPlayerPath)
+                .ToDictionary(x => x.PlayerTypeId, x => x);
             _enemies = Resources
                 .LoadAll<EnemyStaticData>(StaticDataEnemiesPath)
                 .ToDictionary(x => x.EnemyTypeId, x => x);
@@ -30,19 +35,16 @@ namespace Assets.Scripts.Infrastructure.Services.StaticData
                 .ToDictionary(x => x.WindowId, x => x);
         }
 
+        public PlayerStaticData ForPlayer(PlayerTypeId typeId) => 
+            _players.GetValueOrDefault(typeId);
+
         public EnemyStaticData ForEnemy(EnemyTypeId typeId) => 
-            _enemies.TryGetValue(typeId, out var enemyStaticData) 
-                ? enemyStaticData 
-                : null;
+            _enemies.GetValueOrDefault(typeId);
 
         public LevelStaticData ForLevel(string sceneKey) =>
-            _levels.TryGetValue(sceneKey, out var levelStaticData)
-                ? levelStaticData
-                : null;
+            _levels.GetValueOrDefault(sceneKey);
 
         public WindowConfig ForWindow(WindowId windowId) =>
-            _windowConfigs.TryGetValue(windowId, out var windowConfig)
-                ? windowConfig
-                : null;
+            _windowConfigs.GetValueOrDefault(windowId);
     }
 }
