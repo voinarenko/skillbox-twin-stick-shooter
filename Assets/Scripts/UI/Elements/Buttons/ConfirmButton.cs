@@ -10,7 +10,8 @@ namespace Assets.Scripts.UI.Elements.Buttons
 
         public override void OnPointerClick(PointerEventData eventData)
         {
-            AudioService.StoreVolume(new Settings());
+            SettingsService.Settings = new Settings();
+            AudioService.StoreVolume(SettingsService.Settings);
             SaveLoadService.SaveSettings();
             Destroy(Window.gameObject);
         }

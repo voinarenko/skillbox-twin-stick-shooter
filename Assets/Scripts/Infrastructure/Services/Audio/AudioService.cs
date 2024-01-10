@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Data;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Infrastructure.Services.Audio
 {
@@ -39,9 +40,12 @@ namespace Assets.Scripts.Infrastructure.Services.Audio
 
         public void StoreVolume(Settings settings)
         {
-            settings.Volume.MasterVolume = _masterVolume;
-            settings.Volume.MusicVolume = _musicVolume;
-            settings.Volume.EffectsVolume = _effectsVolume;
+            _masterVca.getVolume(out var masterVolume);
+            _musicVca.getVolume(out var musicVolume);
+            _effectsVca.getVolume(out var effectsVolume);
+            settings.Volume.MasterVolume = masterVolume;
+            settings.Volume.MusicVolume = musicVolume;
+            settings.Volume.EffectsVolume = effectsVolume;
         }
 
         public void CancelChanges()
@@ -49,6 +53,13 @@ namespace Assets.Scripts.Infrastructure.Services.Audio
             _masterVca.setVolume(_masterVolume);
             _musicVca.setVolume(_musicVolume);
             _effectsVca.setVolume(_effectsVolume);
+        }
+
+        public void UpdateSliders(Slider masterSlider, Slider musicSlider, Slider effectsSlider)
+        {
+            masterSlider.value = _masterVolume;
+            musicSlider.value = _musicVolume;
+            effectsSlider.value = _effectsVolume;
         }
     }
 }

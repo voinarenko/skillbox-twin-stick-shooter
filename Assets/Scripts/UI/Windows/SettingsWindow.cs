@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.UI.Elements.Buttons;
+﻿using UnityEngine;
+using UnityEngine.UI;
+using Button = Assets.Scripts.UI.Elements.Buttons.Button;
 
 namespace Assets.Scripts.UI.Windows
 {
@@ -7,10 +9,14 @@ namespace Assets.Scripts.UI.Windows
         public Button ConfirmButton;
         public Button CancelButton;
 
-        public void Init()
+        [SerializeField] private Slider _masterSlider;
+        [SerializeField] private Slider _musicSlider;
+        [SerializeField] private Slider _effectsSlider;
+
+        public override void Init()
         {
-            AudioService.GetVolume();
-            ConfirmButton.Construct(SaveLoadService, AudioService);
+            AudioService.UpdateSliders(_masterSlider, _musicSlider, _effectsSlider);
+            ConfirmButton.Construct(SaveLoadService, AudioService, SettingsService);
             CancelButton.Construct(AudioService);
         }
     }
