@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: DefenderPlayerData
   m_EditorClassIdentifier: 
   PlayerTypeId: 2
-  Health: 0
-  Damage: 0
-  Ammo: 0
-  MoveSpeed: 0
-  RotateSpeed: 0
-  AttackCooldown: 0
-  ReloadCooldown: 0
+  Health: 200
+  Damage: 50
+  Ammo: 100
+  MoveSpeed: 0.005
+  RotateSpeed: 500
+  AttackCooldown: 0.6
+  ReloadCooldown: 3
   Image: {fileID: -77522672, guid: e02e82c2edd98c049999414e64cac17d, type: 3}
   PrefabReference:
     m_AssetGUID: 522a78a114917be47bcd16e8d57ea527

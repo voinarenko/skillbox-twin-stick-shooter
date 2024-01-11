@@ -16,6 +16,13 @@ namespace Assets.Scripts.UI.Elements
         public TextMeshProUGUI PlayerType;
         public Image PlayerImage;
 
+        public Slider HealthSlider;
+        public Slider DamageSlider;
+        public Slider AmmoSlider;
+        public Slider SpeedSlider;
+        public Slider ShootSlider;
+        public Slider ReloadSlider;
+
         private IStaticDataService _staticData;
         private readonly Array _playerTypes = Enum.GetValues(typeof(PlayerTypeId));
         private int _playerType;
@@ -54,8 +61,15 @@ namespace Assets.Scripts.UI.Elements
 
         private void UpdateData(int playerTypeId)
         {
-            PlayerType.text = _staticData.ForPlayer((PlayerTypeId)playerTypeId).PlayerTypeId.ToString();
-            PlayerImage.sprite = _staticData.ForPlayer((PlayerTypeId)playerTypeId).Image;
+            var playerStaticData = _staticData.ForPlayer((PlayerTypeId)playerTypeId);
+            PlayerType.text = playerStaticData.PlayerTypeId.ToString();
+            PlayerImage.sprite = playerStaticData.Image;
+            HealthSlider.value = playerStaticData.Health;
+            DamageSlider.value = playerStaticData.Damage;
+            AmmoSlider.value = playerStaticData.Ammo;
+            SpeedSlider.value = playerStaticData.MoveSpeed;
+            ShootSlider.value = playerStaticData.AttackCooldown;
+            ReloadSlider.value = playerStaticData.ReloadCooldown;
         }
     }
 }

@@ -17,7 +17,9 @@ namespace CartoonFX
                 }
             SessionState.SetBool("CFXR_WelcomeScreen_Shown", true);
 
+#pragma warning disable UNT0031
                 var importer = AssetImporter.GetAtPath(AssetDatabase.GUIDToAssetPath("bfd03f272fe010b4ba558a3bc456ffeb"));
+#pragma warning restore UNT0031
                 if (importer != null && importer.userData == "dontshow")
                 {
                     return;
@@ -35,6 +37,7 @@ namespace CartoonFX
             window.maxSize = new Vector2(516, 370);
         }
 
+        [System.Obsolete]
         private void CreateGUI()
         {
             VisualElement root = rootVisualElement;

@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: ScoutPlayerData
   m_EditorClassIdentifier: 
   PlayerTypeId: 0
-  Health: 0
-  Damage: 0
-  Ammo: 0
-  MoveSpeed: 0
-  RotateSpeed: 0
-  AttackCooldown: 0
-  ReloadCooldown: 0
+  Health: 100
+  Damage: 20
+  Ammo: 50
+  MoveSpeed: 0.01
+  RotateSpeed: 2000
+  AttackCooldown: 0.2
+  ReloadCooldown: 1
   Image: {fileID: 2063644692, guid: e02e82c2edd98c049999414e64cac17d, type: 3}
   PrefabReference:
     m_AssetGUID: efa1b80b36645e3419157009a32f01e9

@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: TrooperPlayerData
   m_EditorClassIdentifier: 
   PlayerTypeId: 1
-  Health: 0
-  Damage: 0
-  Ammo: 0
-  MoveSpeed: 0
-  RotateSpeed: 0
-  AttackCooldown: 0
-  ReloadCooldown: 0
+  Health: 150
+  Damage: 35
+  Ammo: 75
+  MoveSpeed: 0.0075
+  RotateSpeed: 1000
+  AttackCooldown: 0.4
+  ReloadCooldown: 2
   Image: {fileID: -1960876679, guid: e02e82c2edd98c049999414e64cac17d, type: 3}
   PrefabReference:
     m_AssetGUID: c442743a42c50604aba433e006814463
