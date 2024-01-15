@@ -1,21 +1,17 @@
-﻿using System;
-using Assets.Scripts.Bullet;
+﻿using Assets.Scripts.Bullet;
 using Assets.Scripts.Data;
-using Assets.Scripts.Infrastructure.Services.PersistentProgress;
+using Assets.Scripts.StaticData;
 using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
-    [RequireComponent(typeof(PlayerAmmoCounter))]
-    public class PlayerShooter : MonoBehaviour, ISavedProgressReader
+    public class PlayerShooter : MonoBehaviour
     {
         public GameObject ShootEffectPrefab;
         public GameObject BulletPrefab;
         public Transform ShootPoint;
 
-        public event Action Shot;
-
-        private PlayerAmmoCounter PlayerAmmoCounter => GetComponent<PlayerAmmoCounter>();
+        private PlayerStaticData _playerStaticData;
         private PlayerAudio PlayerAudio => GetComponent<PlayerAudio>();
         private PlayerAnimation PlayerAnimation => GetComponent<PlayerAnimation>();
         private PlayerControls _controls;
@@ -31,10 +27,10 @@ namespace Assets.Scripts.Player
         [SerializeField] private float _reloadDelay;
         private float _shoot;
         private float _reload;
-        private Stats _stats;
 
-        public void Construct(WorldData worldData, float damage, float shootDelay, float reloadDelay)
+        public void Construct(PlayerStaticData playerStaticData, WorldData worldData, float damage, float shootDelay, float reloadDelay)
         {
+            _playerStaticData = playerStaticData;
             _worldData = worldData;
             _damage = damage;
             _shootDelay = shootDelay;
@@ -59,11 +55,7 @@ namespace Assets.Scripts.Player
             else if (_reload > 0) 
                 Reload();
         }
-
-        public void SetShootData()
-        {
-        }
-        
+       
 #pragma warning disable IDE0051
         private void OnAttack()
         {            
@@ -74,13 +66,9 @@ namespace Assets.Scripts.Player
                 var bullet = Instantiate(BulletPrefab, ShootPoint.transform.position, transform.rotation);
                 bullet.GetComponent<BulletDamage>().Damage = _damage;
             }
-            Shot?.Invoke();
-            UpdateWorldData();
+            ConsumeAmmo();
         }
 #pragma warning restore IDE0051
-
-        public void LoadProgress(PlayerProgress progress) => 
-            _stats = progress.PlayerStats;
 
         private void Reload()
         {
@@ -89,8 +77,7 @@ namespace Assets.Scripts.Player
                 _reloadTime = Time.time;
                 PlayerAnimation.Reload(true);
                 PlayerAudio.Reload();
-                PlayerAmmoCounter.Reset();
-                _worldData.AmmoData.Available = PlayerAmmoCounter.MaxAmmo;
+                _worldData.AmmoData.Available = _playerStaticData.Ammo;
                 _worldData.AmmoData.Changed?.Invoke();
                 _reload = 0;
             }
@@ -100,7 +87,7 @@ namespace Assets.Scripts.Player
         private void Shoot()
         {
             if (Time.time < _shootTime + _shootDelay) return;
-            if (!PlayerAmmoCounter.Check()) return;
+            if (_worldData.AmmoData.Available <= 0) return;
 
             _shootTime = Time.time;
             PlayerAnimation.Shoot();
@@ -108,7 +95,7 @@ namespace Assets.Scripts.Player
             _shoot = 0;
         }
 
-        private void UpdateWorldData() => 
+        private void ConsumeAmmo() => 
             _worldData.AmmoData.Consume(_ammo);
     }
 }

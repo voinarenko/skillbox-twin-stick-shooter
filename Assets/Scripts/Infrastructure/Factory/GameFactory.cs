@@ -55,14 +55,11 @@ namespace Assets.Scripts.Infrastructure.Factory
             //health.Current = playerData.Health;
             //health.Max = playerData.Health;
 
-            var ammo = PlayerGameObject.GetComponent<PlayerAmmoCounter>();
-            ammo.MaxAmmo = playerData.Ammo;
-            ammo.Reset();
             _progressService.Progress.WorldData.AmmoData.Available = playerData.Ammo;
 
             PlayerGameObject.GetComponent<PlayerMovement>().SetSpeed(playerData.MoveSpeed);
             PlayerGameObject.GetComponent<PlayerRotation>().SetSpeed(playerData.RotateSpeed);
-            PlayerGameObject.GetComponent<PlayerShooter>().Construct(_progressService.Progress.WorldData, playerData.Damage, playerData.AttackCooldown, playerData.ReloadCooldown);
+            PlayerGameObject.GetComponent<PlayerShooter>().Construct(playerData, _progressService.Progress.WorldData, playerData.Damage, playerData.AttackCooldown, playerData.ReloadCooldown);
             return PlayerGameObject;
         }
         
