@@ -78,7 +78,7 @@ namespace Assets.Scripts.Enemy
         {
             _attackCooldown = AttackCooldown;
             _isAttacking = false;
-            Audio.Reload();
+            if (Type == EnemyType.Ranged) Audio.Reload();
         }
 #pragma warning restore IDE0051
 

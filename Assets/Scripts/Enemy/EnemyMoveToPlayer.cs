@@ -9,6 +9,7 @@ namespace Assets.Scripts.Enemy
         public NavMeshAgent Agent;
         public bool PlayerNearby;
 
+        private const float RemainingDistanceThreshold = 0.3f;
         private Attack Attack => GetComponent<Attack>();
         private Transform _playerTransform;
 
@@ -24,11 +25,9 @@ namespace Assets.Scripts.Enemy
         private void CheckDistance()
         {
             var dist=Agent.remainingDistance;
-            if (!float.IsPositiveInfinity(dist) && Agent.pathStatus == NavMeshPathStatus.PathComplete && Agent.remainingDistance <= 0.3f)
-            {
-                Debug.Log($"{Attack.Type} Arrived!");
+            if (!float.IsPositiveInfinity(dist) && Agent.pathStatus == NavMeshPathStatus.PathComplete &&
+                Agent.remainingDistance <= RemainingDistanceThreshold)
                 Attack.EnableAttack();
-            }
             else Attack.DisableAttack();
         }
 

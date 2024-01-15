@@ -5,11 +5,11 @@ using Assets.Scripts.Infrastructure.Services.Randomizer;
 using Assets.Scripts.Infrastructure.Services.StaticData;
 using Assets.Scripts.Logic;
 using Assets.Scripts.Logic.EnemySpawners;
+using Assets.Scripts.Player;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Elements;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Assets.Scripts.Player;
 using UnityEngine;
 using UnityEngine.AI;
 using Object = UnityEngine.Object;
@@ -171,12 +171,12 @@ namespace Assets.Scripts.Infrastructure.Factory
             return gameObject;
         }
 
-        private async Task<GameObject> InstantiateRegisteredAsync(string prefabPath, Vector3 at)
-        {
-            var gameObject = await _assets.Instantiate(prefabPath, at);
-            RegisterProgressWatchers(gameObject);
-            return gameObject;
-        }
+        //private async Task<GameObject> InstantiateRegisteredAsync(string prefabPath, Vector3 at)
+        //{
+        //    var gameObject = await _assets.Instantiate(prefabPath, at);
+        //    RegisterProgressWatchers(gameObject);
+        //    return gameObject;
+        //}
 
         private void RegisterProgressWatchers(GameObject gameObject)
         {
