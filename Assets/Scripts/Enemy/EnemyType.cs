@@ -3,7 +3,7 @@
     public enum EnemyType
     {
         SmallMelee,
-        BigMelee,
-        Ranged
+        BigMelee = 10,
+        Ranged = 20
     }
 }
