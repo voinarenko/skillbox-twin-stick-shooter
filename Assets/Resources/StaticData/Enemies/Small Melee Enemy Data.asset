@@ -20,8 +20,8 @@ MonoBehaviour:
   MoveSpeed: 7
   RotateSpeed: 1600
   Acceleration: 15
-  StoppingDistance: 1
-  EffectiveDistance: 1
+  StoppingDistance: 2
+  EffectiveDistance: 2
   Cleavage: 0.625
   AttackCooldown: 0
   PrefabReference:
