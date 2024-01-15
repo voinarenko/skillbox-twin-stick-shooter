@@ -11,12 +11,13 @@ namespace Assets.Scripts.Player
         public GameObject BulletPrefab;
         public Transform ShootPoint;
 
+        private const int AmmoConsumption = 1;
+        private readonly Ammo _ammo = new();
         private PlayerStaticData _playerStaticData;
         private PlayerAudio PlayerAudio => GetComponent<PlayerAudio>();
         private PlayerAnimation PlayerAnimation => GetComponent<PlayerAnimation>();
         private PlayerControls _controls;
         private WorldData _worldData;
-        private readonly Ammo _ammo = new();
 
         private float _damage;
 
@@ -41,7 +42,7 @@ namespace Assets.Scripts.Player
         {
             _controls = new PlayerControls();
             _controls.Enable();
-            _ammo.Value = 1;
+            _ammo.Value = AmmoConsumption;
         }
 
         private void Update()
