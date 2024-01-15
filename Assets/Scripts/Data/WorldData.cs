@@ -6,11 +6,13 @@ namespace Assets.Scripts.Data
     public class WorldData
     {
         public PositionOnLevel PositionOnLevel;
+        public AmmoData AmmoData;
         public LootData LootData;
 
         public WorldData(string initialLevel)
         {
             PositionOnLevel = new PositionOnLevel(initialLevel);
+            AmmoData = new AmmoData();
             LootData = new LootData();
         }
     }

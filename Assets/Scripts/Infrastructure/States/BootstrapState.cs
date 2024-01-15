@@ -18,9 +18,6 @@
         private void EnterMainMenu() => 
             _stateMachine.Enter<LoadMenuState>();
 
-
-        //private void EnterLoadLevel() => _stateMachine.Enter<LoadProgressState>();
-
         public void Exit() { }
     }
 }

@@ -2,6 +2,7 @@
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Elements.Buttons;
 using System;
+using Assets.Scripts.Infrastructure.States;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +13,7 @@ namespace Assets.Scripts.UI.Elements
     {
         public LeftButton LeftButton;
         public RightButton RightButton;
+        public PlayButton PlayButton;
 
         public TextMeshProUGUI PlayerType;
         public Image PlayerImage;
@@ -24,12 +26,14 @@ namespace Assets.Scripts.UI.Elements
         public Slider ReloadSlider;
 
         private IStaticDataService _staticData;
+        private IGameStateMachine _stateMachine;
         private readonly Array _playerTypes = Enum.GetValues(typeof(PlayerTypeId));
         private int _playerType;
 
-        public void Construct(IStaticDataService staticData)
+        public void Construct(IStaticDataService staticData, IGameStateMachine stateMachine)
         {
             _staticData = staticData;
+            _stateMachine = stateMachine;
             UpdateData(0);
         }
 
@@ -37,12 +41,14 @@ namespace Assets.Scripts.UI.Elements
         {
             LeftButton.Clicked += SwitchLeft;
             RightButton.Clicked += SwitchRight;
+            PlayButton.Clicked += Play;
         }
 
         private void OnDestroy()
         {
             LeftButton.Clicked -= SwitchLeft;
             RightButton.Clicked -= SwitchRight;
+            PlayButton.Clicked -= Play;
         }
 
         private void SwitchLeft()
@@ -58,6 +64,9 @@ namespace Assets.Scripts.UI.Elements
             if (_playerType == _playerTypes.Length) _playerType = 0;
             UpdateData(_playerType);
         }
+
+        private void Play() => 
+            _stateMachine.Enter<LoadProgressState, PlayerStaticData>(_staticData.ForPlayer((PlayerTypeId)_playerType));
 
         private void UpdateData(int playerTypeId)
         {

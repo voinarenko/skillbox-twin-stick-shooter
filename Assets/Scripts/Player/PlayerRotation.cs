@@ -23,5 +23,8 @@ namespace Assets.Scripts.Player
 
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(playerToMouse), _speed * Time.deltaTime);
         }
+
+        public void SetSpeed(float speed) => 
+            _speed = speed;
     }
 }

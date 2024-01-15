@@ -42,9 +42,9 @@ namespace Assets.Scripts.UI.Services.Factory
             baseWindow.Construct(_audioService);
             baseWindow.Init();
             var buttons = window.GetComponent<MenuWindow>();
-            buttons.PlayButton.Construct(stateMachine);
+            //buttons.PlayButton.Construct(stateMachine);
             buttons.SettingsButton.Construct(this);
-            window.GetComponent<PlayerSelector>().Construct(_staticData);
+            window.GetComponent<PlayerSelector>().Construct(_staticData, stateMachine);
         }
 
         public void CreateSettings()

@@ -16,10 +16,8 @@ namespace Assets.Scripts.Enemy
         private bool _picked;
         private WorldData _worldData;
 
-        public void Construct(WorldData worldData)
-        {
+        public void Construct(WorldData worldData) => 
             _worldData = worldData;
-        }
 
         public void Initialize(Loot loot) => _loot = loot;
 

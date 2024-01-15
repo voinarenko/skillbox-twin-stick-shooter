@@ -4,9 +4,9 @@ using Assets.Scripts.Infrastructure.Services.SaveLoad;
 using Assets.Scripts.Infrastructure.Services.StaticData;
 using Assets.Scripts.Logic;
 using Assets.Scripts.UI.Services.Factory;
+using Assets.Scripts.UI.Services.Windows;
 using System;
 using System.Collections.Generic;
-using Assets.Scripts.UI.Services.Windows;
 
 namespace Assets.Scripts.Infrastructure.States
 {
@@ -23,10 +23,10 @@ namespace Assets.Scripts.Infrastructure.States
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader),
                 [typeof(LoadMenuState)] = new LoadMenuState(this, uiFactory, loadingCurtain, windowService),
-                [typeof(MenuLoopState)] = new MenuLoopState(this),
+                [typeof(MenuLoopState)] = new MenuLoopState(),
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, progressService, gameFactory, loadingCurtain, staticData, uiFactory),
                 [typeof(LoadProgressState)] = new LoadProgressState(this, progressService, saveLoadService),
-                [typeof(GameLoopState)] = new GameLoopState(this),
+                [typeof(GameLoopState)] = new GameLoopState()
             };
         }
 

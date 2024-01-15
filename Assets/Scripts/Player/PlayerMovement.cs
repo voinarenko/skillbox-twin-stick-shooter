@@ -46,6 +46,9 @@ namespace Assets.Scripts.Player
             }
         }
 
+        public void SetSpeed(float speed) => 
+            _speed = speed;
+
         private void Warp(Vector3Data to)
         {
             // if physics is being used — disable, then re-enable

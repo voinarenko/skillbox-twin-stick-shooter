@@ -9,6 +9,7 @@ using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Elements;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Assets.Scripts.Player;
 using UnityEngine;
 using UnityEngine.AI;
 using Object = UnityEngine.Object;
@@ -43,7 +44,25 @@ namespace Assets.Scripts.Infrastructure.Factory
 
         public async Task<GameObject> CreatePlayer(Vector3 at)
         {
-            PlayerGameObject = await InstantiateRegisteredAsync(AssetAddress.PlayerPath, at);
+            //PlayerGameObject = await InstantiateRegisteredAsync(AssetAddress.PlayerPath, at);
+            //return PlayerGameObject;
+
+            var playerData = _progressService.Progress.PlayerStaticData;
+            var prefab = await _assets.Load<GameObject>(playerData.PrefabReference);
+            PlayerGameObject = Object.Instantiate(prefab, at, Quaternion.identity);
+
+            //var health = PlayerGameObject.GetComponent<IHealth>();
+            //health.Current = playerData.Health;
+            //health.Max = playerData.Health;
+
+            var ammo = PlayerGameObject.GetComponent<PlayerAmmoCounter>();
+            ammo.MaxAmmo = playerData.Ammo;
+            ammo.Reset();
+            _progressService.Progress.WorldData.AmmoData.Available = playerData.Ammo;
+
+            PlayerGameObject.GetComponent<PlayerMovement>().SetSpeed(playerData.MoveSpeed);
+            PlayerGameObject.GetComponent<PlayerRotation>().SetSpeed(playerData.RotateSpeed);
+            PlayerGameObject.GetComponent<PlayerShooter>().Construct(_progressService.Progress.WorldData, playerData.Damage, playerData.AttackCooldown, playerData.ReloadCooldown);
             return PlayerGameObject;
         }
         
@@ -52,6 +71,7 @@ namespace Assets.Scripts.Infrastructure.Factory
             var hud = await InstantiateRegisteredAsync(AssetAddress.HudPath);
             
             hud.GetComponentInChildren<LootCounter>().Construct(_progressService.Progress.WorldData);
+            hud.GetComponentInChildren<AmmoCounter>().Construct(_progressService.Progress.WorldData);
             hud.GetComponent<ActorUi>().Construct(PlayerGameObject.GetComponent<IHealth>());
 
             return hud;

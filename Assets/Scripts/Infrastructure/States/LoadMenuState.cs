@@ -27,6 +27,7 @@ namespace Assets.Scripts.Infrastructure.States
             await _windowService.Open(WindowId.MainMenu, _stateMachine);
             _stateMachine.Enter<MenuLoopState>();
         }
+
         public void Exit() => 
             _loadingCurtain.Hide();
 

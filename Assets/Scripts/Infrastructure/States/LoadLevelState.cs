@@ -46,7 +46,7 @@ namespace Assets.Scripts.Infrastructure.States
 
         private async void OnLoaded()
         {
-            await InitUIRoot();
+            await InitUiRoot();
             await InitGameWorld();
             InformProgressReaders();
 
@@ -54,7 +54,7 @@ namespace Assets.Scripts.Infrastructure.States
             _stateMachine.Enter<GameLoopState>();
         }
 
-        private async Task InitUIRoot() => 
+        private async Task InitUiRoot() => 
             await _uiFactory.CreateUiRoot();
 
         private async Task InitGameWorld()

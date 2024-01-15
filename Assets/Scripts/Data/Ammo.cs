@@ -3,8 +3,8 @@
 namespace Assets.Scripts.Data
 {
     [Serializable]
-    public class Stats
+    public class Ammo
     {
-        public float Damage;
+        public int Value;
     }
 }
