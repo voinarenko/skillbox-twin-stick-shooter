@@ -50,7 +50,7 @@ namespace Assets.Scripts.Infrastructure.Factory
             var playerData = _progressService.Progress.PlayerStaticData;
             var prefab = await _assets.Load<GameObject>(playerData.PrefabReference);
             PlayerGameObject = Object.Instantiate(prefab, at, Quaternion.identity);
-
+            RegisterProgressWatchers(PlayerGameObject);
             //var health = PlayerGameObject.GetComponent<IHealth>();
             //health.Current = playerData.Health;
             //health.Max = playerData.Health;
