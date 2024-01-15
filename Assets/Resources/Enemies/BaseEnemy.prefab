@@ -55,14 +55,13 @@ GameObject:
   m_Component:
   - component: {fileID: 6766162049956270859}
   - component: {fileID: 2385080763676028636}
-  - component: {fileID: 3704373221005281724}
   m_Layer: 14
   m_Name: AttackZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6766162049956270859
 Transform:
   m_ObjectHideFlags: 0
@@ -99,18 +98,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 2
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &3704373221005281724
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 509412302310125863}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da4082cb602056044a44c38673f10dcb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3699166576607755004
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,7 +108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 386388650726619599}
   - component: {fileID: 6345370728669725298}
-  - component: {fileID: 2275156230222935560}
+  - component: {fileID: 6005476269164500990}
   m_Layer: 13
   m_Name: AggroZone
   m_TagString: Untagged
@@ -165,7 +152,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 6
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &2275156230222935560
+--- !u!114 &6005476269164500990
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -193,7 +180,6 @@ GameObject:
   - component: {fileID: 3281882712681335410}
   - component: {fileID: 5073035938676008861}
   - component: {fileID: 1740678622543289402}
-  - component: {fileID: 1869592710186205699}
   - component: {fileID: 3284828866856555970}
   - component: {fileID: 8558893123410710316}
   - component: {fileID: 8608780446151486639}
@@ -293,6 +279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Agent: {fileID: 8649501591300120365}
+  PlayerNearby: 0
 --- !u!114 &3281882712681335410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,9 +292,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a0eef7f890de7742adb923f3e6bd8b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TriggerObserver: {fileID: 2275156230222935560}
+  TriggerObserver: {fileID: 6005476269164500990}
   Follow: {fileID: 753518817303938587}
-  Cooldown: 3
 --- !u!114 &5073035938676008861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,26 +320,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eb1ce48cb2cd904c9d1e8fe1441a1e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Audio: {fileID: 509864416557740173}
+  ShootEffectPrefab: {fileID: 0}
+  BulletPrefab: {fileID: 0}
+  ShootPoint: {fileID: 0}
   Animator: {fileID: 9193984182133261566}
+  Type: 0
   AttackCooldown: 3
   Cleavage: 0.5
   HitPoints: []
   Damage: 10
   EffectiveDistance: 0
---- !u!114 &1869592710186205699
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3792692793871577069}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34df4560fcbdce342a4697cdb900681a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Attack: {fileID: 1740678622543289402}
-  TriggerObserver: {fileID: 3704373221005281724}
 --- !u!114 &3284828866856555970
 MonoBehaviour:
   m_ObjectHideFlags: 0

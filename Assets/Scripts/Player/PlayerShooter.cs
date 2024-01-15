@@ -65,9 +65,16 @@ namespace Assets.Scripts.Player
             if (BulletPrefab != null)
             {
                 var bullet = Instantiate(BulletPrefab, ShootPoint.transform.position, transform.rotation);
-                bullet.GetComponent<BulletDamage>().Damage = _damage;
+                var bulletData = bullet.GetComponent<BulletDamage>();
+                bulletData.Sender = tag;
+                bulletData.Damage = _damage;
             }
             ConsumeAmmo();
+        }
+
+        private void OnAttackEnded()
+        {
+            
         }
 #pragma warning restore IDE0051
 

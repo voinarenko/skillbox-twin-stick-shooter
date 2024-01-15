@@ -83,8 +83,8 @@ namespace Assets.Scripts.Infrastructure.Factory
             var enemy = Object.Instantiate(prefab, parent.position, Quaternion.identity, parent);
 
             var health = enemy.GetComponent<IHealth>();
-            health.Current = enemyData.Health;
-            health.Max = enemyData.Health;
+            //health.Current = enemyData.Health;
+            //health.Max = enemyData.Health;
 
             enemy.GetComponent<ActorUi>().Construct(health);
             enemy.GetComponent<EnemyMoveToPlayer>().Construct(PlayerGameObject.transform);
@@ -97,6 +97,7 @@ namespace Assets.Scripts.Infrastructure.Factory
 
             var attack = enemy.GetComponent<Attack>();
             attack.Construct(PlayerGameObject.transform);
+            attack.Type = (EnemyType)enemyData.EnemyTypeId;
             attack.Damage = enemyData.Damage;
             attack.Cleavage = enemyData.Cleavage;
             attack.EffectiveDistance = enemyData.EffectiveDistance;

@@ -5,21 +5,13 @@ namespace Assets.Scripts.Enemy
 {
     public class EnemyAudio : MonoBehaviour
     {
-        private PlayerDirectionFinder PlayerDirectionFinder => GetComponent<PlayerDirectionFinder>();
-
-        public void FootStep(int index)
-        {
+        public void FootStep() => 
             FMODUnity.RuntimeManager.PlayOneShot("event:/PlayerFootStep", GetComponent<Transform>().position);
-        }
 
-        public void Shoot()
-        {
+        public void Shoot() => 
             FMODUnity.RuntimeManager.PlayOneShot("event:/PlayerShoot", GetComponent<Transform>().position);
-        }
 
-        public void Reload()
-        {
+        public void Reload() => 
             FMODUnity.RuntimeManager.PlayOneShot("event:/PlayerReload", GetComponent<Transform>().position);
-        }
     }
 }

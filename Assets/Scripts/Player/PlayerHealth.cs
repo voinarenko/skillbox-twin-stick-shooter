@@ -37,6 +37,7 @@ namespace Assets.Scripts.Player
         public void LoadProgress(PlayerProgress progress)
         {
             _state = progress.PlayerState;
+            Debug.Log(_state);
             HealthChanged?.Invoke();
         }
 

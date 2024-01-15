@@ -10,6 +10,7 @@ namespace Assets.Scripts.Enemy
         private static readonly int Hit = Animator.StringToHash("Hit");
         private static readonly int IsMoving = Animator.StringToHash("IsMoving");
         private static readonly int Attack = Animator.StringToHash("Attack");
+        private static readonly int Shoot = Animator.StringToHash("Shoot");
 
         private readonly int _idleStateHash = Animator.StringToHash("mutant idle");
         private readonly int _attackStateHash = Animator.StringToHash("mutant swiping");
@@ -28,12 +29,10 @@ namespace Assets.Scripts.Enemy
 
         public void PlayDeath() => _animator.SetTrigger(Die);
         public void PlayHit() => _animator.SetTrigger(Hit);
-
         public void Move() => _animator.SetBool(IsMoving, true);
-
         public void StopMoving() => _animator.SetBool(IsMoving, false);
-
         public void PlayAttack() => _animator.SetTrigger(Attack);
+        public void PlayShoot() => _animator.SetTrigger(Shoot);
 
         public void EnteredState(int stateHash)
         {
@@ -41,10 +40,8 @@ namespace Assets.Scripts.Enemy
             StateEntered?.Invoke(State);
         }
 
-        public void ExitedState(int stateHash)
-        {
+        public void ExitedState(int stateHash) => 
             StateExited?.Invoke(StateFor(stateHash));
-        }
 
         private AnimatorState StateFor(int stateHash)
         {

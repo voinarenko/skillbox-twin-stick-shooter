@@ -44,7 +44,7 @@ namespace Assets.Scripts.Infrastructure.States
             progress.PlayerStats.Damage = _playerStaticData.Damage;
 
             progress.PlayerState.ResetHealth();
-
+            
             return progress;
         }
     }

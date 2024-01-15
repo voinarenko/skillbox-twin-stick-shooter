@@ -2,19 +2,28 @@
 using Assets.Scripts.Logic;
 using System.Linq;
 using UnityEngine;
+using Assets.Scripts.Bullet;
 
 namespace Assets.Scripts.Enemy
 {
     [RequireComponent(typeof(EnemyAnimator))]
     public class Attack : MonoBehaviour
     {
+        public EnemyAudio Audio;
+        public GameObject ShootEffectPrefab;
+        public GameObject BulletPrefab;
+        public Transform ShootPoint;
         public EnemyAnimator Animator;
 
+        public EnemyType Type;
         public float AttackCooldown = 3f;
         public float Cleavage = 0.5f;
         public List<Transform> HitPoints;
         public float Damage = 10f;
+        public float EffectiveDistance;
 
+        private const string PlayerLayerMask = "Player";
+        private const float AttackTime = 0.1f;
         private Transform _playerTransform;
         private float _attackCooldown;
         private bool _isAttacking;
@@ -22,13 +31,12 @@ namespace Assets.Scripts.Enemy
         private readonly Collider[] _hits = new Collider[1];
 
         private bool _attackIsActive;
-        public float EffectiveDistance;
 
         public void Construct(Transform playerTransform) => 
             _playerTransform = playerTransform;
 
         private void Awake() => 
-            _layerMask = 1 << LayerMask.NameToLayer("Player");
+            _layerMask = 1 << LayerMask.NameToLayer(PlayerLayerMask);
 
         private void Update()
         {
@@ -41,11 +49,26 @@ namespace Assets.Scripts.Enemy
 
         private void OnAttack()
         {
-            foreach (var hitPoint in HitPoints)
+            if (Type == EnemyType.Ranged)
             {
-                if (Hit(out var hit, hitPoint))
+                if (ShootEffectPrefab != null) 
+                    Instantiate(ShootEffectPrefab, ShootPoint.position, ShootPoint.rotation);
+                if (BulletPrefab != null)
                 {
-                    PhysicsDebug.DrawDebug(hitPoint.position, Cleavage, 0.1f);
+                    var bullet = Instantiate(BulletPrefab, ShootPoint.transform.position, transform.rotation);
+                    var bulletData = bullet.GetComponent<BulletDamage>();
+                    bulletData.Sender = tag;
+                    bulletData.Damage = Damage;
+                }
+
+                Audio.Shoot();
+            }
+            else
+            {
+                foreach (var hitPoint in HitPoints)
+                {
+                    if (!Hit(out var hit, hitPoint)) continue;
+                    PhysicsDebug.DrawDebug(hitPoint.position, Cleavage, AttackTime);
                     hit.transform.GetComponent<IHealth>().TakeDamage(Damage);
                 }
             }
@@ -55,6 +78,7 @@ namespace Assets.Scripts.Enemy
         {
             _attackCooldown = AttackCooldown;
             _isAttacking = false;
+            Audio.Reload();
         }
 #pragma warning restore IDE0051
 
@@ -68,7 +92,16 @@ namespace Assets.Scripts.Enemy
         private void StartAttack()
         {
             transform.LookAt(_playerTransform);
-            Animator.PlayAttack();
+            if (Type == EnemyType.Ranged)
+            {
+                Animator.PlayShoot();
+                Audio.Shoot();
+            }
+            else
+            {
+                Debug.Log($"Play attack {Type}");
+                Animator.PlayAttack();
+            }
 
             _isAttacking = true;
         }
