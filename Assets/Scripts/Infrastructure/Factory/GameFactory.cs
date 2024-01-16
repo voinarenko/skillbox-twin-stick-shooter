@@ -95,7 +95,7 @@ namespace Assets.Scripts.Infrastructure.Factory
             agent.angularSpeed = enemyData.RotateSpeed;
             agent.acceleration = enemyData.Acceleration;
 
-            var attack = enemy.GetComponent<Attack>();
+            var attack = enemy.GetComponent<EnemyAttack>();
             attack.Construct(PlayerGameObject.transform);
             attack.Type = (EnemyType)enemyData.EnemyTypeId;
             attack.Damage = enemyData.Damage;

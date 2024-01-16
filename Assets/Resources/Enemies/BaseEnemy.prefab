@@ -184,6 +184,8 @@ GameObject:
   - component: {fileID: 8558893123410710316}
   - component: {fileID: 8608780446151486639}
   - component: {fileID: 509864416557740173}
+  - component: {fileID: -606367621403601221}
+  - component: {fileID: -4366050693132424147}
   m_Layer: 0
   m_Name: BaseEnemy
   m_TagString: Enemy
@@ -279,7 +281,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Agent: {fileID: 8649501591300120365}
+  ApproachPlayer: 0
   PlayerNearby: 0
+  PlayerTransform: {fileID: 0}
 --- !u!114 &3281882712681335410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,6 +388,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e68b6c63176bec46b9a02a310f0aa1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-606367621403601221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3792692793871577069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4d06b049207b1541a0af1482942ea00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ActionsAvailable:
+  - {fileID: 11400000, guid: 27c7e9381eeb4444984c2de969cd768f, type: 2}
+  - {fileID: 11400000, guid: 26ac5ddf85a7e2c44b13535ee40fa573, type: 2}
+  - {fileID: 11400000, guid: 276bd4d2cbd2ba34c934a4dac77a8f34, type: 2}
+--- !u!114 &-4366050693132424147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3792692793871577069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 867212a99a8066b4e89b3952c78b08ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7817264753111938217

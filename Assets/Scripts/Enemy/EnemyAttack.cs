@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Assets.Scripts.Logic;
 using System.Linq;
 using UnityEngine;
@@ -7,7 +8,7 @@ using Assets.Scripts.Bullet;
 namespace Assets.Scripts.Enemy
 {
     [RequireComponent(typeof(EnemyAnimator))]
-    public class Attack : MonoBehaviour
+    public class EnemyAttack : MonoBehaviour
     {
         public EnemyAudio Audio;
         public GameObject ShootEffectPrefab;
@@ -21,6 +22,7 @@ namespace Assets.Scripts.Enemy
         public List<Transform> HitPoints;
         public float Damage = 10f;
         public float EffectiveDistance;
+        public event Action Completed;
 
         private const string PlayerLayerMask = "Player";
         private const float AttackTime = 0.1f;
@@ -79,6 +81,7 @@ namespace Assets.Scripts.Enemy
             _attackCooldown = AttackCooldown;
             _isAttacking = false;
             if (Type == EnemyType.Ranged) Audio.Reload();
+            Completed?.Invoke();
         }
 #pragma warning restore IDE0051
 
@@ -99,10 +102,8 @@ namespace Assets.Scripts.Enemy
             }
             else
             {
-                Debug.Log($"Play attack {Type}");
                 Animator.PlayAttack();
             }
-
             _isAttacking = true;
         }
 

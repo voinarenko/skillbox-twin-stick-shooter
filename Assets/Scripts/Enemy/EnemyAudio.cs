@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Player;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Enemy
 {

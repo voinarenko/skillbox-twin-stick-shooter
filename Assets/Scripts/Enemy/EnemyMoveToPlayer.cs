@@ -1,39 +1,49 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.AI;
 
 namespace Assets.Scripts.Enemy
 {
-    [RequireComponent(typeof(Attack))]
     public class EnemyMoveToPlayer : MonoBehaviour
     {
         public NavMeshAgent Agent;
+        public bool ApproachPlayer;
         public bool PlayerNearby;
+        public event Action Completed;
 
-        private Attack Attack => GetComponent<Attack>();
-        private Transform _playerTransform;
+        public Transform PlayerTransform;
 
-        public void Construct(Transform playerTransform) => 
-            _playerTransform = playerTransform;
+        public void Construct(Transform playerTransform)
+        {
+            PlayerTransform = playerTransform;
+            ApproachPlayer = true;
+            //Agent.destination = PlayerTransform.position;
+        }
 
         private void Update()
         {
-            SetDestinationForAgent();
-            if (PlayerNearby) CheckDistance();
+            if (ApproachPlayer) SetDestinationForAgent();
+            if (PlayerNearby && ApproachPlayer) CheckDistance();
         }
 
         private void CheckDistance()
         {
+            //DEBUG
+            if (Agent.gameObject.GetComponent<EnemyAttack>().Type == EnemyType.Ranged) 
+                Debug.Log(Agent.remainingDistance);
             var dist=Agent.remainingDistance;
             if (!float.IsPositiveInfinity(dist) && Agent.pathStatus == NavMeshPathStatus.PathComplete &&
-                Agent.remainingDistance <= Agent.stoppingDistance)
-                Attack.EnableAttack();
-            else Attack.DisableAttack();
+                Agent.remainingDistance <= Agent.stoppingDistance && PlayerTransform != null)
+            {
+                Completed?.Invoke();
+                ApproachPlayer = false;
+            }
         }
 
         private void SetDestinationForAgent()
         {
-            if (_playerTransform)
-                Agent.destination = _playerTransform.position;
+            if (PlayerTransform)
+                Agent.destination = PlayerTransform.position;
         }
     }
 }
