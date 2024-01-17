@@ -315,6 +315,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c5840075d6d2f6478f90ed6ab8c9535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HitFxPrefab: {fileID: 100000, guid: bc98890f6028f444eaa7789bde5e2eeb, type: 3}
+  Sender: 
   Damage: 10
 --- !u!54 &2384452741857392058
 Rigidbody:
@@ -342,4 +344,4 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3

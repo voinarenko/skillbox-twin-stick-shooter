@@ -26,8 +26,6 @@ namespace Assets.Scripts.StaticData
         [Range(1, 6)]
         public float StoppingDistance;
 
-        [Range(1, 5)]
-        public float EffectiveDistance;
         [Range(0.5f, 1)]
         public float Cleavage;
         [Range(1, 5)]

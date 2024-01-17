@@ -281,7 +281,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Agent: {fileID: 8649501591300120365}
-  ApproachPlayer: 0
   PlayerNearby: 0
   PlayerTransform: {fileID: 0}
 --- !u!114 &3281882712681335410
@@ -334,7 +333,6 @@ MonoBehaviour:
   Cleavage: 0.5
   HitPoints: []
   Damage: 10
-  EffectiveDistance: 0
 --- !u!114 &3284828866856555970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,6 +362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: {fileID: 3284828866856555970}
   Animator: {fileID: 9193984182133261566}
+  Agent: {fileID: 8649501591300120365}
   DeathFx: {fileID: 100004, guid: 7867af58a6ec48846ae807eb4022fbaa, type: 3}
 --- !u!114 &8608780446151486639
 MonoBehaviour:

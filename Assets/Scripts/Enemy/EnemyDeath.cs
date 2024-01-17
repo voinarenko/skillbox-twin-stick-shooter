@@ -1,18 +1,23 @@
-﻿using System;
+﻿using Assets.Scripts.Enemy.UtilityAi;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
+using Action = System.Action;
 
 namespace Assets.Scripts.Enemy
 {
-    [RequireComponent(typeof(EnemyHealth), typeof(EnemyAnimator))]
+    [RequireComponent(typeof(EnemyHealth), typeof(EnemyAnimator), typeof(NavMeshAgent))]
     public class EnemyDeath : MonoBehaviour
     {
-        public EnemyHealth Health;
-        public EnemyAnimator Animator;
-
         public GameObject DeathFx;
 
         public event Action Happened;
+
+        private EnemyHealth Health => GetComponent<EnemyHealth>();
+        private EnemyAnimator Animator => GetComponent<EnemyAnimator>();
+        private NavMeshAgent Agent => GetComponent<NavMeshAgent>();
+        private AiBrain AiBrain => GetComponent<AiBrain>();
+        private EnemyBehavior Behavior => GetComponent<EnemyBehavior>();
 
         private void Start() => 
             Health.HealthChanged += HealthChanged;
@@ -29,6 +34,8 @@ namespace Assets.Scripts.Enemy
         private void Die()
         {
             Health.HealthChanged -= HealthChanged;
+            AiBrain.SetAction(Behavior.ActionsAvailable[2]);
+            Agent.isStopped = true;
             Animator.PlayDeath();
             SpawnDeathFx();
             StartCoroutine(DestroyTimer());

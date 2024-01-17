@@ -21,11 +21,11 @@ namespace Assets.Scripts.Enemy
         public float Cleavage = 0.5f;
         public List<Transform> HitPoints;
         public float Damage = 10f;
-        public float EffectiveDistance;
         public event Action Completed;
 
         private const string PlayerLayerMask = "Player";
         private const float AttackTime = 0.1f;
+        private const string PlayerTag = "Player";
         private Transform _playerTransform;
         private float _attackCooldown;
         private bool _isAttacking;
@@ -71,7 +71,8 @@ namespace Assets.Scripts.Enemy
                 {
                     if (!Hit(out var hit, hitPoint)) continue;
                     PhysicsDebug.DrawDebug(hitPoint.position, Cleavage, AttackTime);
-                    hit.transform.GetComponent<IHealth>().TakeDamage(Damage);
+                    if (!hit.CompareTag(PlayerTag)) return;
+                    hit.transform.parent.GetComponent<IHealth>().TakeDamage(Damage);
                 }
             }
         }

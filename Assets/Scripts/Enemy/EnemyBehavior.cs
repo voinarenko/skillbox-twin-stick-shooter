@@ -13,7 +13,7 @@ namespace Assets.Scripts.Enemy
         public Action[] ActionsAvailable;
 
         private AiBrain AiBrain => GetComponent<AiBrain>();
-        public EnemyAttack Attacker => GetComponent<EnemyAttack>();
+        private EnemyAttack Attacker => GetComponent<EnemyAttack>();
 
         private void Start()
         {
@@ -30,24 +30,14 @@ namespace Assets.Scripts.Enemy
             AiBrain.Decided -= ExecuteAction;
         }
 
-        public void DoMove()
-        {
-            Debug.Log($"{Attacker.Type} is moving");
+        public void DoMove() => 
             Attacker.DisableAttack();
-            Mover.ApproachPlayer = true;
-        }
 
-        public void DoAttack()
-        {
-            Debug.Log($"{Attacker.Type} is attacking");
+        public void DoAttack() => 
             Attacker.EnableAttack();
-        }
 
-        public void DoWait()
-        {
-            Debug.Log($"{Attacker.Type} is waiting");
+        public void DoWait() => 
             Attacker.DisableAttack();
-        }
 
         private void ExecuteAction() => 
             AiBrain.BestAction.Execute(this);

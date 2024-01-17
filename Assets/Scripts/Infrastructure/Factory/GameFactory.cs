@@ -100,7 +100,6 @@ namespace Assets.Scripts.Infrastructure.Factory
             attack.Type = (EnemyType)enemyData.EnemyTypeId;
             attack.Damage = enemyData.Damage;
             attack.Cleavage = enemyData.Cleavage;
-            attack.EffectiveDistance = enemyData.EffectiveDistance;
             attack.AttackCooldown = enemyData.AttackCooldown;
 
             var lootSpawner = enemy.GetComponentInChildren<LootSpawner>();
