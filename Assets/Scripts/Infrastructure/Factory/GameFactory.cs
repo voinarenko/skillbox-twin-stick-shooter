@@ -103,7 +103,6 @@ namespace Assets.Scripts.Infrastructure.Factory
             attack.AttackCooldown = enemyData.AttackCooldown;
 
             var lootSpawner = enemy.GetComponentInChildren<LootSpawner>();
-            lootSpawner.SetLoot(enemyData.MinLoot, enemyData.MaxLoot);
             lootSpawner.Construct(this, _randomService);
 
             return enemy;

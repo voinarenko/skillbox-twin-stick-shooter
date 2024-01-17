@@ -10,8 +10,6 @@ namespace Assets.Scripts.Enemy
         public EnemyDeath EnemyDeath;
         private IGameFactory _factory;
         private IRandomService _random;
-        private int _lootMin;
-        private int _lootMax;
 
         public void Construct(IGameFactory factory, IRandomService random)
         {
@@ -31,18 +29,10 @@ namespace Assets.Scripts.Enemy
             loot.Initialize(lootItem);
         }
 
-        private Loot GenerateLoot()
-        {
-            return new Loot
+        private Loot GenerateLoot() =>
+            new()
             {
-                Value = _random.Next(_lootMin, _lootMax)
+                Type = (LootType)_random.Next(0, (int)LootType.Quantity)
             };
-        }
-
-        public void SetLoot(int min, int max)
-        {
-            _lootMin = min;
-            _lootMax = max;
-        }
     }
 }

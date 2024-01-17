@@ -10,7 +10,7 @@ namespace Assets.Scripts.Data
 
         public void Collect(Loot loot)
         {
-            Collected += loot.Value;
+            //Collected += loot.Value;
             Changed?.Invoke();
         }
     }

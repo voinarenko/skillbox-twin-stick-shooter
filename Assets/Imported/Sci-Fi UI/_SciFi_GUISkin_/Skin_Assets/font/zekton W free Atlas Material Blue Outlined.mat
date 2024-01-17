@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: zekton free Atlas Material Blue Outlined
+  m_Name: zekton W free Atlas Material Blue Outlined
   m_Shader: {fileID: 4800000, guid: fe393ace9b354375a9cb14cdbbc28be4, type: 3}
   m_Parent: {fileID: -3308833332049195147, guid: 42061dc10d54e9941b59ce4880f8e9ec,
     type: 2}

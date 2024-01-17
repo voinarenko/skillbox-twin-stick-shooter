@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Assets.Scripts.Data;
+﻿using Assets.Scripts.Data;
 using TMPro;
 using UnityEngine;
 
@@ -12,6 +11,8 @@ namespace Assets.Scripts.Enemy
         public TextMeshPro lootText;
         public GameObject PickupPopup;
 
+        private const float TimeToDestroy = 1.5f;
+        private const string PlayerTag = "Player";
         private Loot _loot;
         private bool _picked;
         private WorldData _worldData;
@@ -21,7 +22,10 @@ namespace Assets.Scripts.Enemy
 
         public void Initialize(Loot loot) => _loot = loot;
 
-        private void OnTriggerEnter(Collider other) => Pickup();
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag(PlayerTag)) Pickup();
+        }
 
         private void Pickup()
         {
@@ -34,8 +38,8 @@ namespace Assets.Scripts.Enemy
 
             PlayPickupFx();
             ShowText();
-
-            StartCoroutine(StartDestroyTimer());
+            
+            Destroy(gameObject, TimeToDestroy);
         }
 
         private void UpdateWorldData() => 
@@ -49,14 +53,8 @@ namespace Assets.Scripts.Enemy
 
         private void ShowText()
         {
-            lootText.text = $"{_loot.Value}";
+            lootText.text = $"{_loot.Type}";
             PickupPopup.SetActive(true);
-        }
-
-        private IEnumerator StartDestroyTimer()
-        {
-            yield return new WaitForSeconds(1.5f);
-            Destroy(gameObject);
         }
     }
 }

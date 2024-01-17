@@ -10,9 +10,10 @@ namespace Assets.Scripts.Enemy
     public class EnemyDeath : MonoBehaviour
     {
         public GameObject DeathFx;
-
         public event Action Happened;
 
+        private const float TimeToDestroy = 3;
+        private const float TimeToSpawnLoot = 2.5f;
         private EnemyHealth Health => GetComponent<EnemyHealth>();
         private EnemyAnimator Animator => GetComponent<EnemyAnimator>();
         private NavMeshAgent Agent => GetComponent<NavMeshAgent>();
@@ -22,9 +23,6 @@ namespace Assets.Scripts.Enemy
         private void Start() => 
             Health.HealthChanged += HealthChanged;
 
-        private void OnDestroy() => 
-            Health.HealthChanged -= HealthChanged;
-
         private void HealthChanged()
         {
             if (Health.Current <= 0)
@@ -33,23 +31,24 @@ namespace Assets.Scripts.Enemy
 
         private void Die()
         {
+            GetComponent<EnemyAttack>().enabled = false;
+            GetComponentInChildren<Collider>().enabled = false;
             Health.HealthChanged -= HealthChanged;
             AiBrain.SetAction(Behavior.ActionsAvailable[2]);
             Agent.isStopped = true;
             Animator.PlayDeath();
             SpawnDeathFx();
-            StartCoroutine(DestroyTimer());
+            StartCoroutine(Inform());
+            Destroy(gameObject, TimeToDestroy);
+        }
 
+        private IEnumerator Inform()
+        {
+            yield return new WaitForSeconds(TimeToSpawnLoot);
             Happened?.Invoke();
         }
 
         private void SpawnDeathFx() => 
             Instantiate(DeathFx, transform.position, Quaternion.identity);
-
-        private IEnumerator DestroyTimer()
-        {
-            yield return new WaitForSeconds(3);
-            Destroy(gameObject);
-        }
     }
 }
