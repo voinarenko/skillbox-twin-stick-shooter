@@ -1,30 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3012138333983289333
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/PlayerFootStep/FootStep
-  m_EditorClassIdentifier: 
-  Name: FootStep
-  StudioPath: 
-  Min: 0
-  Max: 1
-  Default: 0
-  ID:
-    data1: 3588720700
-    data2: 2301767079
-  Type: 0
-  IsGlobal: 0
-  Labels: []
-  Exists: 1
---- !u!114 &-533407652348216553
+--- !u!114 &-7861593934012838869
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -34,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/PlayerShoot
+  m_Name: event:/UI/Buttons/Click
   m_EditorClassIdentifier: 
-  Path: event:/PlayerShoot
+  Path: event:/UI/Buttons/Click
   Guid:
-    Data1: 1180766089
-    Data2: 1114958032
-    Data3: -169725784
-    Data4: -57990887
+    Data1: -546808179
+    Data2: 1164188315
+    Data3: 822388870
+    Data4: 21146560
   Banks:
   - {fileID: 1152089476803478707}
   IsStream: 0
@@ -50,7 +26,223 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 389
+  Length: 0
+--- !u!114 &-7671175907060187261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Enemies/SmallMeleeEnemy/Attack/SmallEnemyAttack
+  m_EditorClassIdentifier: 
+  Path: event:/Enemies/SmallMeleeEnemy/Attack/SmallEnemyAttack
+  Guid:
+    Data1: -966656011
+    Data2: 1183644972
+    Data3: 545447053
+    Data4: -1273187378
+  Banks:
+  - {fileID: 1152089476803478707}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-7058820399136219498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Enemies/BigMeleeEnemy/Attack/BigEnemyAttack
+  m_EditorClassIdentifier: 
+  Path: event:/Enemies/BigMeleeEnemy/Attack/BigEnemyAttack
+  Guid:
+    Data1: 1227143992
+    Data2: 1198148179
+    Data3: 814624414
+    Data4: -883297820
+  Banks:
+  - {fileID: 1152089476803478707}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-6879087253917112770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Enemies/RangedEnemy/Move/RangedEnemyFootStep
+  m_EditorClassIdentifier: 
+  Path: event:/Enemies/RangedEnemy/Move/RangedEnemyFootStep
+  Guid:
+    Data1: 1805026051
+    Data2: 1111243656
+    Data3: 1295915958
+    Data4: 1654633405
+  Banks:
+  - {fileID: 1152089476803478707}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-6804730899603695303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Enemies/RangedEnemy/Attack/RangedEnemyShoot
+  m_EditorClassIdentifier: 
+  Path: event:/Enemies/RangedEnemy/Attack/RangedEnemyShoot
+  Guid:
+    Data1: -830450550
+    Data2: 1232785567
+    Data3: 1755765927
+    Data4: -861200005
+  Banks:
+  - {fileID: 1152089476803478707}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-5452526272865788721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Enemies/SmallMeleeEnemy/Move/SmallEnemyFootStep
+  m_EditorClassIdentifier: 
+  Path: event:/Enemies/SmallMeleeEnemy/Move/SmallEnemyFootStep
+  Guid:
+    Data1: 1026440569
+    Data2: 1318522590
+    Data3: 902756750
+    Data4: 1755231823
+  Banks:
+  - {fileID: 1152089476803478707}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-3934142054766365320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Ambient/GameMusic
+  m_EditorClassIdentifier: 
+  Path: event:/Ambient/GameMusic
+  Guid:
+    Data1: 562649012
+    Data2: 1151694146
+    Data3: 90215558
+    Data4: -1273658976
+  Banks:
+  - {fileID: 1152089476803478707}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 51840
+--- !u!114 &-2841865246584301715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Enemies/BigMeleeEnemy/Move/BigEnemyFootStep
+  m_EditorClassIdentifier: 
+  Path: event:/Enemies/BigMeleeEnemy/Move/BigEnemyFootStep
+  Guid:
+    Data1: -1329400791
+    Data2: 1130924093
+    Data3: -843287157
+    Data4: -1554864302
+  Banks:
+  - {fileID: 1152089476803478707}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-372966803770545514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Player/Attack/PlayerReload
+  m_EditorClassIdentifier: 
+  Path: event:/Player/Attack/PlayerReload
+  Guid:
+    Data1: -1879715852
+    Data2: 1298438949
+    Data3: 975278733
+    Data4: 233202165
+  Banks:
+  - {fileID: 1152089476803478707}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,16 +259,53 @@ MonoBehaviour:
   - {fileID: 6223416008413774302}
   - {fileID: 1152089476803478707}
   EditorEvents:
-  - {fileID: 6755787028546873046}
-  - {fileID: 7215712479986989505}
-  - {fileID: -533407652348216553}
+  - {fileID: -6879087253917112770}
+  - {fileID: 6963941444056415685}
+  - {fileID: -5452526272865788721}
+  - {fileID: -6804730899603695303}
+  - {fileID: 8913953703127119314}
+  - {fileID: 1036687974743256910}
+  - {fileID: -372966803770545514}
+  - {fileID: -7671175907060187261}
+  - {fileID: -2841865246584301715}
+  - {fileID: -7058820399136219498}
+  - {fileID: -3934142054766365320}
+  - {fileID: 6393275230194946402}
+  - {fileID: -7861593934012838869}
   EditorParameters: []
   MasterBanks:
   - {fileID: 1152089476803478707}
   StringsBanks:
   - {fileID: 6223416008413774302}
-  cacheTime: 638404007355928980
+  cacheTime: 638411012860790980
   cacheVersion: 131609
+--- !u!114 &1036687974743256910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Enemies/RangedEnemy/Attack/RangedEnemyReload
+  m_EditorClassIdentifier: 
+  Path: event:/Enemies/RangedEnemy/Attack/RangedEnemyReload
+  Guid:
+    Data1: 594414067
+    Data2: 1215413949
+    Data3: 2116293508
+    Data4: -465503523
+  Banks:
+  - {fileID: 1152089476803478707}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &1152089476803478707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,7 +322,7 @@ MonoBehaviour:
     Twin Stick Shooter/Build/Desktop/Master.bank"
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638404007355928980
+  lastModified: 638411012860779943
   FileSizes: []
   Exists: 1
 --- !u!114 &6223416008413774302
@@ -112,12 +341,12 @@ MonoBehaviour:
     Twin Stick Shooter/Build/Desktop/Master.strings.bank"
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638404007355928980
+  lastModified: 638411012860790980
   FileSizes:
   - Name: 
-    Value: 1206
+    Value: 1820
   Exists: 1
---- !u!114 &6755787028546873046
+--- !u!114 &6393275230194946402
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,25 +356,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/PlayerFootStep
+  m_Name: event:/Ambient/MenuMusic
   m_EditorClassIdentifier: 
-  Path: event:/PlayerFootStep
+  Path: event:/Ambient/MenuMusic
   Guid:
-    Data1: 1970233651
-    Data2: 1132840538
-    Data3: -916943182
-    Data4: -850344490
+    Data1: -1733027564
+    Data2: 1139851696
+    Data3: 950100367
+    Data4: -545634973
   Banks:
   - {fileID: 1152089476803478707}
-  IsStream: 0
+  IsStream: 1
   Is3D: 0
-  IsOneShot: 1
-  Parameters:
-  - {fileID: -3012138333983289333}
+  IsOneShot: 0
+  Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 442
---- !u!114 &7215712479986989505
+  Length: 37090
+--- !u!114 &6963941444056415685
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -155,20 +383,47 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/PlayerReload
+  m_Name: event:/Player/Move/PlayerFootStep
   m_EditorClassIdentifier: 
-  Path: event:/PlayerReload
+  Path: event:/Player/Move/PlayerFootStep
   Guid:
-    Data1: -381360313
-    Data2: 1178831348
-    Data3: 182637700
-    Data4: -82695653
+    Data1: -1798694109
+    Data2: 1101544628
+    Data3: -1662171978
+    Data4: -1891491051
   Banks:
   - {fileID: 1152089476803478707}
   IsStream: 0
-  Is3D: 0
+  Is3D: 1
   IsOneShot: 1
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 914
+  Length: 0
+--- !u!114 &8913953703127119314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Player/Attack/PlayerShoot
+  m_EditorClassIdentifier: 
+  Path: event:/Player/Attack/PlayerShoot
+  Guid:
+    Data1: -270877216
+    Data2: 1305236576
+    Data3: -314391130
+    Data4: -1777279054
+  Banks:
+  - {fileID: 1152089476803478707}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0

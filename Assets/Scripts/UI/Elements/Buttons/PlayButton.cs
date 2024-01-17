@@ -7,7 +7,10 @@ namespace Assets.Scripts.UI.Elements.Buttons
     {
         public event Action Clicked;
 
-        public override void OnPointerClick(PointerEventData eventData) => 
+        public override void OnPointerClick(PointerEventData eventData)
+        {
+            base.OnPointerClick(eventData);
             Clicked?.Invoke();
+        }
     }
 }

@@ -9,6 +9,7 @@ namespace Assets.Scripts.UI.Elements.Buttons
 
         public override void OnPointerClick(PointerEventData eventData)
         {
+            base.OnPointerClick(eventData);
             AudioService.CancelChanges();
             Destroy(Window.gameObject);
         }

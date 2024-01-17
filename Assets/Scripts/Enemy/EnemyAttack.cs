@@ -73,6 +73,8 @@ namespace Assets.Scripts.Enemy
                     PhysicsDebug.DrawDebug(hitPoint.position, Cleavage, AttackTime);
                     if (!hit.CompareTag(PlayerTag)) return;
                     hit.transform.parent.GetComponent<IHealth>().TakeDamage(Damage);
+
+                    Audio.Attack();
                 }
             }
         }
@@ -97,14 +99,9 @@ namespace Assets.Scripts.Enemy
         {
             transform.LookAt(_playerTransform);
             if (Type == EnemyType.Ranged)
-            {
                 Animator.PlayShoot();
-                Audio.Shoot();
-            }
             else
-            {
                 Animator.PlayAttack();
-            }
             _isAttacking = true;
         }
 

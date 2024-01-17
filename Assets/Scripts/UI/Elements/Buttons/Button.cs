@@ -36,7 +36,8 @@ namespace Assets.Scripts.UI.Elements.Buttons
             SettingsService = settingsService;
         }
 
-        public virtual void OnPointerClick(PointerEventData eventData) { }
+        public virtual void OnPointerClick(PointerEventData eventData) => 
+            FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Buttons/Click", GetComponent<Transform>().position);
 
         public void OnPointerDown(PointerEventData eventData) => 
             Image.sprite = _pressed;
