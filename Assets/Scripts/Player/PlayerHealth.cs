@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
-    [RequireComponent(typeof(PlayerAnimation))]
+    [RequireComponent(typeof(PlayerAnimator))]
     public class PlayerHealth : MonoBehaviour, ISavedProgress, IHealth
     {
         public float Max
@@ -30,7 +30,7 @@ namespace Assets.Scripts.Player
             }
         }
 
-        public PlayerAnimation Animator;
+        public PlayerAnimator Animator;
 
         private State _state;
 

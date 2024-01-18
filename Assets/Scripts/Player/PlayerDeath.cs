@@ -8,7 +8,7 @@ namespace Assets.Scripts.Player
         public PlayerMovement Move;
         public PlayerRotation Rotate;
         public PlayerShooter Attack;
-        public PlayerAnimation Animator;
+        public PlayerAnimator Animator;
         public GameObject DeathFx;
         
         private bool _isDead;

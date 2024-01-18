@@ -2,28 +2,21 @@
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerAnimation : MonoBehaviour
+    public class PlayerAnimator : MonoBehaviour
     {
+        public readonly int AnimIdVertical = Animator.StringToHash("Y");
+        public readonly int AnimIdHorizontal = Animator.StringToHash("X");
+        public readonly int AnimSpeed = Animator.StringToHash("Speed");
+
         private Animator Animator => GetComponent<Animator>();
         private static readonly int HitHash = Animator.StringToHash("Hit");
         private static readonly int DieHash = Animator.StringToHash("Die");
+        private readonly int _animIdAiming = Animator.StringToHash("Aiming");
+        private readonly int _animIdShoot = Animator.StringToHash("Shoot");
+        private readonly int _animIdReloading = Animator.StringToHash("Reloading");
 
-        public int AnimIdVertical;
-        public int AnimIdHorizontal;
-        private int _animIdAiming;
-        private int _animIdShoot;
-        private int _animIdReloading;
-
-        private void Start()
-        {
-            _animIdAiming = Animator.StringToHash("Aiming");
-            AnimIdVertical = Animator.StringToHash("Y");
-            AnimIdHorizontal = Animator.StringToHash("X");
-            _animIdShoot = Animator.StringToHash("Shoot");
-            _animIdReloading = Animator.StringToHash("Reloading");
-
+        private void Start() => 
             Animator.SetBool(_animIdAiming, true);
-        }
 
         public void Move(Vector3 dir)
         {

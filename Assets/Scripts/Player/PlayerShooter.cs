@@ -15,7 +15,7 @@ namespace Assets.Scripts.Player
         private readonly Ammo _ammo = new();
         private PlayerStaticData _playerStaticData;
         private PlayerAudio PlayerAudio => GetComponent<PlayerAudio>();
-        private PlayerAnimation PlayerAnimation => GetComponent<PlayerAnimation>();
+        private PlayerAnimator PlayerAnimator => GetComponent<PlayerAnimator>();
         private PlayerControls _controls;
         private WorldData _worldData;
 
@@ -83,13 +83,13 @@ namespace Assets.Scripts.Player
             if (!(Time.time < _reloadTime + _reloadDelay))
             {
                 _reloadTime = Time.time;
-                PlayerAnimation.Reload(true);
+                PlayerAnimator.Reload(true);
                 PlayerAudio.Reload();
                 _worldData.AmmoData.Available = _playerStaticData.Ammo;
                 _worldData.AmmoData.Changed?.Invoke();
                 _reload = 0;
             }
-            else PlayerAnimation.Reload(false);
+            else PlayerAnimator.Reload(false);
         }
 
         private void Shoot()
@@ -98,7 +98,7 @@ namespace Assets.Scripts.Player
             if (_worldData.AmmoData.Available <= 0) return;
 
             _shootTime = Time.time;
-            PlayerAnimation.Shoot();
+            PlayerAnimator.Shoot();
             PlayerAudio.Shoot();
             _shoot = 0;
         }

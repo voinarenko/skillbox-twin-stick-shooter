@@ -12,7 +12,7 @@ namespace Assets.Scripts.Player
         private NavMeshAgent Agent => GetComponent<NavMeshAgent>();
         [SerializeField] private float _speed;
 
-        private PlayerAnimation PlayerAnimation => GetComponent<PlayerAnimation>();
+        private PlayerAnimator PlayerAnimator => GetComponent<PlayerAnimator>();
 
         private void Start()
         {
@@ -30,7 +30,7 @@ namespace Assets.Scripts.Player
             pos += new Vector3(move.x * _speed, 0, move.y * _speed);
             if (transform != null) transform.position = pos;
 
-            PlayerAnimation.Move(dir);
+            PlayerAnimator.Move(dir);
         }
 
         public void UpdateProgress(PlayerProgress progress) => 

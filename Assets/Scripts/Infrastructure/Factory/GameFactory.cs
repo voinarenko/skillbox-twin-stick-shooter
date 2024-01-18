@@ -60,7 +60,15 @@ namespace Assets.Scripts.Infrastructure.Factory
 
             PlayerGameObject.GetComponent<PlayerMovement>().SetSpeed(playerData.MoveSpeed);
             PlayerGameObject.GetComponent<PlayerRotation>().SetSpeed(playerData.RotateSpeed);
-            PlayerGameObject.GetComponent<PlayerShooter>().Construct(playerData, _progressService.Progress.WorldData, playerData.Damage, playerData.AttackCooldown, playerData.ReloadCooldown);
+            PlayerGameObject.GetComponent<PlayerShooter>()
+                .Construct(playerData,
+                    _progressService.Progress.WorldData,
+                    playerData.Damage,
+                    playerData.AttackCooldown,
+                    playerData.ReloadCooldown);
+            
+            PlayerGameObject.GetComponent<Animator>().SetFloat(PlayerGameObject.GetComponent<PlayerAnimator>().AnimSpeed, playerData.SpeedFactor);
+            
             return PlayerGameObject;
         }
         

@@ -12,6 +12,8 @@ namespace Assets.Scripts.StaticData
         [Range(5, 50)] public float Damage;
         [Range(25, 100)] public int Ammo;
 
+        public float SpeedFactor;
+
         [Range(0.0025f, 0.01f)] public float MoveSpeed;
         [Range(0, 2000)] public float RotateSpeed;
 
