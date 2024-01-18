@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7590313302537449379}
   - component: {fileID: 2174431747868724600}
   - component: {fileID: 7881494916408245461}
+  - component: {fileID: 3999358436166296035}
   m_Layer: 17
   m_Name: Loot
   m_TagString: Untagged
@@ -69,10 +70,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56bdfcdb38eaad444b3537ba9fd0cd99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sphere: {fileID: 2930479967796866886}
+  Sphere: {fileID: 2930479967794672006}
   PickupFxPrefab: {fileID: 100000, guid: 6d4aaf064b43ace428499a835ba9b383, type: 3}
-  lootText: {fileID: 4610099593923398758}
+  LootText: {fileID: 4610099593923398758}
   PickupPopup: {fileID: 6958589980381928606}
+--- !u!114 &3999358436166296035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4945866355247197177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50a30a3ced7cd3c4e9dc1e11d60118b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _materials:
+  - {fileID: 2100000, guid: f1f527c338a5eb846900fec4bf523d5b, type: 2}
+  - {fileID: 2100000, guid: 00f084d2dfb0d074eb2d3b8c1bc5230e, type: 2}
+  - {fileID: 2100000, guid: 2213c4bb05ffc494a92ebd426d326b56, type: 2}
+  - {fileID: 2100000, guid: f84e4150b310d9447817165b6516e739, type: 2}
+  - {fileID: 2100000, guid: afbd9f4161013b9419f8ab41fbe9f330, type: 2}
 --- !u!1 &6958589980381928606
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,15 +362,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b77b89f9c619298419251cf7f172fcb3, type: 3}
---- !u!4 &2930479967796573030 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: b77b89f9c619298419251cf7f172fcb3,
+--- !u!23 &2930479967794672006 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300000, guid: b77b89f9c619298419251cf7f172fcb3,
     type: 3}
   m_PrefabInstance: {fileID: 2930479967796963814}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2930479967796866886 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: b77b89f9c619298419251cf7f172fcb3,
+--- !u!4 &2930479967796573030 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: b77b89f9c619298419251cf7f172fcb3,
     type: 3}
   m_PrefabInstance: {fileID: 2930479967796963814}
   m_PrefabAsset: {fileID: 0}
@@ -426,6 +445,46 @@ PrefabInstance:
     - target: {fileID: 400008, guid: e3d819d8722fa1f47a3f68574b56dfb3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: e3d819d8722fa1f47a3f68574b56dfb3, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: e3d819d8722fa1f47a3f68574b56dfb3, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: e3d819d8722fa1f47a3f68574b56dfb3, type: 3}
+      propertyPath: InitialModule.startRotationX.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: e3d819d8722fa1f47a3f68574b56dfb3, type: 3}
+      propertyPath: InitialModule.startRotationY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: e3d819d8722fa1f47a3f68574b56dfb3, type: 3}
+      propertyPath: InitialModule.startRotationX.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: e3d819d8722fa1f47a3f68574b56dfb3, type: 3}
+      propertyPath: InitialModule.startRotationY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800004, guid: e3d819d8722fa1f47a3f68574b56dfb3, type: 3}
+      propertyPath: InitialModule.startRotationX.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800004, guid: e3d819d8722fa1f47a3f68574b56dfb3, type: 3}
+      propertyPath: InitialModule.startRotationY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800006, guid: e3d819d8722fa1f47a3f68574b56dfb3, type: 3}
+      propertyPath: InitialModule.startRotationX.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800006, guid: e3d819d8722fa1f47a3f68574b56dfb3, type: 3}
+      propertyPath: InitialModule.startRotationY.minMaxState
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 19900000, guid: e3d819d8722fa1f47a3f68574b56dfb3, type: 3}
       propertyPath: m_Materials.Array.size

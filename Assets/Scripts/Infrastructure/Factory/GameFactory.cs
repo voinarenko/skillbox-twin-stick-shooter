@@ -56,6 +56,7 @@ namespace Assets.Scripts.Infrastructure.Factory
             //health.Max = playerData.Health;
 
             _progressService.Progress.WorldData.AmmoData.Available = playerData.Ammo;
+            _progressService.Progress.WorldData.WaveData.NextWave();
 
             PlayerGameObject.GetComponent<PlayerMovement>().SetSpeed(playerData.MoveSpeed);
             PlayerGameObject.GetComponent<PlayerRotation>().SetSpeed(playerData.RotateSpeed);
@@ -67,7 +68,7 @@ namespace Assets.Scripts.Infrastructure.Factory
         {
             var hud = await InstantiateRegisteredAsync(AssetAddress.HudPath);
             
-            hud.GetComponentInChildren<LootCounter>().Construct(_progressService.Progress.WorldData);
+            hud.GetComponentInChildren<WaveCounter>().Construct(_progressService.Progress.WorldData);
             hud.GetComponentInChildren<AmmoCounter>().Construct(_progressService.Progress.WorldData);
             hud.GetComponent<ActorUi>().Construct(PlayerGameObject.GetComponent<IHealth>());
 
@@ -103,7 +104,7 @@ namespace Assets.Scripts.Infrastructure.Factory
             attack.AttackCooldown = enemyData.AttackCooldown;
 
             var lootSpawner = enemy.GetComponentInChildren<LootSpawner>();
-            lootSpawner.Construct(this, _randomService);
+            lootSpawner.Construct(this, _randomService, _progressService);
 
             return enemy;
         }
