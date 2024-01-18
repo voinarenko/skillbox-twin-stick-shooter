@@ -9,7 +9,7 @@ namespace Assets.Scripts.Enemy
     public class LootSpawner : MonoBehaviour
     {
         public EnemyDeath EnemyDeath;
-        [SerializeField] private float _boostFactor = 0.1f;
+        private const float BoostFactor = 0.1f;
         private IGameFactory _factory;
         private IRandomService _random;
         private IPersistentProgressService _progressService;
@@ -43,7 +43,7 @@ namespace Assets.Scripts.Enemy
 
         private bool SpawnAllowed()
         {
-            var target = (_boostFactor + _boostFactor * (_progressService.Progress.WorldData.WaveData.Encountered - 1)) * 100;
+            var target = (BoostFactor + BoostFactor * (_progressService.Progress.WorldData.WaveData.Encountered - 1)) * 100;
             var random = _random.Next(0, 101);
             return random >= 0 && random <= target;
         }
