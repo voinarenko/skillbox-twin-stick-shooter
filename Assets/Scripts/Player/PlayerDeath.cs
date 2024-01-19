@@ -42,17 +42,9 @@ namespace Assets.Scripts.Player
             Attack.enabled = false;
             Animator.PlayDeath();
 
-            ShowResults();
+            Happened?.Invoke();
 
             Instantiate(DeathFx, transform.position, Quaternion.identity);
-        }
-
-        private void ShowResults()
-        {
-            foreach (var pair in _progressService.Progress.WorldData.KillData.Killed) 
-                Debug.Log($"Killed |{pair.Key}|: |{pair.Value}|");
-            foreach (var pair in _progressService.Progress.WorldData.LootData.Collected) 
-                Debug.Log($"Collected |{pair.Key}|: |{pair.Value}|");
         }
 
 #pragma warning disable IDE0051

@@ -76,7 +76,7 @@ namespace Assets.Scripts.Infrastructure.States
         private void InitWaveChanger(PlayerDeath playerDeath) => 
             GameObject.FindWithTag(WaveChangerTag)
                 .GetComponent<WaveChanger>()
-                .Construct(_progressService, _waveService,  playerDeath);
+                .Construct(_progressService, _stateMachine, _waveService,  playerDeath);
 
         private async Task InitSpawners(LevelStaticData levelData)
         {

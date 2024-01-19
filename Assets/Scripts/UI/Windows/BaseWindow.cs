@@ -3,6 +3,7 @@ using Assets.Scripts.Infrastructure.Services.Audio;
 using Assets.Scripts.Infrastructure.Services.Parameters;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.SaveLoad;
+using Assets.Scripts.Infrastructure.States;
 using UnityEngine;
 
 namespace Assets.Scripts.UI.Windows
@@ -13,7 +14,11 @@ namespace Assets.Scripts.UI.Windows
         protected ISaveLoadService SaveLoadService;
         protected IAudioService AudioService;
         protected ISettingsService SettingsService;
+        protected IGameStateMachine StateMachine;
         protected PlayerProgress Progress => _progressService.Progress;
+
+        public void Construct(IGameStateMachine stateMachine) =>
+            StateMachine = stateMachine;
 
         public void Construct(IPersistentProgressService progressService) => 
             _progressService = progressService;
