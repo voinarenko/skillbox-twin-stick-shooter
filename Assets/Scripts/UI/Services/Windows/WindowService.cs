@@ -8,10 +8,8 @@ namespace Assets.Scripts.UI.Services.Windows
     {
         private readonly IUiFactory _uiFactory;
 
-        public WindowService(IUiFactory uiFactory)
-        {
+        public WindowService(IUiFactory uiFactory) => 
             _uiFactory = uiFactory;
-        }
 
         public async Task Open(WindowId windowId, IGameStateMachine stateMachine)
         {
@@ -25,8 +23,11 @@ namespace Assets.Scripts.UI.Services.Windows
                 case WindowId.Settings:
                     _uiFactory.CreateSettings();
                     break;
+                case WindowId.Pause:
+                    _uiFactory.CreatePause();
+                    break;
                 case WindowId.EndGame:
-                    _uiFactory.CreateEndGame();
+                    _uiFactory.CreateEndGame(stateMachine);
                     break;
             }
         }

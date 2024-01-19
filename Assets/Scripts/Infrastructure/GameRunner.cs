@@ -4,6 +4,7 @@ using Assets.Scripts.Infrastructure.Services.Audio;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.SaveLoad;
 using Assets.Scripts.Infrastructure.Services.StaticData;
+using Assets.Scripts.Infrastructure.Services.Wave;
 using Assets.Scripts.UI.Services.Factory;
 using Assets.Scripts.UI.Services.Windows;
 using UnityEngine;
@@ -22,11 +23,12 @@ namespace Assets.Scripts.Infrastructure
         private IUiFactory _uiFactory;
         private IWindowService _windowService;
         private IAudioService _audioService;
+        private IWaveService _waveService;
 
         [Inject]
         public void Construct(IStaticDataService staticData, IPersistentProgressService progressService,
             ISaveLoadService saveLoadService, IGameFactory gameFactory, IUiFactory uiFactory,
-            IWindowService windowService, IAudioService audioService)
+            IWindowService windowService, IAudioService audioService, IWaveService waveService)
         {
             _staticData = staticData;
             _progressService = progressService;
@@ -35,6 +37,7 @@ namespace Assets.Scripts.Infrastructure
             _uiFactory = uiFactory;
             _windowService = windowService;
             _audioService = audioService;
+            _waveService = waveService;
         }
 
         private void Awake()
@@ -43,7 +46,7 @@ namespace Assets.Scripts.Infrastructure
             if (!bootstrapper)
             {
                 bootstrapper = Instantiate(BootstrapperPrefab);
-                bootstrapper.Construct(_staticData, _progressService, _saveLoadService, _gameFactory, _uiFactory, _windowService);
+                bootstrapper.Construct(_staticData, _progressService, _saveLoadService, _gameFactory, _uiFactory, _windowService, _waveService);
             }
 
             var audioManager = FindAnyObjectByType<AudioManager>();

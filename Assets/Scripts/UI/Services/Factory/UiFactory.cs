@@ -55,7 +55,12 @@ namespace Assets.Scripts.UI.Services.Factory
             window.Init();
         }
 
-        public void CreateEndGame()
+        public void CreatePause()
+        {
+            
+        }
+
+        public void CreateEndGame(IGameStateMachine stateMachine)
         {
             var config = _staticData.ForWindow(WindowId.EndGame);
             var window = Object.Instantiate(config.Prefab, _uiRoot);

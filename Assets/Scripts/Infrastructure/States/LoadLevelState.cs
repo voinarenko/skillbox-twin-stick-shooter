@@ -1,7 +1,9 @@
 ﻿using Assets.Scripts.Infrastructure.Factory;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.StaticData;
+using Assets.Scripts.Infrastructure.Services.Wave;
 using Assets.Scripts.Logic;
+using Assets.Scripts.Player;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Services.Factory;
 using Cinemachine;
@@ -13,16 +15,18 @@ namespace Assets.Scripts.Infrastructure.States
 {
     public class LoadLevelState : IPayloadedState<string>
     {
+        private const string WaveChangerTag = "WaveChanger";
         private const string CameraTag = "VirtualCamera";
         private readonly IPersistentProgressService _progressService;
         private readonly IGameFactory _gameFactory;
         private readonly IStaticDataService _staticData;
         private readonly IUiFactory _uiFactory;
+        private readonly IWaveService _waveService;
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
         private readonly LoadingCurtain _loadingCurtain;
 
-        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, IPersistentProgressService progressService, IGameFactory gameFactory, LoadingCurtain loadingCurtain, IStaticDataService staticData, IUiFactory uiFactory)
+        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, IPersistentProgressService progressService, IGameFactory gameFactory, LoadingCurtain loadingCurtain, IStaticDataService staticData, IUiFactory uiFactory, IWaveService waveService)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
@@ -31,6 +35,7 @@ namespace Assets.Scripts.Infrastructure.States
             _loadingCurtain = loadingCurtain;
             _staticData = staticData;
             _uiFactory = uiFactory;
+            _waveService = waveService;
         }
 
         public void Enter(string sceneName)
@@ -62,10 +67,16 @@ namespace Assets.Scripts.Infrastructure.States
             var levelData = LevelStaticData();
             await InitSpawners(levelData);
             var player = await InitPlayer(levelData);
+            InitWaveChanger(player.GetComponent<PlayerDeath>());
             CameraFollow(player);
 
             await InitHud();
         }
+
+        private void InitWaveChanger(PlayerDeath playerDeath) => 
+            GameObject.FindWithTag(WaveChangerTag)
+                .GetComponent<WaveChanger>()
+                .Construct(_progressService, _waveService,  playerDeath);
 
         private async Task InitSpawners(LevelStaticData levelData)
         {

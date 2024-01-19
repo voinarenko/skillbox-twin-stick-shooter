@@ -7,9 +7,10 @@ namespace Assets.Scripts.UI.Services.Factory
 {
     public interface IUiFactory : IService
     {
-        void CreateEndGame();
+        void CreateEndGame(IGameStateMachine stateMachine);
         Task CreateUiRoot();
         Task CreateMainMenu(IGameStateMachine stateMachine, IWindowService windowService);
         void CreateSettings();
+        void CreatePause();
     }
 }

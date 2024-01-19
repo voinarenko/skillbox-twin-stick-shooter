@@ -19,7 +19,6 @@ namespace Assets.Scripts.Infrastructure.Factory
 {
     public class GameFactory : IGameFactory
     {
-        private const string WaveChangerTag = "WaveChanger";
         public List<ISavedProgressReader> ProgressReaders { get; } = new();
         public List<ISavedProgress> ProgressWriters { get; } = new();
 
@@ -78,15 +77,9 @@ namespace Assets.Scripts.Infrastructure.Factory
             var playerDeath = PlayerGameObject.GetComponent<PlayerDeath>();
             playerDeath.Construct(_progressService);
 
-            InitWaveChanger(playerDeath);
-
             return PlayerGameObject;
         }
 
-        private void InitWaveChanger(PlayerDeath playerDeath) => 
-            GameObject.FindWithTag(WaveChangerTag)
-                .GetComponent<WaveChanger>()
-                .Construct(_progressService, _waveService,  playerDeath);
 
         public async Task<GameObject> CreateHud()
         {

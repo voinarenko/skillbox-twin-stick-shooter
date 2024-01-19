@@ -7,6 +7,7 @@ using Assets.Scripts.UI.Services.Factory;
 using Assets.Scripts.UI.Services.Windows;
 using System;
 using System.Collections.Generic;
+using Assets.Scripts.Infrastructure.Services.Wave;
 
 namespace Assets.Scripts.Infrastructure.States
 {
@@ -17,14 +18,14 @@ namespace Assets.Scripts.Infrastructure.States
 
         public GameStateMachine(SceneLoader sceneLoader, LoadingCurtain loadingCurtain, IStaticDataService staticData,
             IPersistentProgressService progressService, ISaveLoadService saveLoadService, IGameFactory gameFactory,
-            IUiFactory uiFactory, IWindowService windowService)
+            IUiFactory uiFactory, IWindowService windowService, IWaveService waveService)
         {
             _states = new Dictionary<Type, IExitableState>
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader),
                 [typeof(LoadMenuState)] = new LoadMenuState(this, uiFactory, loadingCurtain, windowService),
                 [typeof(MenuLoopState)] = new MenuLoopState(),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, progressService, gameFactory, loadingCurtain, staticData, uiFactory),
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, progressService, gameFactory, loadingCurtain, staticData, uiFactory, waveService),
                 [typeof(LoadProgressState)] = new LoadProgressState(this, progressService, saveLoadService),
                 [typeof(GameLoopState)] = new GameLoopState()
             };
