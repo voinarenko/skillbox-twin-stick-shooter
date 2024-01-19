@@ -61,7 +61,6 @@ namespace Assets.Scripts.Infrastructure.States
         {
             var levelData = LevelStaticData();
             await InitSpawners(levelData);
-            //await InitDroppedLoot();
             var player = await InitPlayer(levelData);
             CameraFollow(player);
 
@@ -79,18 +78,6 @@ namespace Assets.Scripts.Infrastructure.States
 
         private async Task InitHud() => 
             await _gameFactory.CreateHud();
-
-        //private async Task InitDroppedLoot()
-        //{
-        //    var droppedLoot = _progressService.Progress.WorldData.DroppedLoot;
-        //    foreach (var drop in droppedLoot.Items)
-        //    {
-        //        var lootPiece = await _gameFactory.CreateLoot();
-        //        lootPiece.transform.position = drop.Position.AsUnityVector();
-        //        lootPiece.Initialize(drop.Loot);
-        //    }
-
-        //}
 
         private async Task<GameObject> InitPlayer(LevelStaticData levelData) => 
             await _gameFactory.CreatePlayer(levelData.InitialPlayerPosition);

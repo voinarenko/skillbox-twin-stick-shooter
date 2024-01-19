@@ -11,11 +11,13 @@ namespace Assets.Scripts.Bullet
 
         private const string PlayerTag = "Player";
         private const string EnemyTag = "Enemy";
+        private const string WallTag = "Wall";
 
         private bool _collided;
 
         private void OnTriggerEnter(Collider other)
         {
+            if (other.CompareTag(WallTag)) Destroy(gameObject);
             if (other.CompareTag(Sender)) return;
             if (!other.transform.CompareTag(EnemyTag) && !other.transform.CompareTag(PlayerTag)) return;
             if (_collided) return;

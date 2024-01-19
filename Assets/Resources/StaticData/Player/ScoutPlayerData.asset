@@ -16,6 +16,7 @@ MonoBehaviour:
   Health: 100
   Damage: 20
   Ammo: 50
+  SpeedFactor: 2
   MoveSpeed: 0.01
   RotateSpeed: 2000
   AttackCooldown: 0.2
