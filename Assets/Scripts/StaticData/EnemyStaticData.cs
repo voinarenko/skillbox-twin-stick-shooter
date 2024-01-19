@@ -31,5 +31,7 @@ namespace Assets.Scripts.StaticData
         public float AttackCooldown;
 
         public AssetReferenceGameObject PrefabReference;
+        
+        public int KillValue;
     }
 }

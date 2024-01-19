@@ -9,6 +9,9 @@ namespace Assets.Scripts.Data
         public AmmoData AmmoData;
         public LootData LootData;
         public WaveData WaveData;
+        public KillData KillData;
+        public ScoreData ScoreData;
+        public SpentData SpentData;
 
         public WorldData(string initialLevel)
         {
@@ -16,6 +19,9 @@ namespace Assets.Scripts.Data
             AmmoData = new AmmoData();
             LootData = new LootData();
             WaveData = new WaveData();
+            KillData = new KillData();
+            ScoreData = new ScoreData();
+            SpentData = new SpentData();
         }
     }
 }

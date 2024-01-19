@@ -12,11 +12,10 @@ namespace Assets.Scripts.UI.Elements
         public void Construct(WorldData worldData)
         {
             _worldData = worldData;
-            _worldData.LootData.Changed += UpdateCounter;
             UpdateCounter();
         }
 
         private void UpdateCounter() => 
-            Counter.text = $"{_worldData.LootData.Collected}";
+            Counter.text = $"{_worldData.LootData.ItemsCollected}";
     }
 }

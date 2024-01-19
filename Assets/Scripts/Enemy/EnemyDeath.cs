@@ -12,6 +12,7 @@ namespace Assets.Scripts.Enemy
     {
         public GameObject DeathFx;
         public event Action Happened;
+        public int Value;
 
         private const float TimeToDestroy = 3;
         private const float TimeToSpawnLoot = 2.5f;
@@ -20,13 +21,12 @@ namespace Assets.Scripts.Enemy
         private EnemyAnimator Animator => GetComponent<EnemyAnimator>();
         private NavMeshAgent Agent => GetComponent<NavMeshAgent>();
         private AiBrain AiBrain => GetComponent<AiBrain>();
+        private EnemyAttack Attack => GetComponent<EnemyAttack>();
 
         private EnemyBehavior Behavior => GetComponent<EnemyBehavior>();
 
-        public void Construct(IPersistentProgressService progressService)
-        {
+        public void Construct(IPersistentProgressService progressService) => 
             _progressService = progressService;
-        }
 
         private void Start() => 
             Health.HealthChanged += HealthChanged;
@@ -41,8 +41,10 @@ namespace Assets.Scripts.Enemy
         {
             Agent.isStopped = true;
             _progressService.Progress.WorldData.WaveData.RemoveEnemy();
+            _progressService.Progress.WorldData.KillData.Collect(Attack);
+            _progressService.Progress.WorldData.ScoreData.UpdateScore(this);
 
-            GetComponent<EnemyAttack>().enabled = false;
+            Attack.enabled = false;
             GetComponentInChildren<Collider>().enabled = false;
             Health.HealthChanged -= HealthChanged;
             AiBrain.SetAction(Behavior.ActionsAvailable[2]);

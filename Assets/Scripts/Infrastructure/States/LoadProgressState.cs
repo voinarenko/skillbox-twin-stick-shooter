@@ -41,7 +41,6 @@ namespace Assets.Scripts.Infrastructure.States
             var progress = new PlayerProgress(InitialLevel, _playerStaticData);
             progress.PlayerState.CurrentType = _playerStaticData.PlayerTypeId;
             progress.PlayerState.MaxHealth = _playerStaticData.Health;
-            progress.PlayerStats.Damage = _playerStaticData.Damage;
 
             progress.PlayerState.ResetHealth();
             

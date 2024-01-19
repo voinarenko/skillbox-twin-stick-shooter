@@ -87,6 +87,7 @@ namespace Assets.Scripts.Player
             if (!(Time.time < _reloadTime + _reloadDelay))
             {
                 _reloadTime = Time.time;
+                _worldData.SpentData.Reloads++;
                 PlayerAnimator.Reload(true);
                 PlayerAudio.Reload();
                 _worldData.AmmoData.Available = _playerStaticData.Ammo;
@@ -102,6 +103,7 @@ namespace Assets.Scripts.Player
             if (_worldData.AmmoData.Available <= 0) return;
 
             _shootTime = Time.time;
+            _worldData.SpentData.Bullets++;
             PlayerAnimator.Shoot();
             PlayerAudio.Shoot();
             _shoot = 0;

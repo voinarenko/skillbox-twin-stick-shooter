@@ -8,16 +8,7 @@ namespace Assets.Scripts.UI.Windows
         protected override void Initialize() =>
             RefreshPointsText();
 
-        protected override void SubscribeUpdates() =>
-            Progress.WorldData.LootData.Changed += RefreshPointsText;
-
-        protected override void Cleanup()
-        {
-            base.Cleanup();
-            Progress.WorldData.LootData.Changed -= RefreshPointsText;
-        }
-
         private void RefreshPointsText() => 
-            PointsText.text = $"{Progress.WorldData.LootData.Collected}";
+            PointsText.text = $"{Progress.WorldData.LootData.ItemsCollected}";
     }
 }

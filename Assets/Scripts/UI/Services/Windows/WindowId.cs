@@ -5,6 +5,7 @@
         Unknown = 0,
         MainMenu = 1,
         Settings = 2,
-        EndGame = 3
+        Pause = 3,
+        EndGame = 4
     }
 }

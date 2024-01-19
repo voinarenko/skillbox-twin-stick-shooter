@@ -15,13 +15,11 @@ MonoBehaviour:
   EnemyTypeId: 0
   Health: 30
   Damage: 10
-  MinLoot: 0
-  MaxLoot: 0
+  BoostFactor: 0.1
   MoveSpeed: 7
   RotateSpeed: 1600
   Acceleration: 15
   StoppingDistance: 2
-  EffectiveDistance: 2
   Cleavage: 0.625
   AttackCooldown: 0
   PrefabReference:
@@ -29,3 +27,4 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  KillValue: 10

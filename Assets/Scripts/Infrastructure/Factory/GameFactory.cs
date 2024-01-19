@@ -3,6 +3,7 @@ using Assets.Scripts.Infrastructure.AssetManagement;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.Randomizer;
 using Assets.Scripts.Infrastructure.Services.StaticData;
+using Assets.Scripts.Infrastructure.Services.Wave;
 using Assets.Scripts.Logic;
 using Assets.Scripts.Logic.EnemySpawners;
 using Assets.Scripts.Player;
@@ -10,7 +11,6 @@ using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Elements;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Assets.Scripts.Infrastructure.Services.Wave;
 using UnityEngine;
 using UnityEngine.AI;
 using Object = UnityEngine.Object;
@@ -74,16 +74,19 @@ namespace Assets.Scripts.Infrastructure.Factory
                     playerData.ReloadCooldown);
             
             PlayerGameObject.GetComponent<Animator>().SetFloat(PlayerGameObject.GetComponent<PlayerAnimator>().AnimSpeed, playerData.SpeedFactor);
-            
-            InitWaveChanger();
+
+            var playerDeath = PlayerGameObject.GetComponent<PlayerDeath>();
+            playerDeath.Construct(_progressService);
+
+            InitWaveChanger(playerDeath);
 
             return PlayerGameObject;
         }
 
-        private void InitWaveChanger() => 
+        private void InitWaveChanger(PlayerDeath playerDeath) => 
             GameObject.FindWithTag(WaveChangerTag)
                 .GetComponent<WaveChanger>()
-                .Construct(_progressService, _waveService);
+                .Construct(_progressService, _waveService,  playerDeath);
 
         public async Task<GameObject> CreateHud()
         {
@@ -124,7 +127,9 @@ namespace Assets.Scripts.Infrastructure.Factory
             attack.Cleavage = enemyData.Cleavage;
             attack.AttackCooldown = enemyData.AttackCooldown;
 
-            enemy.GetComponent<EnemyDeath>().Construct(_progressService);
+            var death = enemy.GetComponent<EnemyDeath>();
+            death.Construct(_progressService);
+            death.Value = enemyData.KillValue;
 
             var lootSpawner = enemy.GetComponentInChildren<LootSpawner>();
             lootSpawner.Construct(this, _randomService, _progressService);
