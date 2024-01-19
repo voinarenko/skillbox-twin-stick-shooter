@@ -34,7 +34,7 @@ namespace Assets.Scripts.UI.Services.Factory
             _settingsService = settingsService;
         }
 
-        public async Task CreateMainMenu(IGameStateMachine stateMachine)
+        public async Task CreateMainMenu(IGameStateMachine stateMachine, IWindowService windowService)
         {
             var window = await _assets.Instantiate(AssetAddress.MainMenu);
             window.transform.SetParent(_uiRoot);
@@ -43,7 +43,7 @@ namespace Assets.Scripts.UI.Services.Factory
             baseWindow.Init();
             var buttons = window.GetComponent<MenuWindow>();
             //buttons.PlayButton.Construct(stateMachine);
-            buttons.SettingsButton.Construct(this);
+            buttons.SettingsButton.Construct(windowService);
             window.GetComponent<PlayerSelector>().Construct(_staticData, stateMachine);
         }
 

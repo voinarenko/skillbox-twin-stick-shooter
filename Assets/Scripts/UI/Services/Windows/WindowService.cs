@@ -20,9 +20,10 @@ namespace Assets.Scripts.UI.Services.Windows
                 case WindowId.Unknown:
                     break;
                 case WindowId.MainMenu:
-                    await _uiFactory.CreateMainMenu(stateMachine);
+                    await _uiFactory.CreateMainMenu(stateMachine, this);
                     break;
                 case WindowId.Settings:
+                    _uiFactory.CreateSettings();
                     break;
                 case WindowId.EndGame:
                     _uiFactory.CreateEndGame();

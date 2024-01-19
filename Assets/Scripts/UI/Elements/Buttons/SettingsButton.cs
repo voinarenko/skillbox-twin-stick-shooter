@@ -1,4 +1,5 @@
-﻿using UnityEngine.EventSystems;
+﻿using Assets.Scripts.UI.Services.Windows;
+using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.UI.Elements.Buttons
 {
@@ -7,7 +8,7 @@ namespace Assets.Scripts.UI.Elements.Buttons
         public override void OnPointerClick(PointerEventData eventData)
         {
             base.OnPointerClick(eventData);
-            UiFactory.CreateSettings();
+            WindowService.Open(WindowId.Settings, StateMachine);
         }
     }
 }
