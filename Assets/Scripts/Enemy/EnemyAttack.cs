@@ -4,12 +4,14 @@ using Assets.Scripts.Logic;
 using System.Linq;
 using UnityEngine;
 using Assets.Scripts.Bullet;
+using UnityEngine.AI;
 
 namespace Assets.Scripts.Enemy
 {
     [RequireComponent(typeof(EnemyAnimator))]
     public class EnemyAttack : MonoBehaviour
     {
+        public NavMeshAgent Agent;
         public EnemyAudio Audio;
         public GameObject ShootEffectPrefab;
         public GameObject BulletPrefab;
@@ -48,6 +50,8 @@ namespace Assets.Scripts.Enemy
         }
 
 #pragma warning disable IDE0051
+        private void OnAttackStart() => 
+            Agent.isStopped = true;
 
         private void OnAttack()
         {
@@ -81,11 +85,19 @@ namespace Assets.Scripts.Enemy
 
         private void OnAttackEnded()
         {
+            Agent.isStopped = false;
             _attackCooldown = AttackCooldown;
             _isAttacking = false;
             if (Type == EnemyType.Ranged) Audio.Reload();
             Completed?.Invoke();
         }
+
+        private void OnHit() => 
+            Agent.isStopped = true;
+       
+        private void OnHitEnded() => 
+            Agent.isStopped = false;
+        
 #pragma warning restore IDE0051
 
 

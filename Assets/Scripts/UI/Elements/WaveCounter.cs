@@ -12,7 +12,7 @@ namespace Assets.Scripts.UI.Elements
         public void Construct(WorldData worldData)
         {
             _worldData = worldData;
-            _worldData.WaveData.Changed += UpdateCounter;
+            _worldData.WaveData.WaveChanged += UpdateCounter;
             UpdateCounter();
         }
 

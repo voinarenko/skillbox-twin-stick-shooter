@@ -15,7 +15,7 @@ namespace Assets.Scripts.Infrastructure.Factory
 
         Task<GameObject> CreatePlayer(Vector3 at);
         Task<GameObject> CreateHud();
-        Task CreateSpawner(Vector3 at, string spawnerId, EnemyTypeId enemyTypeId);
+        Task CreateSpawner(Vector3 at, string spawnerId);
         void CleanUp();
         Task<GameObject> CreateEnemy(EnemyTypeId typeId, Transform parent);
         Task<LootPiece> CreateLoot();

@@ -12,6 +12,7 @@ TagManager:
   - Bullet
   - Enemy
   - Wall
+  - WaveChanger
   layers:
   - Default
   - TransparentFX

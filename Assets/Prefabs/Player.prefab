@@ -170,8 +170,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ec17239b1bdc64448b47a30e1f7f617, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AnimIdVertical: 0
-  AnimIdHorizontal: 0
 --- !u!114 &9058767553230839065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,6 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 322e82e400e952d49b9cbe40796bc88c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Agent: {fileID: 7901589542009476601}
   Health: {fileID: 9058767553230839065}
   Move: {fileID: 5884183835665077832}
   Rotate: {fileID: 4173493268443023469}

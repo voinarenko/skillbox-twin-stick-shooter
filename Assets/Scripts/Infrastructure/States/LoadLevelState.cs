@@ -70,7 +70,7 @@ namespace Assets.Scripts.Infrastructure.States
         private async Task InitSpawners(LevelStaticData levelData)
         {
             foreach (var spawnerData in levelData.EnemySpawners)
-                await _gameFactory.CreateSpawner(spawnerData.Position, spawnerData.Id, spawnerData.EnemyTypeId);
+                await _gameFactory.CreateSpawner(spawnerData.Position, spawnerData.Id);
         }
 
         private void InformProgressReaders() => 

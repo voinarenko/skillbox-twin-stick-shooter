@@ -6,6 +6,7 @@ using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.Randomizer;
 using Assets.Scripts.Infrastructure.Services.SaveLoad;
 using Assets.Scripts.Infrastructure.Services.StaticData;
+using Assets.Scripts.Infrastructure.Services.Wave;
 using Assets.Scripts.Infrastructure.States;
 using Assets.Scripts.UI.Services.Factory;
 using Assets.Scripts.UI.Services.Windows;
@@ -31,6 +32,7 @@ namespace Assets.Scripts.Infrastructure.Installers
             BindLoadProgressState();
             BindAudioService();
             BindSettingsService();
+            BindWaveService();
         }
 
         private void BindStaticData()
@@ -116,6 +118,12 @@ namespace Assets.Scripts.Infrastructure.Installers
             Container
                 .Bind<ISettingsService>()
                 .To<SettingsService>()
+                .AsSingle();
+
+        private void BindWaveService() => 
+            Container
+                .Bind<IWaveService>()
+                .To<WaveService>()
                 .AsSingle();
     }
 }

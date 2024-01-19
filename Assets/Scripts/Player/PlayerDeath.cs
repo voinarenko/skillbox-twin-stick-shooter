@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 namespace Assets.Scripts.Player
 {
     public class PlayerDeath : MonoBehaviour
     {
+        public NavMeshAgent Agent;
         public PlayerHealth Health;
         public PlayerMovement Move;
         public PlayerRotation Rotate;
@@ -34,5 +36,9 @@ namespace Assets.Scripts.Player
 
             Instantiate(DeathFx, transform.position, Quaternion.identity);
         }
+#pragma warning disable IDE0051
+        private void OnDeath() => 
+            Agent.isStopped = true;
+#pragma warning restore IDE0051
     }
 }

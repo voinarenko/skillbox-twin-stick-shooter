@@ -10,6 +10,7 @@ using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Elements;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Assets.Scripts.Infrastructure.Services.Wave;
 using UnityEngine;
 using UnityEngine.AI;
 using Object = UnityEngine.Object;
@@ -18,22 +19,26 @@ namespace Assets.Scripts.Infrastructure.Factory
 {
     public class GameFactory : IGameFactory
     {
+        private const string WaveChangerTag = "WaveChanger";
+        public List<ISavedProgressReader> ProgressReaders { get; } = new();
+        public List<ISavedProgress> ProgressWriters { get; } = new();
+
         private readonly IAssets _assets;
         private readonly IStaticDataService _staticData;
         private readonly IRandomService _randomService;
         private readonly IPersistentProgressService _progressService;
+        private readonly IWaveService _waveService;
 
-        public List<ISavedProgressReader> ProgressReaders { get; } = new();
-        public List<ISavedProgress> ProgressWriters { get; } = new();
 
         private GameObject PlayerGameObject { get; set; }
 
-        public GameFactory(IAssets assets, IStaticDataService staticData, IRandomService randomService, IPersistentProgressService progressService)
+        public GameFactory(IAssets assets, IStaticDataService staticData, IRandomService randomService, IPersistentProgressService progressService, IWaveService waveService)
         {
             _assets = assets;
             _staticData = staticData;
             _randomService = randomService;
             _progressService = progressService;
+            _waveService = waveService;
         }
 
         public async Task WarmUp()
@@ -57,6 +62,7 @@ namespace Assets.Scripts.Infrastructure.Factory
 
             _progressService.Progress.WorldData.AmmoData.Available = playerData.Ammo;
             _progressService.Progress.WorldData.WaveData.NextWave();
+            _waveService.SpawnEnemies();
 
             PlayerGameObject.GetComponent<PlayerMovement>().SetSpeed(playerData.MoveSpeed);
             PlayerGameObject.GetComponent<PlayerRotation>().SetSpeed(playerData.RotateSpeed);
@@ -69,9 +75,16 @@ namespace Assets.Scripts.Infrastructure.Factory
             
             PlayerGameObject.GetComponent<Animator>().SetFloat(PlayerGameObject.GetComponent<PlayerAnimator>().AnimSpeed, playerData.SpeedFactor);
             
+            InitWaveChanger();
+
             return PlayerGameObject;
         }
-        
+
+        private void InitWaveChanger() => 
+            GameObject.FindWithTag(WaveChangerTag)
+                .GetComponent<WaveChanger>()
+                .Construct(_progressService, _waveService);
+
         public async Task<GameObject> CreateHud()
         {
             var hud = await InstantiateRegisteredAsync(AssetAddress.HudPath);
@@ -111,6 +124,8 @@ namespace Assets.Scripts.Infrastructure.Factory
             attack.Cleavage = enemyData.Cleavage;
             attack.AttackCooldown = enemyData.AttackCooldown;
 
+            enemy.GetComponent<EnemyDeath>().Construct(_progressService);
+
             var lootSpawner = enemy.GetComponentInChildren<LootSpawner>();
             lootSpawner.Construct(this, _randomService, _progressService);
 
@@ -126,14 +141,15 @@ namespace Assets.Scripts.Infrastructure.Factory
             return lootPiece;
         }
 
-        public async Task CreateSpawner(Vector3 at, string spawnerId, EnemyTypeId enemyTypeId)
+        public async Task CreateSpawner(Vector3 at, string spawnerId)
         {
             var prefab = await _assets.Load<GameObject>(AssetAddress.Spawner);
             var spawner = InstantiateRegistered(prefab, at)
                 .GetComponent<SpawnPoint>();
-            spawner.Construct(this);
+            spawner.Construct(this, _randomService, _progressService);
             spawner.Id = spawnerId;
-            spawner.EnemyTypeId = enemyTypeId;
+            _waveService.SpawnPoints ??= new List<SpawnPoint>();
+            _waveService.SpawnPoints.Add(spawner);
         }
 
         public void Register(ISavedProgressReader progressReader)

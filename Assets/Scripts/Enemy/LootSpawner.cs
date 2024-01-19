@@ -8,17 +8,17 @@ namespace Assets.Scripts.Enemy
 {
     public class LootSpawner : MonoBehaviour
     {
+        public  IPersistentProgressService ProgressService;
         public EnemyDeath EnemyDeath;
         private const float BoostFactor = 0.1f;
         private IGameFactory _factory;
         private IRandomService _random;
-        private IPersistentProgressService _progressService;
 
         public void Construct(IGameFactory factory, IRandomService random, IPersistentProgressService progress)
         {
             _factory = factory;
             _random = random;
-            _progressService = progress;
+            ProgressService = progress;
         }
 
         private void Start() => 
@@ -43,8 +43,8 @@ namespace Assets.Scripts.Enemy
 
         private bool SpawnAllowed()
         {
-            var target = (BoostFactor + BoostFactor * (_progressService.Progress.WorldData.WaveData.Encountered - 1)) * 100;
-            var random = _random.Next(0, 101);
+            var target = (BoostFactor + BoostFactor * (ProgressService.Progress.WorldData.WaveData.Encountered - 1)) * 100;
+            var random = _random.Next(0, 100);
             return random >= 0 && random <= target;
         }
     }

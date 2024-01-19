@@ -19,7 +19,7 @@ namespace Assets.Scripts.Editor
             if (GUILayout.Button("Collect"))
             {
                 levelData.EnemySpawners = FindObjectsByType<SpawnMarker>(FindObjectsSortMode.None)
-                    .Select(x => new EnemySpawnerData(x.GetComponent<UniqueId>().Id, x.EnemyTypeId, x.transform.position))
+                    .Select(x => new EnemySpawnerData(x.GetComponent<UniqueId>().Id, x.transform.position))
                     .ToList();
                 levelData.LevelKey = SceneManager.GetActiveScene().name;
                 levelData.InitialPlayerPosition = GameObject.FindWithTag(InitialPointTag).transform.position;

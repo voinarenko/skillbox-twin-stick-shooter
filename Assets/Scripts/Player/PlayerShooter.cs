@@ -58,6 +58,8 @@ namespace Assets.Scripts.Player
         }
        
 #pragma warning disable IDE0051
+        private void OnAttackStart() { }
+
         private void OnAttack()
         {            
             if (ShootEffectPrefab != null) 
@@ -72,10 +74,12 @@ namespace Assets.Scripts.Player
             ConsumeAmmo();
         }
 
-        private void OnAttackEnded()
-        {
-            
-        }
+        private void OnAttackEnded() { }
+
+        private void OnHit() { }
+       
+        private void OnHitEnded() { }
+
 #pragma warning restore IDE0051
 
         private void Reload()
