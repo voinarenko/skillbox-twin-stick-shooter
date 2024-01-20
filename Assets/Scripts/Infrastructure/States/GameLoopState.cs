@@ -21,7 +21,7 @@ namespace Assets.Scripts.Infrastructure.States
         {
             var manager = GameObject.FindWithTag(WaveChangerTag);
             manager.GetComponent<WaveChanger>().Init(_sceneLoader);
-            manager.GetComponent<PauseListener>().Init(_windowService);
+            manager.GetComponent<PauseListener>().Init(_windowService, _sceneLoader);
         }
     }
 }

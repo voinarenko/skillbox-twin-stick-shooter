@@ -19,6 +19,7 @@ namespace Assets.Scripts.UI.Windows
         public RestartButton RestartButton;
         public MenuReturnButton ReturnButton;
 
+        private SceneLoader _sceneLoader;
         private GameObject _player;
         private PauseListener _pauseListener;
         private PlayerMovement _playerMovement;
@@ -58,6 +59,10 @@ namespace Assets.Scripts.UI.Windows
             AudioService.UpdateSliders(_masterSlider, _musicSlider, _effectsSlider);
             ConfirmButton.Construct(SaveLoadService, AudioService, SettingsService);
         }
+
+        public void SetLoader(SceneLoader sceneLoader) =>
+            _sceneLoader = sceneLoader;
+
         protected override void Initialize()
         {
             RestartButton.Clicked += ProcessRestartClick;
@@ -82,11 +87,13 @@ namespace Assets.Scripts.UI.Windows
             SettingsService.Settings = new Settings();
             AudioService.StoreVolume(SettingsService.Settings);
             SaveLoadService.SaveSettings();
-            SceneManager.LoadScene("InitialScene");
-            Destroy(_player);
-            foreach (var point in FindObjectsByType<SpawnPoint>(FindObjectsSortMode.None)) Destroy(point);
-            StateMachine.Enter<LoadProgressState, PlayerStaticData>(StaticData.ForPlayer(Progress.PlayerState.CurrentType));
-            Destroy(gameObject);
+            _sceneLoader.Load("InitialScene", OnLoaded);
+            //Destroy(_player);
+            //foreach (var point in FindObjectsByType<SpawnPoint>(FindObjectsSortMode.None)) Destroy(point);
+            //Destroy(gameObject);
         }
+
+        private void OnLoaded() => 
+            StateMachine.Enter<LoadProgressState, PlayerStaticData>(StaticData.ForPlayer(Progress.PlayerState.CurrentType));
     }
 }

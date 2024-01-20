@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Data;
-using Assets.Scripts.Infrastructure;
 using Assets.Scripts.Infrastructure.Services.Audio;
 using Assets.Scripts.Infrastructure.Services.Parameters;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
