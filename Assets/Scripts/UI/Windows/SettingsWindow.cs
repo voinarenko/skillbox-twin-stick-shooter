@@ -7,7 +7,6 @@ namespace Assets.Scripts.UI.Windows
     public class SettingsWindow : BaseWindow
     {
         public Button ConfirmButton;
-        public Button CancelButton;
 
         [SerializeField] private Slider _masterSlider;
         [SerializeField] private Slider _musicSlider;
@@ -17,7 +16,6 @@ namespace Assets.Scripts.UI.Windows
         {
             AudioService.UpdateSliders(_masterSlider, _musicSlider, _effectsSlider);
             ConfirmButton.Construct(SaveLoadService, AudioService, SettingsService);
-            CancelButton.Construct(AudioService);
         }
     }
 }

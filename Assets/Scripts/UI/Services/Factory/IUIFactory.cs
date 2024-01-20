@@ -11,6 +11,6 @@ namespace Assets.Scripts.UI.Services.Factory
         Task CreateUiRoot();
         Task CreateMainMenu(IGameStateMachine stateMachine, IWindowService windowService);
         void CreateSettings();
-        void CreatePause();
+        void CreatePause(IGameStateMachine stateMachine);
     }
 }

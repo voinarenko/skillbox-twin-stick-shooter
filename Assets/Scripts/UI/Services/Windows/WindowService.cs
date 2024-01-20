@@ -24,7 +24,7 @@ namespace Assets.Scripts.UI.Services.Windows
                     _uiFactory.CreateSettings();
                     break;
                 case WindowId.Pause:
-                    _uiFactory.CreatePause();
+                    _uiFactory.CreatePause(stateMachine);
                     break;
                 case WindowId.EndGame:
                     _uiFactory.CreateEndGame(stateMachine);

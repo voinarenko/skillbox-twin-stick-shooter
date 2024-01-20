@@ -29,12 +29,8 @@ namespace Assets.Scripts.Infrastructure.States
 
         public void Exit() { }
 
-        private void LoadProgressOrInitNew()
-        {
-            _progressService.Progress =
-                _saveLoadService.LoadProgress()
-                ?? NewProgress();
-        }
+        private void LoadProgressOrInitNew() => 
+            _progressService.Progress = NewProgress();
 
         private PlayerProgress NewProgress()
         {

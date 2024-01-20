@@ -3,7 +3,6 @@ using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.Wave;
 using Assets.Scripts.Infrastructure.States;
 using Assets.Scripts.Player;
-using Assets.Scripts.UI.Services.Windows;
 using UnityEngine;
 
 namespace Assets.Scripts.Infrastructure

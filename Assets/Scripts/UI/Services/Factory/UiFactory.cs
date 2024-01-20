@@ -5,6 +5,7 @@ using Assets.Scripts.Infrastructure.States;
 using Assets.Scripts.UI.Services.Windows;
 using Assets.Scripts.UI.Windows;
 using System.Threading.Tasks;
+using Assets.Scripts.Infrastructure;
 using Assets.Scripts.Infrastructure.Services.Audio;
 using Assets.Scripts.Infrastructure.Services.Parameters;
 using Assets.Scripts.Infrastructure.Services.SaveLoad;
@@ -42,7 +43,6 @@ namespace Assets.Scripts.UI.Services.Factory
             baseWindow.Construct(_audioService);
             baseWindow.Init();
             var buttons = window.GetComponent<MenuWindow>();
-            //buttons.PlayButton.Construct(stateMachine);
             buttons.SettingsButton.Construct(windowService);
             window.GetComponent<PlayerSelector>().Construct(_staticData, stateMachine);
         }
@@ -55,9 +55,12 @@ namespace Assets.Scripts.UI.Services.Factory
             window.Init();
         }
 
-        public void CreatePause()
+        public void CreatePause(IGameStateMachine stateMachine)
         {
-            
+            var config = _staticData.ForWindow(WindowId.Pause);
+            var window = Object.Instantiate(config.Prefab, _uiRoot);
+            window.Construct(_progressService, _saveLoadService, _audioService, _settingsService, stateMachine, _staticData);
+            window.Init();
         }
 
         public void CreateEndGame(IGameStateMachine stateMachine)

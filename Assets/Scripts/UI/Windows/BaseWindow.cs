@@ -1,8 +1,10 @@
 ﻿using Assets.Scripts.Data;
+using Assets.Scripts.Infrastructure;
 using Assets.Scripts.Infrastructure.Services.Audio;
 using Assets.Scripts.Infrastructure.Services.Parameters;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.SaveLoad;
+using Assets.Scripts.Infrastructure.Services.StaticData;
 using Assets.Scripts.Infrastructure.States;
 using UnityEngine;
 
@@ -15,6 +17,7 @@ namespace Assets.Scripts.UI.Windows
         protected IAudioService AudioService;
         protected ISettingsService SettingsService;
         protected IGameStateMachine StateMachine;
+        protected IStaticDataService StaticData;
         protected PlayerProgress Progress => _progressService.Progress;
 
         public void Construct(IPersistentProgressService progressService, IGameStateMachine stateMachine)
@@ -32,14 +35,24 @@ namespace Assets.Scripts.UI.Windows
             AudioService = audioService;
             SettingsService = settingsService;
         }
-
-        private void Start()
+        public void Construct(IPersistentProgressService progressService, ISaveLoadService saveLoadService, IAudioService audioService, ISettingsService settingsService, IGameStateMachine stateMachine, IStaticDataService staticData)
         {
+            _progressService = progressService;
+            SaveLoadService = saveLoadService;
+            AudioService = audioService;
+            SettingsService = settingsService;
+            StateMachine = stateMachine;
+            StaticData = staticData;
+        }
+
+        protected virtual void Start()
+        {
+            Cursor.visible = true;
             Initialize();
             SubscribeUpdates();
         }
 
-        private void OnDestroy() => 
+        protected virtual void OnDestroy() => 
             Cleanup();
 
         public virtual void Init(){Debug.Log("Base window init");}

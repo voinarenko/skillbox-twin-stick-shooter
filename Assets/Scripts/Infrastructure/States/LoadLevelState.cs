@@ -73,10 +73,12 @@ namespace Assets.Scripts.Infrastructure.States
             await InitHud();
         }
 
-        private void InitWaveChanger(PlayerDeath playerDeath) => 
-            GameObject.FindWithTag(WaveChangerTag)
-                .GetComponent<WaveChanger>()
-                .Construct(_progressService, _stateMachine, _waveService,  playerDeath);
+        private void InitWaveChanger(PlayerDeath playerDeath)
+        {
+            var manager = GameObject.FindWithTag(WaveChangerTag);
+                manager.GetComponent<WaveChanger>().Construct(_progressService, _stateMachine, _waveService, playerDeath);
+                manager.GetComponent<PauseListener>().Construct(_stateMachine);
+        }
 
         private async Task InitSpawners(LevelStaticData levelData)
         {

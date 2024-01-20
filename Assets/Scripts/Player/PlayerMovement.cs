@@ -46,6 +46,12 @@ namespace Assets.Scripts.Player
             }
         }
 
+        public void ControlsEnabled(bool value)
+        {
+            if (value) _controls.Enable();
+            else _controls.Disable();
+        }
+
         public void SetSpeed(float speed) => 
             _speed = speed;
 

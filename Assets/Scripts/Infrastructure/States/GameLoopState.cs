@@ -6,18 +6,22 @@ namespace Assets.Scripts.Infrastructure.States
     public class GameLoopState : IState
     {
         private const string WaveChangerTag = "WaveChanger";
+        private readonly IWindowService _windowService;
         private readonly SceneLoader _sceneLoader;
 
-        public GameLoopState(SceneLoader sceneLoader) => 
+        public GameLoopState(SceneLoader sceneLoader, IWindowService windowService)
+        {
             _sceneLoader = sceneLoader;
+            _windowService = windowService;
+        }
 
         public void Exit() { }
 
         public void Enter()
         {
-            GameObject.FindWithTag(WaveChangerTag)
-            .GetComponent<WaveChanger>()
-                .Init(_sceneLoader);
+            var manager = GameObject.FindWithTag(WaveChangerTag);
+            manager.GetComponent<WaveChanger>().Init(_sceneLoader);
+            manager.GetComponent<PauseListener>().Init(_windowService);
         }
     }
 }
