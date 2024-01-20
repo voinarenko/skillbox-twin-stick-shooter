@@ -30,8 +30,11 @@ namespace Assets.Scripts.UI.Windows
             DisplayStatistics();
         }
 
-        private void ProcessClick() => 
-            StateMachine.Enter<LoadMenuState>();
+        private void ProcessClick()
+        {
+            ReturnButton.Clicked -= ProcessClick;
+            StateMachine.Enter<BootstrapState>();
+        }
 
         private void DisplayStatistics()
         {

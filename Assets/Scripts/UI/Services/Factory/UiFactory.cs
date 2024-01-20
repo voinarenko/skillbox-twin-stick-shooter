@@ -64,7 +64,7 @@ namespace Assets.Scripts.UI.Services.Factory
         {
             var config = _staticData.ForWindow(WindowId.EndGame);
             var window = Object.Instantiate(config.Prefab, _uiRoot);
-            window.Construct(_progressService);
+            window.Construct(_progressService, stateMachine);
         }
 
         public async Task CreateUiRoot()

@@ -17,11 +17,11 @@ namespace Assets.Scripts.UI.Windows
         protected IGameStateMachine StateMachine;
         protected PlayerProgress Progress => _progressService.Progress;
 
-        public void Construct(IGameStateMachine stateMachine) =>
-            StateMachine = stateMachine;
-
-        public void Construct(IPersistentProgressService progressService) => 
+        public void Construct(IPersistentProgressService progressService, IGameStateMachine stateMachine)
+        {
             _progressService = progressService;
+            StateMachine = stateMachine;
+        }
 
         public void Construct(IAudioService audioService) => 
             AudioService = audioService;

@@ -10,10 +10,12 @@ namespace Assets.Scripts.Infrastructure
 {
     public class WaveChanger : MonoBehaviour
     {
+        private const string FinalScene = "FinalScene";
         private IPersistentProgressService _progressService;
         private IGameStateMachine _stateMachine;
         private IWaveService _waveService;
-        private IWindowService _windowService;
+        private SceneLoader _sceneLoader;
+        
         private PlayerDeath _playerDeath;
 
         private WaveData _waveData;
@@ -29,11 +31,14 @@ namespace Assets.Scripts.Infrastructure
             _playerDeath.Happened += GameOver;
         }
 
-        public void Init(IWindowService windowService) => 
-            _windowService = windowService;
+        public void Init(SceneLoader sceneLoader) => 
+            _sceneLoader = sceneLoader;
 
         private void GameOver() => 
-            _windowService.Open(WindowId.EndGame, _stateMachine);
+            _sceneLoader.Load(FinalScene, onLoaded: EnterStats);
+
+        private void EnterStats() =>
+            _stateMachine.Enter<LoadStatsState>();
 
         private void CheckEnemies()
         {
