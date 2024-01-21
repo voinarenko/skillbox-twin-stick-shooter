@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Assets.Scripts.Bullet;
 using Assets.Scripts.Logic;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Assets.Scripts.Bullet;
 using UnityEngine.AI;
+using Action = System.Action;
 
 namespace Assets.Scripts.Enemy
 {
@@ -30,11 +30,11 @@ namespace Assets.Scripts.Enemy
         private const string PlayerTag = "Player";
         private Transform _playerTransform;
         private float _attackCooldown;
-        private bool _isAttacking;
         private int _layerMask;
         private readonly Collider[] _hits = new Collider[1];
 
-        private bool _attackIsActive;
+        [SerializeField] private bool _isAttacking;
+        [SerializeField] private bool _attackIsActive;
 
         public void Construct(Transform playerTransform) => 
             _playerTransform = playerTransform;
@@ -94,10 +94,13 @@ namespace Assets.Scripts.Enemy
 
         private void OnHit() => 
             Agent.isStopped = true;
-       
-        private void OnHitEnded() => 
+
+        private void OnHitEnded()
+        {
             Agent.isStopped = false;
-        
+            Completed?.Invoke();
+       }
+
 #pragma warning restore IDE0051
 
 

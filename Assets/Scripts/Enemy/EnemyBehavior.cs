@@ -1,48 +1,58 @@
 ﻿using Assets.Scripts.Enemy.UtilityAi;
-using Assets.Scripts.Enemy.UtilityAi.Actions;
 using Assets.Scripts.Logic;
 using UnityEngine;
+using UnityEngine.AI;
 using Action = Assets.Scripts.Enemy.UtilityAi.Action;
 
 namespace Assets.Scripts.Enemy
 {
     public class EnemyBehavior : MonoBehaviour
     {
-        public EnemyMoveToPlayer Mover => GetComponent<EnemyMoveToPlayer>();
-        public IHealth PlayerHealth => Mover.PlayerTransform.GetComponent<IHealth>();
+        public EnemyMoveToPlayer Mover;
+        public IHealth PlayerHealth;
         public Action[] ActionsAvailable;
 
-        private AiBrain AiBrain => GetComponent<AiBrain>();
-        private EnemyAttack Attacker => GetComponent<EnemyAttack>();
+        private NavMeshAgent _agent;
+        private AiBrain _aiBrain;
+        private EnemyAttack _attacker;
 
         private void Start()
         {
-            Attacker.Completed += Completed;
+            Mover = GetComponent<EnemyMoveToPlayer>();
+            PlayerHealth = Mover.PlayerTransform.GetComponent<IHealth>();
+            _aiBrain = GetComponent<AiBrain>();
+            _attacker = GetComponent<EnemyAttack>();
+            _agent = GetComponent<NavMeshAgent>();
+            _attacker.Completed += Completed;
             Mover.Completed += Completed;
-            AiBrain.Decided += ExecuteAction;
-            AiBrain.SetAction(ActionsAvailable[1]);
+            _aiBrain.Decided += ExecuteAction;
+            _aiBrain.SetAction(ActionsAvailable[1]);
         }
 
         private void OnDestroy()
         {
-            Attacker.Completed -= Completed;
+            _attacker.Completed -= Completed;
             Mover.Completed -= Completed;
-            AiBrain.Decided -= ExecuteAction;
+            _aiBrain.Decided -= ExecuteAction;
         }
 
-        public void DoMove() => 
-            Attacker.DisableAttack();
+        public void DoMove()
+        {
+            Mover.SetDestinationForAgent();
+            _agent.isStopped = false;
+            _attacker.DisableAttack();
+        }
 
         public void DoAttack() => 
-            Attacker.EnableAttack();
+            _attacker.EnableAttack();
 
         public void DoWait() => 
-            Attacker.DisableAttack();
+            _attacker.DisableAttack();
 
         private void ExecuteAction() => 
-            AiBrain.BestAction.Execute(this);
+            _aiBrain.BestAction.Execute(this);
 
         private void Completed() => 
-            AiBrain.DecideBestAction(ActionsAvailable);
+            _aiBrain.DecideBestAction(ActionsAvailable);
     }
 }

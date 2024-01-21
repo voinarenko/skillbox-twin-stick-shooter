@@ -23,12 +23,12 @@ namespace Assets.Scripts.Enemy
 
         private void CheckDistance()
         {
-            var dist=Agent.remainingDistance;
-            if (!float.IsPositiveInfinity(dist) && Agent.pathStatus == NavMeshPathStatus.PathComplete &&
-                Agent.remainingDistance <= Agent.stoppingDistance && PlayerTransform != null) Completed?.Invoke();
+            var dist = Agent.remainingDistance;
+            if (!float.IsPositiveInfinity(dist) && Agent.remainingDistance <= Agent.stoppingDistance && PlayerTransform != null) 
+                Completed?.Invoke();
         }
 
-        private void SetDestinationForAgent()
+        public void SetDestinationForAgent()
         {
             if (PlayerTransform)
                 Agent.destination = PlayerTransform.position;

@@ -16,7 +16,7 @@ namespace Assets.Scripts.Infrastructure.Services.Wave
         public void SpawnEnemies()
         {
             for (var i = 0; i < _progressService.Progress.WorldData.WaveData.Encountered; i++)
-                foreach (var point in SpawnPoints) 
+                foreach (var point in SpawnPoints)
                     point.Spawn();
         }
     }

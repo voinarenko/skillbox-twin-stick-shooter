@@ -4,10 +4,13 @@ namespace Assets.Scripts.Enemy.UtilityAi
 {
     public class AiBrain : MonoBehaviour
     {
-        public Action BestAction { get; private set; }
+        public Action BestAction;// { get; private set; }
         public event System.Action Decided;
 
-        private EnemyBehavior Enemy => GetComponent<EnemyBehavior>();
+        private EnemyBehavior _enemy;
+
+        private void Start() =>
+            _enemy = GetComponent<EnemyBehavior>();
 
         public void SetAction(Action action)
         {
@@ -35,7 +38,7 @@ namespace Assets.Scripts.Enemy.UtilityAi
             var score = 1f;
             foreach (var consideration in action.Considerations)
             {
-                var considerationScore = consideration.ScoreConsideration(Enemy);
+                var considerationScore = consideration.ScoreConsideration(_enemy);
                 score *= considerationScore;
 
                 if (score != 0f) continue;
