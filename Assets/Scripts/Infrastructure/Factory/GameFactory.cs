@@ -48,16 +48,10 @@ namespace Assets.Scripts.Infrastructure.Factory
 
         public async Task<GameObject> CreatePlayer(Vector3 at)
         {
-            //PlayerGameObject = await InstantiateRegisteredAsync(AssetAddress.PlayerPath, at);
-            //return PlayerGameObject;
-
             var playerData = _progressService.Progress.PlayerStaticData;
             var prefab = await _assets.Load<GameObject>(playerData.PrefabReference);
             PlayerGameObject = Object.Instantiate(prefab, at, Quaternion.identity);
             RegisterProgressWatchers(PlayerGameObject);
-            //var health = PlayerGameObject.GetComponent<IHealth>();
-            //health.Current = playerData.Health;
-            //health.Max = playerData.Health;
 
             _progressService.Progress.WorldData.AmmoData.Available = playerData.Ammo;
             _progressService.Progress.WorldData.WaveData.NextWave();
@@ -150,7 +144,7 @@ namespace Assets.Scripts.Infrastructure.Factory
             _waveService.SpawnPoints.Add(spawner);
         }
 
-        public void Register(ISavedProgressReader progressReader)
+        private void Register(ISavedProgressReader progressReader)
         {
             if (progressReader is ISavedProgress progressPiece)
             {
@@ -191,13 +185,6 @@ namespace Assets.Scripts.Infrastructure.Factory
             RegisterProgressWatchers(gameObject);
             return gameObject;
         }
-
-        //private async Task<GameObject> InstantiateRegisteredAsync(string prefabPath, Vector3 at)
-        //{
-        //    var gameObject = await _assets.Instantiate(prefabPath, at);
-        //    RegisterProgressWatchers(gameObject);
-        //    return gameObject;
-        //}
 
         private void RegisterProgressWatchers(GameObject gameObject)
         {

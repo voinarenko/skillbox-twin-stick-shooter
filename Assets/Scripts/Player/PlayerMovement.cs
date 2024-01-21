@@ -9,13 +9,14 @@ namespace Assets.Scripts.Player
     public class PlayerMovement : MonoBehaviour, ISavedProgress
     {
         private PlayerControls _controls;
-        private NavMeshAgent Agent => GetComponent<NavMeshAgent>();
-        [SerializeField] private float _speed;
+        private NavMeshAgent _agent;
+        private float _speed;
 
         private PlayerAnimator PlayerAnimator => GetComponent<PlayerAnimator>();
 
         private void Start()
         {
+            _agent = GetComponent<NavMeshAgent>();
             _controls = new PlayerControls();
             _controls.Enable();
         }
@@ -46,21 +47,14 @@ namespace Assets.Scripts.Player
             }
         }
 
-        public void ControlsEnabled(bool value)
-        {
-            if (value) _controls.Enable();
-            else _controls.Disable();
-        }
-
         public void SetSpeed(float speed) => 
             _speed = speed;
 
         private void Warp(Vector3Data to)
         {
-            // if physics is being used — disable, then re-enable
-            Agent.enabled = false;
+            _agent.enabled = false;
             transform.position = to.AsUnityVector();
-            Agent.enabled = true;
+            _agent.enabled = true;
         }
 
         private static string CurrentLevel() => 

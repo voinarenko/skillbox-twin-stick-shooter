@@ -27,7 +27,7 @@ namespace Assets.Scripts.Infrastructure.States
                 [typeof(MenuLoopState)] = new MenuLoopState(),
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, progressService, gameFactory, loadingCurtain, staticData, uiFactory, waveService),
                 [typeof(LoadProgressState)] = new LoadProgressState(this, progressService, saveLoadService),
-                [typeof(GameLoopState)] = new GameLoopState(sceneLoader, windowService),
+                [typeof(GameLoopState)] = new GameLoopState(sceneLoader, windowService, waveService),
                 [typeof(LoadStatsState)] = new LoadStatsState(this, uiFactory, loadingCurtain, windowService),
                 [typeof(StatsLoopState)] = new StatsLoopState()
             };

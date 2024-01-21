@@ -30,8 +30,6 @@ namespace Assets.Scripts.Infrastructure
             _playerDeath.Happened += GameOver;
         }
 
-        private void OnDestroy() => _waveService.SpawnPoints.Clear();
-
         public void Init(SceneLoader sceneLoader) => 
             _sceneLoader = sceneLoader;
 
