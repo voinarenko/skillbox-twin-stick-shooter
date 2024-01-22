@@ -12,7 +12,6 @@ namespace Assets.Scripts.Enemy
         public IHealth PlayerHealth;
         public Action[] ActionsAvailable;
 
-        private NavMeshAgent _agent;
         private AiBrain _aiBrain;
         private EnemyAttack _attacker;
 
@@ -22,7 +21,6 @@ namespace Assets.Scripts.Enemy
             PlayerHealth = Mover.PlayerTransform.GetComponent<IHealth>();
             _aiBrain = GetComponent<AiBrain>();
             _attacker = GetComponent<EnemyAttack>();
-            _agent = GetComponent<NavMeshAgent>();
             _attacker.Completed += Completed;
             Mover.Completed += Completed;
             _aiBrain.Decided += ExecuteAction;
@@ -39,7 +37,6 @@ namespace Assets.Scripts.Enemy
         public void DoMove()
         {
             Mover.SetDestinationForAgent();
-            _agent.isStopped = false;
             _attacker.DisableAttack();
         }
 

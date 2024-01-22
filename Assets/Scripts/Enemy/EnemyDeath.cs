@@ -62,6 +62,7 @@ namespace Assets.Scripts.Enemy
             _aiBrain.enabled = false;
             _agent.updatePosition = false;
             _agent.updateRotation = false;
+            _agent.speed = 0;
             _attack.enabled = false;
             _animator.PlayDeath();
             SpawnDeathFx();

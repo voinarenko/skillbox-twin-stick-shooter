@@ -26,8 +26,8 @@ namespace Assets.Scripts.Enemy
         public event Action Completed;
 
         private const string PlayerLayerMask = "Player";
-        private const float AttackTime = 0.1f;
         private const string PlayerTag = "Player";
+        private const float AttackTime = 0.1f;
         private Transform _playerTransform;
         private float _attackCooldown;
         private int _layerMask;
@@ -35,12 +35,16 @@ namespace Assets.Scripts.Enemy
 
         [SerializeField] private bool _isAttacking;
         [SerializeField] private bool _attackIsActive;
+        [SerializeField] private float _savedSpeed;
 
         public void Construct(Transform playerTransform) => 
             _playerTransform = playerTransform;
 
         private void Awake() => 
             _layerMask = 1 << LayerMask.NameToLayer(PlayerLayerMask);
+
+        private void Start() => 
+            _savedSpeed = Agent.speed;
 
         private void Update()
         {
@@ -51,7 +55,7 @@ namespace Assets.Scripts.Enemy
 
 #pragma warning disable IDE0051
         private void OnAttackStart() => 
-            Agent.isStopped = true;
+            Agent.speed = 0;
 
         private void OnAttack()
         {
@@ -85,7 +89,7 @@ namespace Assets.Scripts.Enemy
 
         private void OnAttackEnded()
         {
-            Agent.isStopped = false;
+            Agent.speed = _savedSpeed;
             _attackCooldown = AttackCooldown;
             _isAttacking = false;
             if (Type == EnemyType.Ranged) Audio.Reload();
@@ -93,11 +97,11 @@ namespace Assets.Scripts.Enemy
         }
 
         private void OnHit() => 
-            Agent.isStopped = true;
+            Agent.speed = 0;
 
         private void OnHitEnded()
         {
-            Agent.isStopped = false;
+            Agent.speed = _savedSpeed;
             Completed?.Invoke();
        }
 
