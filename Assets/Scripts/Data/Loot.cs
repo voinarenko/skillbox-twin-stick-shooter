@@ -1,10 +1,11 @@
 ﻿using System;
+using Assets.Scripts.StaticData;
 
 namespace Assets.Scripts.Data
 {
     [Serializable]
     public class Loot
     {
-        public LootType Type;
+        public LootTypeId Type;
     }
 }

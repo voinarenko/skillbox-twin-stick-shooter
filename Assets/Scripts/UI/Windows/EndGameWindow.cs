@@ -2,6 +2,7 @@
 using Assets.Scripts.Enemy;
 using System.Linq;
 using Assets.Scripts.Infrastructure.States;
+using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Elements.Buttons;
 using TMPro;
 
@@ -45,11 +46,11 @@ namespace Assets.Scripts.UI.Windows
             SmallMeleesKilledText.text = $"{GetValue(EnemyType.SmallMelee)}";
             BigMeleesKilledText.text = $"{GetValue(EnemyType.BigMelee)}";
             RangedKilledText.text = $"{GetValue(EnemyType.Ranged)}";
-            HealthPickedText.text = $"{GetValue(LootType.Health)}";
-            DefensePickedText.text = $"{GetValue(LootType.Defense)}";
-            MoveSpeedPickedText.text = $"{GetValue(LootType.MoveSpeed)}";
-            DamagePickedText.text = $"{GetValue(LootType.Damage)}";
-            AttackSpeedPickedText.text = $"{GetValue(LootType.AttackSpeed)}";
+            HealthPickedText.text = $"{GetValue(LootTypeId.Health)}";
+            DefensePickedText.text = $"{GetValue(LootTypeId.Defense)}";
+            MoveSpeedPickedText.text = $"{GetValue(LootTypeId.MoveSpeed)}";
+            DamagePickedText.text = $"{GetValue(LootTypeId.Damage)}";
+            AttackSpeedPickedText.text = $"{GetValue(LootTypeId.AttackSpeed)}";
         }
 
         private int GetValue(EnemyType type)
@@ -60,7 +61,7 @@ namespace Assets.Scripts.UI.Windows
             return result;
         }
 
-        private int GetValue(LootType type)
+        private int GetValue(LootTypeId type)
         {
             var result = 0;
             foreach (var pair in Progress.WorldData.LootData.Collected.Where(x => x.Key == type))

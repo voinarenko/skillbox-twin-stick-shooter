@@ -2,6 +2,7 @@
 using Assets.Scripts.Infrastructure.Factory;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.Randomizer;
+using Assets.Scripts.StaticData;
 using UnityEngine;
 
 namespace Assets.Scripts.Enemy
@@ -38,7 +39,7 @@ namespace Assets.Scripts.Enemy
         private Loot GenerateLoot() =>
             new()
             {
-                Type = (LootType)_random.Next(0, (int)LootType.Quantity)
+                Type = (LootTypeId)_random.Next(0, (int)LootTypeId.Quantity)
             };
 
         private bool SpawnAllowed()

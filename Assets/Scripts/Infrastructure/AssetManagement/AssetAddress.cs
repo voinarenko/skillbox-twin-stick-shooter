@@ -7,5 +7,6 @@
         public const string HudPath = "HUD";
         public const string Loot = "Loot";
         public const string MainMenu = "MainMenu";
+        public const string PerkElement = "PerkElement";
     }
 }

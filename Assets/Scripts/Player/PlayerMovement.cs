@@ -10,7 +10,7 @@ namespace Assets.Scripts.Player
     {
         private PlayerControls _controls;
         private NavMeshAgent _agent;
-        private float _speed;
+        public float Speed;
 
         private PlayerAnimator PlayerAnimator => GetComponent<PlayerAnimator>();
 
@@ -28,7 +28,7 @@ namespace Assets.Scripts.Player
             var dir = new Vector3(move.x, 0, move.y);
             dir.Normalize();
 
-            pos += new Vector3(move.x * _speed, 0, move.y * _speed);
+            pos += new Vector3(move.x * Speed, 0, move.y * Speed);
             if (transform != null) transform.position = pos;
 
             PlayerAnimator.Move(dir);
@@ -48,7 +48,7 @@ namespace Assets.Scripts.Player
         }
 
         public void SetSpeed(float speed) => 
-            _speed = speed;
+            Speed = speed;
 
         private void Warp(Vector3Data to)
         {

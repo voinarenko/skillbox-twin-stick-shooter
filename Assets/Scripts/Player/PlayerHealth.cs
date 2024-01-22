@@ -31,6 +31,7 @@ namespace Assets.Scripts.Player
         }
 
         public PlayerAnimator Animator;
+        public float Defense = 1;
 
         private State _state;
 
@@ -49,8 +50,14 @@ namespace Assets.Scripts.Player
         public void TakeDamage(float damage)
         {
             if (Current <= 0) return;
-            Current -= damage;
+            Current -= damage / Defense;
             Animator.PlayHit();
+        }
+
+        public void Heal(float cure)
+        {
+            if (Current + cure > Max) _state.ResetHealth();
+            else Current += cure;
         }
     }
 }

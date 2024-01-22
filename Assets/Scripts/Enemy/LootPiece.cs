@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Data;
+using Assets.Scripts.Infrastructure.Services.Loot;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -19,9 +20,13 @@ namespace Assets.Scripts.Enemy
         private Loot _loot;
         private bool _picked;
         private WorldData _worldData;
+        private ILootService _lootService;
 
-        public void Construct(WorldData worldData) => 
+        public void Construct(WorldData worldData, ILootService lootService)
+        {
             _worldData = worldData;
+            _lootService = lootService;
+        }
 
         public void Initialize(Loot loot)
         {
@@ -32,10 +37,10 @@ namespace Assets.Scripts.Enemy
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag(PlayerTag)) 
-                Pickup();
+                Pickup(other.gameObject);
         }
 
-        private void Pickup()
+        private void Pickup(GameObject player)
         {
             if (_picked) return;
             _picked = true;
@@ -47,6 +52,8 @@ namespace Assets.Scripts.Enemy
             PlayPickupFx();
             ShowText();
             
+            _lootService.Process(_loot, player);
+
             Destroy(gameObject, TimeToDestroy);
         }
 

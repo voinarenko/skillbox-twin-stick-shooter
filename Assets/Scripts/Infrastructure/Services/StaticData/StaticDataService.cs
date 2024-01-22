@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Assets.Scripts.StaticData;
+﻿using Assets.Scripts.StaticData;
 using Assets.Scripts.StaticData.Windows;
 using Assets.Scripts.UI.Services.Windows;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.Infrastructure.Services.StaticData
@@ -12,10 +12,14 @@ namespace Assets.Scripts.Infrastructure.Services.StaticData
         private const string StaticDataPlayerPath = "StaticData/Player";
         private const string StaticDataEnemiesPath = "StaticData/Enemies";
         private const string StaticDataLevelsPath = "StaticData/Levels";
+        private const string StaticDataConsumablesPath = "StaticData/Consumables";
+        private const string StaticDataPerksPath = "StaticData/Perks";
         private const string StaticDataWindowsPath = "StaticData/UI/WindowStaticData";
         private Dictionary<PlayerTypeId, PlayerStaticData> _players;
         private Dictionary<EnemyTypeId, EnemyStaticData> _enemies;
         private Dictionary<string, LevelStaticData> _levels;
+        private Dictionary<LootTypeId, ConsumableStaticData> _consumables;
+        private Dictionary<LootTypeId, PerkStaticData> _perks;
         private Dictionary<WindowId, WindowConfig> _windowConfigs;
         
         public void Load()
@@ -29,6 +33,12 @@ namespace Assets.Scripts.Infrastructure.Services.StaticData
             _levels = Resources
                 .LoadAll<LevelStaticData>(StaticDataLevelsPath)
                 .ToDictionary(x => x.LevelKey, x => x);
+            _consumables = Resources
+                .LoadAll<ConsumableStaticData>(StaticDataConsumablesPath)
+                .ToDictionary(x => x.LootTypeId, x => x);
+            //_perks = Resources
+            //    .LoadAll<PerkStaticData>(StaticDataPerksPath)
+            //    .ToDictionary(x => x.LootTypeId, x => x);
             _windowConfigs = Resources
                 .Load<WindowStaticData>(StaticDataWindowsPath)
                 .Configs
@@ -46,5 +56,11 @@ namespace Assets.Scripts.Infrastructure.Services.StaticData
 
         public WindowConfig ForWindow(WindowId windowId) =>
             _windowConfigs.GetValueOrDefault(windowId);
+
+        public ConsumableStaticData ForConsumable(LootTypeId typeId) => 
+            _consumables.GetValueOrDefault(typeId);
+
+        public PerkStaticData ForPerk(LootTypeId typeId) =>
+            _perks.GetValueOrDefault(typeId);
     }
 }

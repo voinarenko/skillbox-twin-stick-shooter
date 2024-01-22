@@ -11,6 +11,8 @@ using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Elements;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Assets.Scripts.Data;
+using Assets.Scripts.Infrastructure.Services.Loot;
 using UnityEngine;
 using UnityEngine.AI;
 using Object = UnityEngine.Object;
@@ -27,17 +29,20 @@ namespace Assets.Scripts.Infrastructure.Factory
         private readonly IRandomService _randomService;
         private readonly IPersistentProgressService _progressService;
         private readonly IWaveService _waveService;
+        private readonly ILootService _lootService;
 
 
         private GameObject PlayerGameObject { get; set; }
+        private Transform PerkParent;
 
-        public GameFactory(IAssets assets, IStaticDataService staticData, IRandomService randomService, IPersistentProgressService progressService, IWaveService waveService)
+        public GameFactory(IAssets assets, IStaticDataService staticData, IRandomService randomService, IPersistentProgressService progressService, IWaveService waveService, ILootService lootService)
         {
             _assets = assets;
             _staticData = staticData;
             _randomService = randomService;
             _progressService = progressService;
             _waveService = waveService;
+            _lootService = lootService;
         }
 
         public async Task WarmUp()
@@ -83,6 +88,8 @@ namespace Assets.Scripts.Infrastructure.Factory
             hud.GetComponentInChildren<AmmoCounter>().Construct(_progressService.Progress.WorldData);
             hud.GetComponent<ActorUi>().Construct(PlayerGameObject.GetComponent<IHealth>());
 
+            PerkParent = hud.GetComponent<PerkDisplay>().GetParent();
+
             return hud;
         }
 
@@ -95,7 +102,8 @@ namespace Assets.Scripts.Infrastructure.Factory
             var enemy = Object.Instantiate(prefab, parent.position, Quaternion.identity, parent);
 
             var health = enemy.GetComponent<IHealth>();
-            health.Current = enemyData.Health;
+            health.Current = enemyData.Health + enemyData.Health * enemyData.BoostFactor *
+                (_progressService.Progress.WorldData.WaveData.Encountered - 1);
             health.Max = enemyData.Health;
 
             enemy.GetComponent<ActorUi>().Construct(health);
@@ -110,7 +118,8 @@ namespace Assets.Scripts.Infrastructure.Factory
             var attack = enemy.GetComponent<EnemyAttack>();
             attack.Construct(PlayerGameObject.transform);
             attack.Type = (EnemyType)enemyData.EnemyTypeId;
-            attack.Damage = enemyData.Damage;
+            attack.Damage = enemyData.Damage + enemyData.Damage * enemyData.BoostFactor *
+                (_progressService.Progress.WorldData.WaveData.Encountered - 1);
             attack.Cleavage = enemyData.Cleavage;
             attack.AttackCooldown = enemyData.AttackCooldown;
 
@@ -129,8 +138,23 @@ namespace Assets.Scripts.Infrastructure.Factory
             var prefab = await _assets.Load<GameObject>(AssetAddress.Loot);
             var lootPiece = InstantiateRegistered(prefab)
                 .GetComponent<LootPiece>();
-            lootPiece.Construct(_progressService.Progress.WorldData);
+            lootPiece.Construct(_progressService.Progress.WorldData, _lootService);
             return lootPiece;
+        }
+
+        public async Task<PerkTimer> CreatePerkTimer(Loot loot, GameObject player)
+        {
+            var perkData = _staticData.ForPerk(loot.Type);
+            var prefab = await _assets.Load<GameObject>(AssetAddress.PerkElement);
+            var perk = Object.Instantiate(prefab, PerkParent).GetComponent<PerkTimer>();
+
+            perk.Player = player;
+            perk.Type = loot.Type;
+            perk.Icon = perkData.Icon;
+            perk.Duration = perkData.Duration;
+            perk.Multiplier = perkData.Multiplier;
+
+            return perk;
         }
 
         public async Task CreateSpawner(Vector3 at, string spawnerId)

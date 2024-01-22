@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Infrastructure.AssetManagement;
 using Assets.Scripts.Infrastructure.Factory;
 using Assets.Scripts.Infrastructure.Services.Audio;
+using Assets.Scripts.Infrastructure.Services.Loot;
 using Assets.Scripts.Infrastructure.Services.Parameters;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.Randomizer;
@@ -33,6 +34,8 @@ namespace Assets.Scripts.Infrastructure.Installers
             BindAudioService();
             BindSettingsService();
             BindWaveService();
+            Container.Bind<ILootService>().To<LootService>().AsSingle();
+
         }
 
         private void BindStaticData()

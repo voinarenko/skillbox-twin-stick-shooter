@@ -19,13 +19,13 @@ namespace Assets.Scripts.Player
         private PlayerControls _controls;
         private WorldData _worldData;
 
-        private float _damage;
+        public float Damage;
 
         private float _shootTime = float.MinValue;
-        [SerializeField] private float _shootDelay;
+        public float ShootDelay;
 
         private float _reloadTime = float.MinValue;
-        [SerializeField] private float _reloadDelay;
+        public float ReloadDelay;
         private float _shoot;
         private float _reload;
 
@@ -33,9 +33,9 @@ namespace Assets.Scripts.Player
         {
             _playerStaticData = playerStaticData;
             _worldData = worldData;
-            _damage = damage;
-            _shootDelay = shootDelay;
-            _reloadDelay = reloadDelay;
+            Damage = damage;
+            ShootDelay = shootDelay;
+            ReloadDelay = reloadDelay;
         }
 
         private void Start()
@@ -69,7 +69,7 @@ namespace Assets.Scripts.Player
                 var bullet = Instantiate(BulletPrefab, ShootPoint.transform.position, transform.rotation);
                 var bulletData = bullet.GetComponent<BulletDamage>();
                 bulletData.Sender = tag;
-                bulletData.Damage = _damage;
+                bulletData.Damage = Damage;
             }
             ConsumeAmmo();
         }
@@ -84,7 +84,7 @@ namespace Assets.Scripts.Player
 
         private void Reload()
         {
-            if (!(Time.time < _reloadTime + _reloadDelay))
+            if (!(Time.time < _reloadTime + ReloadDelay))
             {
                 _reloadTime = Time.time;
                 _worldData.SpentData.Reloads++;
@@ -99,7 +99,7 @@ namespace Assets.Scripts.Player
 
         private void Shoot()
         {
-            if (Time.time < _shootTime + _shootDelay) return;
+            if (Time.time < _shootTime + ShootDelay) return;
             if (_worldData.AmmoData.Available <= 0) return;
 
             _shootTime = Time.time;
