@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Hero
+  m_EditorClassIdentifier: 
+  m_GroupName: Hero
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 498d78b5cd65901429edf96648d8d9f8
+  m_SerializeEntries:
+  - m_GUID: efa1b80b36645e3419157009a32f01e9
+    m_Address: Scout
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c442743a42c50604aba433e006814463
+    m_Address: Trooper
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 522a78a114917be47bcd16e8d57ea527
+    m_Address: Defender
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eb6ef9d73f0d6e74799f74730168dd6b
+    m_Address: Assets/Imported/SciFi_Space_Soldier
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cca9004048572344c8a6558c129fe647
+    m_Address: Assets/Prefabs/Player.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 86b362727c947564b91390ab794cec3c
+    m_Address: Assets/Prefabs/StartPoint.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 33ac7f81fc6e7d749a68fb740d9fc631
+    m_Address: Assets/Resources_moved/Player
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 5a2cfc119625f364aa6dd44b593d717d, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: d4461bf19570af646b15350885ab5544, type: 2}
+    - {fileID: 11400000, guid: b27e6255668f308438509390fc401372, type: 2}

@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: UI
+  m_EditorClassIdentifier: 
+  m_GroupName: UI
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 1f745278691459c49a57370181ea3e3d
+  m_SerializeEntries:
+  - m_GUID: 57f5dbfe70df49e48a8bdf052f813c7d
+    m_Address: HUD
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 33ee2e0a87d5d9441ab660a2da9e8713
+    m_Address: UIRoot
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c2fd589bf5766794ebda67423caa0a10
+    m_Address: MainMenu
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6cfd8f739b304c54e94db11e9245ccf4
+    m_Address: PerkElement
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ecbf531a9f86b394fb9a7c1f2bd06b8a
+    m_Address: Assets/Imported/White Black GUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d4a7d4fc99e5b0144a152f0ffee617e0
+    m_Address: Assets/Imported/64 flat icons
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e447ae32818f73641841c6617b5d50fa
+    m_Address: Assets/Imported/Sci-Fi UI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 49de2b07af1ff08498ca6f0dabca70b6
+    m_Address: Assets/Resources_moved/HUD/Ammo.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b0b18504be066a048af23c5d04d23e61
+    m_Address: Assets/Resources_moved/HUD/CharacterUi.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 77d83b5a2fd6e0a428a2047cf40df555
+    m_Address: Assets/Resources_moved/HUD/HealthBar.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 35b130ab2f9b52443a47682b41d300bc
+    m_Address: Assets/Resources_moved/HUD/Waves.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c6ab65a78bd23764ebc96d5a6fc12f03
+    m_Address: Assets/Resources_moved/UI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 5a2cfc119625f364aa6dd44b593d717d, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 1dc5ad95b264e024d82f49edc46dc2b6, type: 2}
+    - {fileID: 11400000, guid: 196dbbc96b088324bb3998fcda446743, type: 2}

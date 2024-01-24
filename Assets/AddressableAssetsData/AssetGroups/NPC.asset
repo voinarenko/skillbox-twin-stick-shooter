@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: NPC
+  m_EditorClassIdentifier: 
+  m_GroupName: NPC
+  m_Data:
+    m_SerializedData: []
+  m_GUID: f132f9e4bfd2d074da7554e4d63c2a07
+  m_SerializeEntries:
+  - m_GUID: cef59e2fe12165d4089d5c3be0cd9ea7
+    m_Address: BigMeleeEnemy
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 66aa806679523be47bf7ee72329a56c7
+    m_Address: SmallMeleeEnemy
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5622f6a3a68ab6e43bd112d607905df4
+    m_Address: RangedEnemy
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ef9ad66d7aeb1ee438d34e54b6755346
+    m_Address: Assets/Imported/Biomechanical_Mutant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d171ba8c039d34248b92df76f629a035
+    m_Address: SpawnPoint
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0573a187154baa248b059c6862961d4d
+    m_Address: Assets/Imported/Sci_Fi_Character_08
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7624c9d70765a754581341bf24b3f95f
+    m_Address: Assets/Imported/Zombie
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c537a4d337fc14d418fee2ced4b58814
+    m_Address: Assets/Prefabs/BaseEnemy.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8690a3c06c44be34e91abc2c22ce13f0
+    m_Address: Assets/Prefabs/EnemyMarker.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7867af58a6ec48846ae807eb4022fbaa
+    m_Address: Assets/Resources_moved/Enemies/CFX2_EnemyDeathSkull.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0a726c1922b438945a40672559a21be4
+    m_Address: Assets/Resources_moved/Enemies/HitPoint.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d93bfed27045f9543b4c9609dde06134
+    m_Address: Assets/Resources_moved/Enemies/SpawnMarker.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 5a2cfc119625f364aa6dd44b593d717d, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 45f042a5f2e852d46a694947f1de9968, type: 2}
+    - {fileID: 11400000, guid: e1e58e37574e9ce4691b437c75aada5b, type: 2}
