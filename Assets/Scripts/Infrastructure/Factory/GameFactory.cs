@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Enemy;
 using Assets.Scripts.Infrastructure.AssetManagement;
+using Assets.Scripts.Infrastructure.Services.Loot;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.Randomizer;
 using Assets.Scripts.Infrastructure.Services.StaticData;
@@ -11,8 +12,6 @@ using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Elements;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Assets.Scripts.Data;
-using Assets.Scripts.Infrastructure.Services.Loot;
 using UnityEngine;
 using UnityEngine.AI;
 using Object = UnityEngine.Object;
@@ -33,7 +32,7 @@ namespace Assets.Scripts.Infrastructure.Factory
 
 
         private GameObject PlayerGameObject { get; set; }
-        private Transform PerkParent;
+        private Transform _perkParent;
 
         public GameFactory(IAssets assets, IStaticDataService staticData, IRandomService randomService, IPersistentProgressService progressService, IWaveService waveService, ILootService lootService)
         {
@@ -88,7 +87,7 @@ namespace Assets.Scripts.Infrastructure.Factory
             hud.GetComponentInChildren<AmmoCounter>().Construct(_progressService.Progress.WorldData);
             hud.GetComponent<ActorUi>().Construct(PlayerGameObject.GetComponent<IHealth>());
 
-            PerkParent = hud.GetComponent<PerkDisplay>().GetParent();
+            _perkParent = hud.GetComponent<PerkDisplay>().GetParent();
 
             return hud;
         }
@@ -138,23 +137,8 @@ namespace Assets.Scripts.Infrastructure.Factory
             var prefab = await _assets.Load<GameObject>(AssetAddress.Loot);
             var lootPiece = InstantiateRegistered(prefab)
                 .GetComponent<LootPiece>();
-            lootPiece.Construct(_progressService.Progress.WorldData, _lootService);
+            lootPiece.Construct(_progressService.Progress.WorldData, _lootService, _perkParent);
             return lootPiece;
-        }
-
-        public async Task<PerkTimer> CreatePerkTimer(Loot loot, GameObject player)
-        {
-            var perkData = _staticData.ForPerk(loot.Type);
-            var prefab = await _assets.Load<GameObject>(AssetAddress.PerkElement);
-            var perk = Object.Instantiate(prefab, PerkParent).GetComponent<PerkTimer>();
-
-            perk.Player = player;
-            perk.Type = loot.Type;
-            perk.Icon = perkData.Icon;
-            perk.Duration = perkData.Duration;
-            perk.Multiplier = perkData.Multiplier;
-
-            return perk;
         }
 
         public async Task CreateSpawner(Vector3 at, string spawnerId)

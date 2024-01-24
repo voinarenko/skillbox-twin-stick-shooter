@@ -4,6 +4,6 @@ namespace Assets.Scripts.Infrastructure.Services.Loot
 {
     public interface ILootService : IService
     {
-        void Process(Data.Loot loot, GameObject player);
+        void Process(Data.Loot loot, GameObject player, Transform perkParent);
     }
 }

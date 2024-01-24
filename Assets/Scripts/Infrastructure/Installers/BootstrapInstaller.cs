@@ -35,6 +35,7 @@ namespace Assets.Scripts.Infrastructure.Installers
             BindSettingsService();
             BindWaveService();
             Container.Bind<ILootService>().To<LootService>().AsSingle();
+            Container.Bind<IPerkFactory>().To<PerkFactory>().AsSingle();
 
         }
 

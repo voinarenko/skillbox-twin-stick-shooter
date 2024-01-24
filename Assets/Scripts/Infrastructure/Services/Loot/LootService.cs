@@ -9,17 +9,17 @@ namespace Assets.Scripts.Infrastructure.Services.Loot
 {
     public class LootService : ILootService
     {
-        private readonly IGameFactory _gameFactory;
+        private readonly IPerkFactory _perkFactory;
         private readonly IStaticDataService _staticData;
 
-        public LootService(IGameFactory gameFactory, IStaticDataService staticData)
+        public LootService(IPerkFactory perkFactory, IStaticDataService staticData)
         {
-            _gameFactory = gameFactory;
             _staticData = staticData;
+            _perkFactory = perkFactory;
         }
 
 
-        public async void Process(Data.Loot loot, GameObject player)
+        public async void Process(Data.Loot loot, GameObject player, Transform perkParent)
         {
             switch (loot.Type)
             {
@@ -27,7 +27,7 @@ namespace Assets.Scripts.Infrastructure.Services.Loot
                     player.GetComponent<PlayerHealth>().Heal(_staticData.ForConsumable(loot.Type).Amount);
                     break;
                 case LootTypeId.AttackSpeed or LootTypeId.Damage or LootTypeId.Defense or LootTypeId.MoveSpeed:
-                    var timer = await _gameFactory.CreatePerkTimer(loot, player);
+                    var timer = await _perkFactory.CreatePerkTimer(loot, player, perkParent);
                     ApplyPerk(timer, player);
                     timer.Completed += RemovePerk;
                     break;

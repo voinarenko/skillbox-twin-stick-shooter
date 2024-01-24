@@ -16,16 +16,18 @@ namespace Assets.Scripts.Enemy
         private const string PlayerTag = "Player";
         private const float TimeToDestroy = 1.5f;
         private const float TimeToHide = 0.5f;
-        private LootMaterial Material => GetComponent<LootMaterial>();
-        private Loot _loot;
-        private bool _picked;
-        private WorldData _worldData;
         private ILootService _lootService;
+        private LootMaterial Material => GetComponent<LootMaterial>();
+        private WorldData _worldData;
+        private Loot _loot;
+        private Transform _perkParent;
+        private bool _picked;
 
-        public void Construct(WorldData worldData, ILootService lootService)
+        public void Construct(WorldData worldData, ILootService lootService, Transform perkParent)
         {
             _worldData = worldData;
             _lootService = lootService;
+            _perkParent = perkParent;
         }
 
         public void Initialize(Loot loot)
@@ -52,7 +54,7 @@ namespace Assets.Scripts.Enemy
             PlayPickupFx();
             ShowText();
             
-            _lootService.Process(_loot, player);
+            _lootService.Process(_loot, player, _perkParent);
 
             Destroy(gameObject, TimeToDestroy);
         }

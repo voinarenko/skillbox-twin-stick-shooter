@@ -36,9 +36,9 @@ namespace Assets.Scripts.Infrastructure.Services.StaticData
             _consumables = Resources
                 .LoadAll<ConsumableStaticData>(StaticDataConsumablesPath)
                 .ToDictionary(x => x.LootTypeId, x => x);
-            //_perks = Resources
-            //    .LoadAll<PerkStaticData>(StaticDataPerksPath)
-            //    .ToDictionary(x => x.LootTypeId, x => x);
+            _perks = Resources
+                .LoadAll<PerkStaticData>(StaticDataPerksPath)
+                .ToDictionary(x => x.LootTypeId, x => x);
             _windowConfigs = Resources
                 .Load<WindowStaticData>(StaticDataWindowsPath)
                 .Configs
