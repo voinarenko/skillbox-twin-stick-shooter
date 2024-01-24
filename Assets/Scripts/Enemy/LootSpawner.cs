@@ -9,9 +9,9 @@ namespace Assets.Scripts.Enemy
 {
     public class LootSpawner : MonoBehaviour
     {
-        public  IPersistentProgressService ProgressService;
+        private IPersistentProgressService _progressService;
         public EnemyDeath EnemyDeath;
-        private const float BoostFactor = 0.1f;
+        private const float BoostFactor = 0.05f;
         private IGameFactory _factory;
         private IRandomService _random;
 
@@ -19,7 +19,7 @@ namespace Assets.Scripts.Enemy
         {
             _factory = factory;
             _random = random;
-            ProgressService = progress;
+            _progressService = progress;
         }
 
         private void Start() => 
@@ -32,19 +32,37 @@ namespace Assets.Scripts.Enemy
             var loot = await _factory.CreateLoot();
             loot.transform.position = transform.position;
 
-            var lootItem = GenerateLoot();
-            loot.Initialize(lootItem);
+            if (GenerateLoot() < 20)
+            {
+                var lootItem = GenerateConsumable();
+                loot.Initialize(lootItem);
+            }
+            else
+            {
+                var lootItem = GeneratePerk();
+                loot.Initialize(lootItem);
+            }
+
         }
 
-        private Loot GenerateLoot() =>
+        private int GenerateLoot() => 
+            _random.Next(0, 100);
+        
+        private Consumable GenerateConsumable() =>
             new()
             {
-                Type = (LootTypeId)_random.Next(0, (int)LootTypeId.Quantity)
+                Type = (ConsumableTypeId)_random.Next(0, (int)ConsumableTypeId.Quantity)
+            };
+
+        private Perk GeneratePerk() =>
+            new()
+            {
+                Type = (PerkTypeId)_random.Next(0, (int)PerkTypeId.Quantity)
             };
 
         private bool SpawnAllowed()
         {
-            var target = (BoostFactor + BoostFactor * (ProgressService.Progress.WorldData.WaveData.Encountered - 1)) * 100;
+            var target = (BoostFactor + BoostFactor * (_progressService.Progress.WorldData.WaveData.Encountered - 1)) * 100;
             var random = _random.Next(0, 100);
             return random >= 0 && random <= target;
         }

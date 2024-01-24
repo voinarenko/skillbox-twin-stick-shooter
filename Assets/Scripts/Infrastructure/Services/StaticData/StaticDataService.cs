@@ -18,8 +18,8 @@ namespace Assets.Scripts.Infrastructure.Services.StaticData
         private Dictionary<PlayerTypeId, PlayerStaticData> _players;
         private Dictionary<EnemyTypeId, EnemyStaticData> _enemies;
         private Dictionary<string, LevelStaticData> _levels;
-        private Dictionary<LootTypeId, ConsumableStaticData> _consumables;
-        private Dictionary<LootTypeId, PerkStaticData> _perks;
+        private Dictionary<ConsumableTypeId, ConsumableStaticData> _consumables;
+        private Dictionary<PerkTypeId, PerkStaticData> _perks;
         private Dictionary<WindowId, WindowConfig> _windowConfigs;
         
         public void Load()
@@ -57,10 +57,10 @@ namespace Assets.Scripts.Infrastructure.Services.StaticData
         public WindowConfig ForWindow(WindowId windowId) =>
             _windowConfigs.GetValueOrDefault(windowId);
 
-        public ConsumableStaticData ForConsumable(LootTypeId typeId) => 
+        public ConsumableStaticData ForConsumable(ConsumableTypeId typeId) => 
             _consumables.GetValueOrDefault(typeId);
 
-        public PerkStaticData ForPerk(LootTypeId typeId) =>
+        public PerkStaticData ForPerk(PerkTypeId typeId) =>
             _perks.GetValueOrDefault(typeId);
     }
 }

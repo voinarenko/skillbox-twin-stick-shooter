@@ -18,19 +18,18 @@ namespace Assets.Scripts.Infrastructure.Factory
             _assets = assets;
         }
 
-        public async Task<PerkTimer> CreatePerkTimer(Loot loot, GameObject player, Transform perkParent)
+        public async Task<PerkTimer> CreatePerkTimer(Perk perk, Transform perkParent)
         {
-            var perkData = _staticData.ForPerk(loot.Type);
+            var perkData = _staticData.ForPerk(perk.Type);
             var prefab = await _assets.Load<GameObject>(AssetAddress.PerkElement);
-            var perk = Object.Instantiate(prefab, perkParent).GetComponent<PerkTimer>();
+            var perkObject = Object.Instantiate(prefab, perkParent).GetComponent<PerkTimer>();
 
-            perk.Player = player;
-            perk.Type = loot.Type;
-            perk.Icon = perkData.Icon;
-            perk.Duration = perkData.Duration;
-            perk.Multiplier = perkData.Multiplier;
+            perkObject.Type = perk.Type;
+            perkObject.Icon = perkData.Icon;
+            perkObject.Duration = perkData.Duration;
+            perkObject.Multiplier = perkData.Multiplier;
 
-            return perk;
+            return perkObject;
         }
     }
 }

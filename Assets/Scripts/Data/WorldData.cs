@@ -7,7 +7,8 @@ namespace Assets.Scripts.Data
     {
         public PositionOnLevel PositionOnLevel;
         public AmmoData AmmoData;
-        public LootData LootData;
+        public ConsumableData ConsumableData;
+        public PerkData PerkData;
         public WaveData WaveData;
         public KillData KillData;
         public ScoreData ScoreData;
@@ -17,7 +18,8 @@ namespace Assets.Scripts.Data
         {
             PositionOnLevel = new PositionOnLevel(initialLevel);
             AmmoData = new AmmoData();
-            LootData = new LootData();
+            ConsumableData = new ConsumableData();
+            PerkData = new PerkData();
             WaveData = new WaveData();
             KillData = new KillData();
             ScoreData = new ScoreData();

@@ -4,8 +4,8 @@ using Assets.Scripts.StaticData;
 namespace Assets.Scripts.Data
 {
     [Serializable]
-    public class Loot
+    public class Consumable
     {
-        public LootTypeId Type;
+        public ConsumableTypeId Type;
     }
 }

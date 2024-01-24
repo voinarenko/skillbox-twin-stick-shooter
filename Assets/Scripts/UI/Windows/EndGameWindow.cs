@@ -46,11 +46,11 @@ namespace Assets.Scripts.UI.Windows
             SmallMeleesKilledText.text = $"{GetValue(EnemyType.SmallMelee)}";
             BigMeleesKilledText.text = $"{GetValue(EnemyType.BigMelee)}";
             RangedKilledText.text = $"{GetValue(EnemyType.Ranged)}";
-            HealthPickedText.text = $"{GetValue(LootTypeId.Health)}";
-            DefensePickedText.text = $"{GetValue(LootTypeId.Defense)}";
-            MoveSpeedPickedText.text = $"{GetValue(LootTypeId.MoveSpeed)}";
-            DamagePickedText.text = $"{GetValue(LootTypeId.Damage)}";
-            AttackSpeedPickedText.text = $"{GetValue(LootTypeId.AttackSpeed)}";
+            HealthPickedText.text = $"{GetValue(ConsumableTypeId.Health)}";
+            DefensePickedText.text = $"{GetValue(PerkTypeId.Defense)}";
+            MoveSpeedPickedText.text = $"{GetValue(PerkTypeId.MoveSpeed)}";
+            DamagePickedText.text = $"{GetValue(PerkTypeId.Damage)}";
+            AttackSpeedPickedText.text = $"{GetValue(PerkTypeId.AttackSpeed)}";
         }
 
         private int GetValue(EnemyType type)
@@ -61,10 +61,17 @@ namespace Assets.Scripts.UI.Windows
             return result;
         }
 
-        private int GetValue(LootTypeId type)
+        private int GetValue(ConsumableTypeId type)
         {
             var result = 0;
-            foreach (var pair in Progress.WorldData.LootData.Collected.Where(x => x.Key == type))
+            foreach (var pair in Progress.WorldData.ConsumableData.Collected.Where(x => x.Key == type))
+                result = pair.Value;
+            return result;
+        }
+        private int GetValue(PerkTypeId type)
+        {
+            var result = 0;
+            foreach (var pair in Progress.WorldData.PerkData.Collected.Where(x => x.Key == type))
                 result = pair.Value;
             return result;
         }

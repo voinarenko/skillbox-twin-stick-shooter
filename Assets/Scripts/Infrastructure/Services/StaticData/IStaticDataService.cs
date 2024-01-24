@@ -11,7 +11,7 @@ namespace Assets.Scripts.Infrastructure.Services.StaticData
         EnemyStaticData ForEnemy(EnemyTypeId typeId);
         LevelStaticData ForLevel(string sceneKey);
         WindowConfig ForWindow(WindowId endGame);
-        ConsumableStaticData ForConsumable(LootTypeId typeId);
-        PerkStaticData ForPerk(LootTypeId typeId);
+        ConsumableStaticData ForConsumable(ConsumableTypeId typeId);
+        PerkStaticData ForPerk(PerkTypeId typeId);
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts.Infrastructure.Factory;
 using Assets.Scripts.Infrastructure.Services.StaticData;
 using Assets.Scripts.Player;
+using Assets.Scripts.Data;
+using Assets.Scripts.Logic;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Elements;
 using UnityEngine;
@@ -17,59 +19,54 @@ namespace Assets.Scripts.Infrastructure.Services.Loot
             _staticData = staticData;
             _perkFactory = perkFactory;
         }
+        
+        public void Process(Consumable loot, GameObject player) => 
+            player.GetComponent<PlayerHealth>().Heal(_staticData.ForConsumable(loot.Type).Amount);
 
-
-        public async void Process(Data.Loot loot, GameObject player, Transform perkParent)
+        public async void Process(Perk loot, GameObject player, Transform perkParent)
         {
-            switch (loot.Type)
-            {
-                case LootTypeId.Health:
-                    player.GetComponent<PlayerHealth>().Heal(_staticData.ForConsumable(loot.Type).Amount);
-                    break;
-                case LootTypeId.AttackSpeed or LootTypeId.Damage or LootTypeId.Defense or LootTypeId.MoveSpeed:
-                    var timer = await _perkFactory.CreatePerkTimer(loot, player, perkParent);
-                    ApplyPerk(timer, player);
-                    timer.Completed += RemovePerk;
-                    break;
-            }
+            var timer = await _perkFactory.CreatePerkTimer(loot, perkParent);
+            ApplyPerk(timer, player);
+            timer.Completed += RemovePerk;
         }
 
-        private void ApplyPerk(PerkTimer timer, GameObject player)
+        private static void ApplyPerk(PerkTimer timer, GameObject player)
         {
+            timer.Player = player;
             var shooter = player.GetComponent<PlayerShooter>();
             switch (timer.Type)
             {
-                case LootTypeId.Damage:
+                case PerkTypeId.Damage:
                     shooter.Damage *= timer.Multiplier;
                     break;
-                case LootTypeId.Defense:
+                case PerkTypeId.Defense:
                     player.GetComponent<PlayerHealth>().Defense *= timer.Multiplier;
                     break;
-                case LootTypeId.MoveSpeed:
+                case PerkTypeId.MoveSpeed:
                     player.GetComponent<PlayerMovement>().Speed *= timer.Multiplier;
                     break;
-                case LootTypeId.AttackSpeed:
+                case PerkTypeId.AttackSpeed:
                     shooter.ShootDelay /= timer.Multiplier;
                     shooter.ReloadDelay /= timer.Multiplier;
                     break;
             }
         }
 
-        private void RemovePerk(PerkTimer timer, GameObject player)
+        private static void RemovePerk(PerkTimer timer, GameObject player)
         {
             var shooter = player.GetComponent<PlayerShooter>();
             switch (timer.Type)
             {
-                case LootTypeId.Damage:
+                case PerkTypeId.Damage:
                     shooter.Damage /= timer.Multiplier;
                     break;
-                case LootTypeId.Defense:
+                case PerkTypeId.Defense:
                     player.GetComponent<PlayerHealth>().Defense /= timer.Multiplier;
                     break;
-                case LootTypeId.MoveSpeed:
+                case PerkTypeId.MoveSpeed:
                     player.GetComponent<PlayerMovement>().Speed /= timer.Multiplier;
                     break;
-                case LootTypeId.AttackSpeed:
+                case PerkTypeId.AttackSpeed:
                     shooter.ShootDelay *= timer.Multiplier;
                     shooter.ReloadDelay *= timer.Multiplier;
                     break;

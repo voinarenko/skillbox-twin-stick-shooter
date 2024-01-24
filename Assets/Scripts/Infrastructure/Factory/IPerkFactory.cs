@@ -8,6 +8,6 @@ namespace Assets.Scripts.Infrastructure.Factory
 {
     public interface IPerkFactory : IService
     {
-        Task<PerkTimer> CreatePerkTimer(Loot loot, GameObject player, Transform perkParent);
+        Task<PerkTimer> CreatePerkTimer(Perk perk, Transform perkParent);
     }
 }

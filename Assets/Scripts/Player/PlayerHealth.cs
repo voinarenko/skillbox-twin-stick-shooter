@@ -22,11 +22,8 @@ namespace Assets.Scripts.Player
             get => _state.CurrentHealth;
             set
             {
-                if (Math.Abs(_state.CurrentHealth - value) > 0.01f)
-                {
-                    _state.CurrentHealth = value;
-                    HealthChanged?.Invoke();
-                }
+                _state.CurrentHealth = value;
+                HealthChanged?.Invoke();
             }
         }
 
@@ -56,8 +53,8 @@ namespace Assets.Scripts.Player
 
         public void Heal(float cure)
         {
-            if (Current + cure > Max) _state.ResetHealth();
-            else Current += cure;
+            Current += cure;
+            if (Current > Max) Current = Max;
         }
     }
 }

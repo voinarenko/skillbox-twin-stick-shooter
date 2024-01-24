@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Data;
+using UnityEngine;
 
 namespace Assets.Scripts.Infrastructure.Services.Loot
 {
     public interface ILootService : IService
     {
-        void Process(Data.Loot loot, GameObject player, Transform perkParent);
+        void Process(Consumable loot, GameObject player);
+        void Process(Perk loot, GameObject player, Transform perkParent);
     }
 }

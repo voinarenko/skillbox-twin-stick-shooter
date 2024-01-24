@@ -9,7 +9,7 @@ namespace Assets.Scripts.UI.Elements
     public class PerkTimer : MonoBehaviour
     {
         public GameObject Player;
-        public LootTypeId Type;
+        public PerkTypeId Type;
         public Sprite Icon;
         public float Duration;
         public float Multiplier;

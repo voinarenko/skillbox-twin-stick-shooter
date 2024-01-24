@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Data;
 using Assets.Scripts.Infrastructure.Services.Loot;
+using Assets.Scripts.Player;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -19,9 +20,11 @@ namespace Assets.Scripts.Enemy
         private ILootService _lootService;
         private LootMaterial Material => GetComponent<LootMaterial>();
         private WorldData _worldData;
-        private Loot _loot;
+        private Consumable _consumable;
+        private Perk _perk;
         private Transform _perkParent;
         private bool _picked;
+        private bool _isConsumable;
 
         public void Construct(WorldData worldData, ILootService lootService, Transform perkParent)
         {
@@ -30,16 +33,23 @@ namespace Assets.Scripts.Enemy
             _perkParent = perkParent;
         }
 
-        public void Initialize(Loot loot)
+        public void Initialize(Consumable loot)
         {
-            _loot = loot;
-            Material.Change(Sphere, (int)_loot.Type);
+            _consumable = loot;
+            Material.Change(Sphere, (int)_consumable.Type);
+            _isConsumable = true;
+        }
+        public void Initialize(Perk loot)
+        {
+            _perk = loot;
+            Material.Change(Sphere, (int)_perk.Type);
+            _isConsumable = false;
         }
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag(PlayerTag)) 
-                Pickup(other.gameObject);
+                Pickup(other.GetComponentInParent<PlayerMovement>().gameObject);
         }
 
         private void Pickup(GameObject player)
@@ -54,13 +64,17 @@ namespace Assets.Scripts.Enemy
             PlayPickupFx();
             ShowText();
             
-            _lootService.Process(_loot, player, _perkParent);
+            if (_isConsumable) _lootService.Process(_consumable, player);
+            else _lootService.Process(_perk, player, _perkParent);
 
             Destroy(gameObject, TimeToDestroy);
         }
 
-        private void UpdateWorldData() => 
-            _worldData.LootData.Collect(_loot);
+        private void UpdateWorldData()
+        {
+            if (_isConsumable) _worldData.ConsumableData.Collect(_consumable);
+            else _worldData.PerkData.Collect(_perk);
+        }
 
         private void HideSphere() => 
             Sphere.transform.DOScale(0,TimeToHide).OnComplete(() => 
@@ -71,7 +85,7 @@ namespace Assets.Scripts.Enemy
 
         private void ShowText()
         {
-            LootText.text = $"{_loot.Type}";
+            LootText.text = _isConsumable ? $"{_consumable.Type}" : $"{_perk.Type}";
             PickupPopup.SetActive(true);
         }
     }
