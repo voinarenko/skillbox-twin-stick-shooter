@@ -630,7 +630,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 86.3
+  m_fontSize: 86.55
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -785,6 +785,16 @@ PrefabInstance:
       propertyPath: m_text
       value: Score earned
       objectReference: {fileID: 0}
+    - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
+        type: 3}
+      propertyPath: m_fontSizeMax
+      value: 33
+      objectReference: {fileID: 0}
     - target: {fileID: 2392820094669015148, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
       propertyPath: m_Name
@@ -930,6 +940,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_text
       value: Big melee enemies killed
+      objectReference: {fileID: 0}
+    - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
+        type: 3}
+      propertyPath: m_fontSizeMax
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: 2392820094669015148, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
@@ -1077,6 +1097,16 @@ PrefabInstance:
       propertyPath: m_text
       value: Reloads made
       objectReference: {fileID: 0}
+    - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
+        type: 3}
+      propertyPath: m_fontSizeMax
+      value: 33
+      objectReference: {fileID: 0}
     - target: {fileID: 2392820094669015148, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
       propertyPath: m_Name
@@ -1221,12 +1251,17 @@ PrefabInstance:
     - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
       propertyPath: m_text
-      value: Move speed bonus picked up
+      value: Move speed bonuses picked up
       objectReference: {fileID: 0}
     - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
       propertyPath: m_fontSize
-      value: 35
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
+        type: 3}
+      propertyPath: m_fontSizeMax
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: 2392820094669015148, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
@@ -1372,7 +1407,17 @@ PrefabInstance:
     - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
       propertyPath: m_text
-      value: Defense bonus picked up
+      value: Defense bonuses picked up
+      objectReference: {fileID: 0}
+    - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
+        type: 3}
+      propertyPath: m_fontSizeMax
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: 2392820094669015148, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
@@ -1520,6 +1565,16 @@ PrefabInstance:
       propertyPath: m_text
       value: Waves survived
       objectReference: {fileID: 0}
+    - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
+        type: 3}
+      propertyPath: m_fontSizeMax
+      value: 33
+      objectReference: {fileID: 0}
     - target: {fileID: 2392820094669015148, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
       propertyPath: m_Name
@@ -1666,6 +1721,16 @@ PrefabInstance:
       propertyPath: m_text
       value: Bullets spent
       objectReference: {fileID: 0}
+    - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
+        type: 3}
+      propertyPath: m_fontSizeMax
+      value: 33
+      objectReference: {fileID: 0}
     - target: {fileID: 2392820094669015148, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
       propertyPath: m_Name
@@ -1810,12 +1875,17 @@ PrefabInstance:
     - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
       propertyPath: m_text
-      value: Attack speed bonus picked up
+      value: Attack speed bonuses picked up
       objectReference: {fileID: 0}
     - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
       propertyPath: m_fontSize
-      value: 35
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
+        type: 3}
+      propertyPath: m_fontSizeMax
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: 2392820094669015148, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
@@ -1961,7 +2031,17 @@ PrefabInstance:
     - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
       propertyPath: m_text
-      value: Health bonus picked up
+      value: Health bonuses picked up
+      objectReference: {fileID: 0}
+    - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
+        type: 3}
+      propertyPath: m_fontSizeMax
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: 2392820094669015148, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
@@ -2109,6 +2189,16 @@ PrefabInstance:
       propertyPath: m_text
       value: Ranged enemies killed
       objectReference: {fileID: 0}
+    - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
+        type: 3}
+      propertyPath: m_fontSizeMax
+      value: 33
+      objectReference: {fileID: 0}
     - target: {fileID: 2392820094669015148, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
       propertyPath: m_Name
@@ -2255,6 +2345,16 @@ PrefabInstance:
       propertyPath: m_text
       value: Small melee enemies killed
       objectReference: {fileID: 0}
+    - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
+        type: 3}
+      propertyPath: m_fontSizeMax
+      value: 33
+      objectReference: {fileID: 0}
     - target: {fileID: 2392820094669015148, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
       propertyPath: m_Name
@@ -2399,7 +2499,17 @@ PrefabInstance:
     - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
       propertyPath: m_text
-      value: Damage bonus picked up
+      value: Damage bonuses picked up
+      objectReference: {fileID: 0}
+    - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
+        type: 3}
+      propertyPath: m_fontSizeMax
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: 2392820094669015148, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}

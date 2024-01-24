@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d544bde01bcf8cd4894c7dbec439d592, type: 3}
   m_Name: Defense
   m_EditorClassIdentifier: 
-  Type: 1
+  LootTypeId: 0
   Icon: {fileID: 21300000, guid: 8c013fbd1dde7bc4db457cfd3b7b7ffa, type: 3}
-  Duration: 3
-  Multiplier: 2
+  Duration: 60
+  Multiplier: 1.2

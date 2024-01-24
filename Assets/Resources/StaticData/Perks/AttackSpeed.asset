@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d544bde01bcf8cd4894c7dbec439d592, type: 3}
   m_Name: AttackSpeed
   m_EditorClassIdentifier: 
-  Type: 4
+  LootTypeId: 3
   Icon: {fileID: 21300000, guid: 7b7de2430deee964da27ba2590989b37, type: 3}
-  Duration: 3
-  Multiplier: 2
+  Duration: 60
+  Multiplier: 1.2

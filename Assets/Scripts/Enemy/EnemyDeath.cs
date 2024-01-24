@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts.Enemy.UtilityAi;
-using System.Collections;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
@@ -14,6 +14,8 @@ namespace Assets.Scripts.Enemy
         public GameObject DeathFx;
         public event Action Happened;
         public int Value;
+        public TextMeshPro LootText;
+        public GameObject PickupPopup;
 
         private const float TimeToDestroy = 3;
         private const float TimeToSpawnLoot = 2.5f;
@@ -66,8 +68,15 @@ namespace Assets.Scripts.Enemy
             _attack.enabled = false;
             _animator.PlayDeath();
             SpawnDeathFx();
+            ShowText();
             StartCoroutine(Inform());
             Destroy(gameObject, TimeToDestroy);
+        }
+
+        private void ShowText()
+        {
+            LootText.text = $"{Value}";
+            PickupPopup.SetActive(true);
         }
 
         private IEnumerator Inform()

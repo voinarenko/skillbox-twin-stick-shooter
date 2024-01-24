@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5984278437907084909}
   - component: {fileID: 7259202369626320990}
   - component: {fileID: 9049786100182173881}
-  - component: {fileID: 8359776573097024331}
+  - component: {fileID: -5000136911602640700}
   m_Layer: 0
   m_Name: PickupPopup
   m_TagString: Untagged
@@ -196,11 +196,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!222 &8359776573097024331
-CanvasRenderer:
+--- !u!114 &-5000136911602640700
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3634758806780902263}
-  m_CullTransparentMesh: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be68e5a9146d0244dacc8e7575d3827b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
