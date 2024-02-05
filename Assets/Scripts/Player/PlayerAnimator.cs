@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerAnimator : MonoBehaviour
+    public class PlayerAnimator : NetworkBehaviour
     {
         public readonly int AnimIdVertical = Animator.StringToHash("Y");
         public readonly int AnimIdHorizontal = Animator.StringToHash("X");

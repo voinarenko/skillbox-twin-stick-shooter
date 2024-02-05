@@ -2396,6 +2396,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 615630079722879486, guid: c537a4d337fc14d418fee2ced4b58814,
+        type: 3}
+      propertyPath: _assetId
+      value: 937635814
+      objectReference: {fileID: 0}
     - target: {fileID: 1740678622543289402, guid: c537a4d337fc14d418fee2ced4b58814,
         type: 3}
       propertyPath: HitPoints.Array.size

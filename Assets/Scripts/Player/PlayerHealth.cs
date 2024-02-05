@@ -1,13 +1,14 @@
-﻿using System;
-using Assets.Scripts.Data;
+﻿using Assets.Scripts.Data;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Logic;
+using Mirror;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
     [RequireComponent(typeof(PlayerAnimator))]
-    public class PlayerHealth : MonoBehaviour, ISavedProgress, IHealth
+    public class PlayerHealth : NetworkBehaviour, ISavedProgress, IHealth
     {
         public float Max
         {

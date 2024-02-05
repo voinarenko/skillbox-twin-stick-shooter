@@ -7,11 +7,12 @@ using Assets.Scripts.Infrastructure.Services.StaticData;
 using Assets.Scripts.Infrastructure.Services.Wave;
 using Assets.Scripts.Logic;
 using Assets.Scripts.Logic.EnemySpawners;
-using Assets.Scripts.Player;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Elements;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Assets.Scripts.Player;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
 using Object = UnityEngine.Object;
@@ -22,6 +23,8 @@ namespace Assets.Scripts.Infrastructure.Factory
     {
         public List<ISavedProgressReader> ProgressReaders { get; } = new();
         public List<ISavedProgress> ProgressWriters { get; } = new();
+
+        private static PlayersWatcher PlayersWatcher => Object.FindAnyObjectByType<PlayersWatcher>();
 
         private readonly IAssets _assets;
         private readonly IStaticDataService _staticData;
@@ -54,12 +57,43 @@ namespace Assets.Scripts.Infrastructure.Factory
         {
             var playerData = _progressService.Progress.PlayerStaticData;
             var prefab = await _assets.Load<GameObject>(playerData.PrefabReference);
-            PlayerGameObject = Object.Instantiate(prefab, at, Quaternion.identity);
+
+            return prefab;
+
+            //PlayerGameObject = Object.Instantiate(prefab, at, Quaternion.identity);
+            //RegisterProgressWatchers(PlayerGameObject);
+
+            //_progressService.Progress.WorldData.AmmoData.Available = playerData.Ammo;
+            //_progressService.Progress.WorldData.WaveData.NextWave();
+            ////_waveService.SpawnEnemies();
+
+            //PlayerGameObject.GetComponent<PlayerMovement>().SetSpeed(playerData.MoveSpeed);
+            //PlayerGameObject.GetComponent<PlayerRotation>().SetSpeed(playerData.RotateSpeed);
+            //PlayerGameObject.GetComponent<PlayerShooter>()
+            //    .Construct(playerData,
+            //        _progressService.Progress.WorldData,
+            //        playerData.Damage,
+            //        playerData.AttackCooldown,
+            //        playerData.ReloadCooldown);
+
+            //PlayerGameObject.GetComponent<Animator>().SetFloat(PlayerGameObject.GetComponent<PlayerAnimator>().AnimSpeed, playerData.SpeedFactor);
+
+            //var playerDeath = PlayerGameObject.GetComponent<PlayerDeath>();
+            //PlayersWatcher.AddPlayer(playerDeath);
+
+            //return PlayerGameObject;
+        }
+
+        public async void UpdatePlayerData(GameObject player)
+        {
+            PlayerGameObject = player;
+            var playerData = _progressService.Progress.PlayerStaticData;
+
             RegisterProgressWatchers(PlayerGameObject);
 
             _progressService.Progress.WorldData.AmmoData.Available = playerData.Ammo;
             _progressService.Progress.WorldData.WaveData.NextWave();
-            _waveService.SpawnEnemies();
+            //_waveService.SpawnEnemies();
 
             PlayerGameObject.GetComponent<PlayerMovement>().SetSpeed(playerData.MoveSpeed);
             PlayerGameObject.GetComponent<PlayerRotation>().SetSpeed(playerData.RotateSpeed);
@@ -69,15 +103,14 @@ namespace Assets.Scripts.Infrastructure.Factory
                     playerData.Damage,
                     playerData.AttackCooldown,
                     playerData.ReloadCooldown);
-            
+
             PlayerGameObject.GetComponent<Animator>().SetFloat(PlayerGameObject.GetComponent<PlayerAnimator>().AnimSpeed, playerData.SpeedFactor);
 
             var playerDeath = PlayerGameObject.GetComponent<PlayerDeath>();
-            playerDeath.Construct(_progressService);
+            PlayersWatcher.AddPlayer(playerDeath);
 
-            return PlayerGameObject;
+            await CreateHud();
         }
-
 
         public async Task<GameObject> CreateHud()
         {
@@ -152,6 +185,15 @@ namespace Assets.Scripts.Infrastructure.Factory
             _waveService.SpawnPoints.Add(spawner);
         }
 
+        public void CleanUp()
+        {
+            ProgressReaders.Clear();
+            ProgressWriters.Clear();
+            _assets.CleanUp();
+        }
+
+        public IAssets GetAssets() => _assets;
+
         private void Register(ISavedProgressReader progressReader)
         {
             if (progressReader is ISavedProgress progressPiece)
@@ -164,13 +206,6 @@ namespace Assets.Scripts.Infrastructure.Factory
             {
                 ProgressReaders.Add(progressReader);
             }
-        }
-
-        public void CleanUp()
-        {
-            ProgressReaders.Clear();
-            ProgressWriters.Clear();
-            _assets.CleanUp();
         }
 
         private GameObject InstantiateRegistered(GameObject prefab)

@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerAudio : MonoBehaviour
+    public class PlayerAudio : NetworkBehaviour
     {
         private PlayerDirectionFinder PlayerDirectionFinder => GetComponent<PlayerDirectionFinder>();
 

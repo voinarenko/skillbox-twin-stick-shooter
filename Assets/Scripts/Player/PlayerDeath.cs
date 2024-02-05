@@ -1,12 +1,14 @@
-﻿using System;
-using Assets.Scripts.Infrastructure.Services.PersistentProgress;
+﻿using Assets.Scripts.Infrastructure.Services.PersistentProgress;
+using Mirror;
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerDeath : MonoBehaviour
+    public class PlayerDeath : NetworkBehaviour
     {
+        private const string DeadTag = "Dead";
         public NavMeshAgent Agent;
         public PlayerHealth Health;
         public PlayerMovement Move;
@@ -15,13 +17,9 @@ namespace Assets.Scripts.Player
         public PlayerAnimator Animator;
         public GameObject DeathFx;
 
-        public event Action Happened;
+        public event Action<PlayerDeath> Happened;
 
-        private IPersistentProgressService _progressService;
         private bool _isDead;
-
-        public void Construct(IPersistentProgressService progressService) => 
-            _progressService = progressService;
 
         private void Start() => 
             Health.HealthChanged += HealthChanged;
@@ -41,8 +39,8 @@ namespace Assets.Scripts.Player
             Rotate.enabled = false;
             Attack.enabled = false;
             Animator.PlayDeath();
-
-            Happened?.Invoke();
+            tag = DeadTag;
+            Happened?.Invoke(this);
 
             Instantiate(DeathFx, transform.position, Quaternion.identity);
         }

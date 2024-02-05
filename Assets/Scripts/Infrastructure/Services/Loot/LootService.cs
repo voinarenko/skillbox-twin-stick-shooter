@@ -1,8 +1,7 @@
-﻿using Assets.Scripts.Infrastructure.Factory;
+﻿using Assets.Scripts.Data;
+using Assets.Scripts.Infrastructure.Factory;
 using Assets.Scripts.Infrastructure.Services.StaticData;
 using Assets.Scripts.Player;
-using Assets.Scripts.Data;
-using Assets.Scripts.Logic;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Elements;
 using UnityEngine;

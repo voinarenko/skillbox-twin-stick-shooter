@@ -154,9 +154,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3da2b55390f603945bb5163ccc14f820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TrailConfig: {fileID: 11400000, guid: 79cae040cd591154fa12b930fca31c3f, type: 2}
-  _speed: 0.1
+  _trailConfig: {fileID: 11400000, guid: 79cae040cd591154fa12b930fca31c3f, type: 2}
   _renderer: {fileID: -2521852740558504257}
+  _speed: 0.1
 --- !u!96 &4147422737147280035
 TrailRenderer:
   serializedVersion: 3
@@ -315,9 +315,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c5840075d6d2f6478f90ed6ab8c9535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitFxPrefab: {fileID: 100000, guid: bc98890f6028f444eaa7789bde5e2eeb, type: 3}
-  Sender: 
   Damage: 10
+  Sender: 
+  _hitFxPrefab: {fileID: 100000, guid: bc98890f6028f444eaa7789bde5e2eeb, type: 3}
 --- !u!54 &2384452741857392058
 Rigidbody:
   m_ObjectHideFlags: 0

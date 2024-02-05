@@ -2,6 +2,7 @@
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Elements.Buttons;
 using System;
+using Assets.Scripts.Infrastructure;
 using Assets.Scripts.Infrastructure.States;
 using TMPro;
 using UnityEngine;
@@ -27,6 +28,7 @@ namespace Assets.Scripts.UI.Elements
 
         private IStaticDataService _staticData;
         private IGameStateMachine _stateMachine;
+        private NetManager _netManager;
         private readonly Array _playerTypes = Enum.GetValues(typeof(PlayerTypeId));
         private int _playerType;
 
@@ -42,6 +44,7 @@ namespace Assets.Scripts.UI.Elements
             LeftButton.Clicked += SwitchLeft;
             RightButton.Clicked += SwitchRight;
             PlayButton.Clicked += Play;
+            _netManager = FindAnyObjectByType<NetManager>();
         }
 
         private void OnDestroy()
@@ -65,8 +68,11 @@ namespace Assets.Scripts.UI.Elements
             UpdateData(_playerType);
         }
 
-        private void Play() => 
+        private void Play()
+        {
+            //_netManager.StartGame();
             _stateMachine.Enter<LoadProgressState, PlayerStaticData>(_staticData.ForPlayer((PlayerTypeId)_playerType));
+        }
 
         private void UpdateData(int playerTypeId)
         {

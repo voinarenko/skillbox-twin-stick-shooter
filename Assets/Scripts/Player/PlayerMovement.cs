@@ -1,28 +1,30 @@
 using Assets.Scripts.Data;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
+using Mirror;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerMovement : MonoBehaviour, ISavedProgress
+    public class PlayerMovement : NetworkBehaviour, ISavedProgress
     {
-        private PlayerControls _controls;
-        private NavMeshAgent _agent;
         public float Speed;
 
-        private PlayerAnimator PlayerAnimator => GetComponent<PlayerAnimator>();
+        [SerializeField] private NavMeshAgent _agent;
+        [SerializeField] private PlayerAnimator _animator;
+
+        private PlayerControls _controls;
 
         private void Start()
         {
-            _agent = GetComponent<NavMeshAgent>();
             _controls = new PlayerControls();
             _controls.Enable();
         }
 
         private void Update()
         {
+            if (!isOwned) return;
             var move = _controls.Player.Move.ReadValue<Vector2>();
             var pos = transform.position;
             var dir = new Vector3(move.x, 0, move.y);
@@ -31,7 +33,7 @@ namespace Assets.Scripts.Player
             pos += new Vector3(move.x * Speed, 0, move.y * Speed);
             if (transform != null) transform.position = pos;
 
-            PlayerAnimator.Move(dir);
+            _animator.Move(dir);
         }
 
         public void UpdateProgress(PlayerProgress progress) => 

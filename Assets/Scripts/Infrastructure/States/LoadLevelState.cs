@@ -3,11 +3,10 @@ using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.StaticData;
 using Assets.Scripts.Infrastructure.Services.Wave;
 using Assets.Scripts.Logic;
-using Assets.Scripts.Player;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Services.Factory;
-using Cinemachine;
 using System.Threading.Tasks;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,6 +16,7 @@ namespace Assets.Scripts.Infrastructure.States
     {
         private const string WaveChangerTag = "WaveChanger";
         private const string CameraTag = "VirtualCamera";
+        private static NetManager NetManager => Object.FindAnyObjectByType<NetManager>();
         private readonly IPersistentProgressService _progressService;
         private readonly IGameFactory _gameFactory;
         private readonly IStaticDataService _staticData;
@@ -66,17 +66,22 @@ namespace Assets.Scripts.Infrastructure.States
         {
             var levelData = LevelStaticData();
             await InitSpawners(levelData);
-            var player = await InitPlayer(levelData);
-            InitWaveChanger(player.GetComponent<PlayerDeath>());
-            CameraFollow(player);
+            //var player = await InitPlayer(levelData);
 
-            await InitHud();
+            NetManager.Construct(_gameFactory, _progressService.Progress.PlayerStaticData, levelData.InitialPlayerPosition);
+
+            InitWaveChanger();
+            //CameraFollow(player);
+
+            //await InitHud();
+ 
+            //NetManager.SpawnPlayer(player);
         }
 
-        private void InitWaveChanger(PlayerDeath playerDeath)
+        private void InitWaveChanger()
         {
             var manager = GameObject.FindWithTag(WaveChangerTag);
-                manager.GetComponent<WaveChanger>().Construct(_progressService, _stateMachine, _waveService, playerDeath);
+                manager.GetComponent<WaveChanger>().Construct(_progressService, _stateMachine, _waveService);
                 manager.GetComponent<PauseListener>().Construct(_stateMachine);
         }
 

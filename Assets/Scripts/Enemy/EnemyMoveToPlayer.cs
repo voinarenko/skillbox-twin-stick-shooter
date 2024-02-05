@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Player;
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,18 +8,36 @@ namespace Assets.Scripts.Enemy
     public class EnemyMoveToPlayer : MonoBehaviour
     {
         public NavMeshAgent Agent;
+        public Transform PlayerTransform;
+
         public bool PlayerNearby;
         public event Action Completed;
 
-        public Transform PlayerTransform;
+        private const string PlayerTag = "Player";
 
-        public void Construct(Transform playerTransform) => 
+
+        public void Construct(Transform playerTransform)
+        {
             PlayerTransform = playerTransform;
+            playerTransform.GetComponent<PlayerDeath>().Happened += PlayerKilled;
+        }
 
         private void Update()
         {
+            if (PlayerTransform == null)
+            {
+                var player = GameObject.FindWithTag(PlayerTag);
+                PlayerTransform = player.GetComponent<PlayerMovement>().transform;
+                player.GetComponent<PlayerDeath>().Happened += PlayerKilled;
+            }
             SetDestinationForAgent();
             if (PlayerNearby) CheckDistance();
+        }
+
+        private void PlayerKilled(PlayerDeath player)
+        {
+            player.Happened -= PlayerKilled;
+            PlayerTransform = null;
         }
 
         private void CheckDistance()

@@ -1,31 +1,32 @@
 ﻿using Assets.Scripts.Bullet;
 using Assets.Scripts.Data;
 using Assets.Scripts.StaticData;
+using Mirror;
 using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerShooter : MonoBehaviour
+    public class PlayerShooter : NetworkBehaviour
     {
-        public GameObject ShootEffectPrefab;
-        public GameObject BulletPrefab;
-        public Transform ShootPoint;
+        public float Damage;
+        public float ShootDelay;
+        public float ReloadDelay;
 
         private const int AmmoConsumption = 1;
         private readonly Ammo _ammo = new();
+
+        [SerializeField] private GameObject _shootEffectPrefab;
+        [SerializeField] private GameObject _bulletPrefab;
+        [SerializeField] private Transform _shootPoint;
+
         private PlayerStaticData _playerStaticData;
-        private PlayerAudio PlayerAudio => GetComponent<PlayerAudio>();
-        private PlayerAnimator PlayerAnimator => GetComponent<PlayerAnimator>();
+        private PlayerAudio _playerAudio;
+        private PlayerAnimator _playerAnimator;
         private PlayerControls _controls;
         private WorldData _worldData;
 
-        public float Damage;
-
         private float _shootTime = float.MinValue;
-        public float ShootDelay;
-
         private float _reloadTime = float.MinValue;
-        public float ReloadDelay;
         private float _shoot;
         private float _reload;
 
@@ -40,6 +41,8 @@ namespace Assets.Scripts.Player
 
         private void Start()
         {
+            _playerAudio = GetComponent<PlayerAudio>();
+            _playerAnimator = GetComponent<PlayerAnimator>();
             _controls = new PlayerControls();
             _controls.Enable();
             _ammo.Value = AmmoConsumption;
@@ -47,6 +50,7 @@ namespace Assets.Scripts.Player
 
         private void Update()
         {
+            if (!isOwned) return;
             _shoot = _controls.Player.Shoot.ReadValue<float>();
             _reload = _controls.Player.Reload.ReadValue<float>();
 
@@ -62,11 +66,11 @@ namespace Assets.Scripts.Player
 
         private void OnAttack()
         {            
-            if (ShootEffectPrefab != null) 
-                Instantiate(ShootEffectPrefab, ShootPoint.position, ShootPoint.rotation);
-            if (BulletPrefab != null)
+            if (_shootEffectPrefab != null) 
+                Instantiate(_shootEffectPrefab, _shootPoint.position, _shootPoint.rotation);
+            if (_bulletPrefab != null)
             {
-                var bullet = Instantiate(BulletPrefab, ShootPoint.transform.position, transform.rotation);
+                var bullet = Instantiate(_bulletPrefab, _shootPoint.transform.position, transform.rotation);
                 var bulletData = bullet.GetComponent<BulletDamage>();
                 bulletData.Sender = tag;
                 bulletData.Damage = Damage;
@@ -88,13 +92,13 @@ namespace Assets.Scripts.Player
             {
                 _reloadTime = Time.time;
                 _worldData.SpentData.Reloads++;
-                PlayerAnimator.Reload(true);
-                PlayerAudio.Reload();
+                _playerAnimator.Reload(true);
+                _playerAudio.Reload();
                 _worldData.AmmoData.Available = _playerStaticData.Ammo;
                 _worldData.AmmoData.Changed?.Invoke();
                 _reload = 0;
             }
-            else PlayerAnimator.Reload(false);
+            else _playerAnimator.Reload(false);
         }
 
         private void Shoot()
@@ -104,8 +108,8 @@ namespace Assets.Scripts.Player
 
             _shootTime = Time.time;
             _worldData.SpentData.Bullets++;
-            PlayerAnimator.Shoot();
-            PlayerAudio.Shoot();
+            _playerAnimator.Shoot();
+            _playerAudio.Shoot();
             _shoot = 0;
         }
 

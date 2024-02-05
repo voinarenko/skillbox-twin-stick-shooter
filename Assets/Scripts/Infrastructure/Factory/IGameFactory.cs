@@ -4,6 +4,7 @@ using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.StaticData;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Assets.Scripts.Infrastructure.AssetManagement;
 using UnityEngine;
 
 namespace Assets.Scripts.Infrastructure.Factory
@@ -20,5 +21,7 @@ namespace Assets.Scripts.Infrastructure.Factory
         Task<GameObject> CreateEnemy(EnemyTypeId typeId, Transform parent);
         Task<LootPiece> CreateLoot();
         Task WarmUp();
+        void UpdatePlayerData(GameObject player);
+        IAssets GetAssets();
     }
 }

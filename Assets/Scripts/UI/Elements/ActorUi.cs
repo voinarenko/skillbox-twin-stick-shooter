@@ -1,9 +1,9 @@
 ﻿using Assets.Scripts.Logic;
-using UnityEngine;
+using Mirror;
 
 namespace Assets.Scripts.UI.Elements
 {
-    public class ActorUi : MonoBehaviour
+    public class ActorUi : NetworkBehaviour
     {
         public HealthBar HealthBar;
 

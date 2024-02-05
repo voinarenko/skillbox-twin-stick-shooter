@@ -5,13 +5,14 @@ namespace Assets.Scripts.Bullet
 {
     public class BulletDamage : MonoBehaviour
     {
-        public GameObject HitFxPrefab;
-        public string Sender;
         public float Damage;
+        public string Sender;
 
         private const string PlayerTag = "Player";
         private const string EnemyTag = "Enemy";
         private const string WallTag = "Wall";
+
+        [SerializeField] private GameObject _hitFxPrefab;
 
         private bool _collided;
 
@@ -23,7 +24,7 @@ namespace Assets.Scripts.Bullet
             if (_collided) return;
             _collided = true;
             other.transform.parent.GetComponent<IHealth>().TakeDamage(Damage);
-            Instantiate(HitFxPrefab, transform.position, Quaternion.identity);
+            Instantiate(_hitFxPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }

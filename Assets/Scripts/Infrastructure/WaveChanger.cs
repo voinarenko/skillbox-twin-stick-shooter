@@ -2,7 +2,6 @@
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.Wave;
 using Assets.Scripts.Infrastructure.States;
-using Assets.Scripts.Player;
 using UnityEngine;
 
 namespace Assets.Scripts.Infrastructure
@@ -10,30 +9,27 @@ namespace Assets.Scripts.Infrastructure
     public class WaveChanger : MonoBehaviour
     {
         private const string FinalScene = "FinalScene";
+
         private IPersistentProgressService _progressService;
         private IGameStateMachine _stateMachine;
         private IWaveService _waveService;
-        private SceneLoader _sceneLoader;
         
-        private PlayerDeath _playerDeath;
-
+        private SceneLoader _sceneLoader;
         private WaveData _waveData;
 
-        public void Construct(IPersistentProgressService progressService, IGameStateMachine stateMachine, IWaveService waveService, PlayerDeath playerDeath)
+        public void Construct(IPersistentProgressService progressService, IGameStateMachine stateMachine, IWaveService waveService)
         {
             _progressService = progressService;
             _stateMachine = stateMachine;
             _waveService = waveService;
             _waveData = _progressService.Progress.WorldData.WaveData;
-            _playerDeath = playerDeath;
             _waveData.EnemyRemoved += CheckEnemies;
-            _playerDeath.Happened += GameOver;
         }
 
         public void Init(SceneLoader sceneLoader) => 
             _sceneLoader = sceneLoader;
 
-        private void GameOver() => 
+        public void GameOver() => 
             _sceneLoader.Load(FinalScene, onLoaded: EnterStats);
 
         private void EnterStats() =>
@@ -41,11 +37,9 @@ namespace Assets.Scripts.Infrastructure
 
         private void CheckEnemies()
         {
-            if (_waveData.GetEnemies() <= 0)
-            {
-                _waveData.NextWave();
-                _waveService.SpawnEnemies();
-            }
+            if (_waveData.GetEnemies() > 0) return;
+            _waveData.NextWave();
+            _waveService.SpawnEnemies();
         }
     }
 }

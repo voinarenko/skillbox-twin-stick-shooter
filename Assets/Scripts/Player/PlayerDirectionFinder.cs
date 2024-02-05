@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerDirectionFinder : MonoBehaviour
+    public class PlayerDirectionFinder : NetworkBehaviour
     {
         private Animator Animator => GetComponent<Animator>();
         private PlayerAnimator PlayerAnimator => GetComponent<PlayerAnimator>();
