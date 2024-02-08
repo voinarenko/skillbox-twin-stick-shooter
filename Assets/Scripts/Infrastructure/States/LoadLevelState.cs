@@ -95,7 +95,7 @@ namespace Assets.Scripts.Infrastructure.States
             _gameFactory.ProgressReaders.ForEach(x=>x.LoadProgress(_progressService.Progress));
 
         private async Task InitHud() => 
-            await _gameFactory.CreateHud();
+            await _gameFactory.RpcCreateHud();
 
         private async Task<GameObject> InitPlayer(LevelStaticData levelData) => 
             await _gameFactory.CreatePlayer(levelData.InitialPlayerPosition);

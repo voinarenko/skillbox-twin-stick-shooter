@@ -7,12 +7,12 @@ using Assets.Scripts.Infrastructure.Services.StaticData;
 using Assets.Scripts.Infrastructure.Services.Wave;
 using Assets.Scripts.Logic;
 using Assets.Scripts.Logic.EnemySpawners;
+using Assets.Scripts.Player;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Elements;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Assets.Scripts.Player;
-using Cinemachine;
+using Mirror;
 using UnityEngine;
 using UnityEngine.AI;
 using Object = UnityEngine.Object;
@@ -84,36 +84,39 @@ namespace Assets.Scripts.Infrastructure.Factory
             //return PlayerGameObject;
         }
 
-        public async void UpdatePlayerData(GameObject player)
+        [ClientRpc]
+        public async Task RpcUpdatePlayerData(GameObject player, PlayerStaticData playerData)
         {
+            Debug.Log("Updating player data!");
             PlayerGameObject = player;
-            var playerData = _progressService.Progress.PlayerStaticData;
-
-            RegisterProgressWatchers(PlayerGameObject);
+            RegisterProgressWatchers(player);
 
             _progressService.Progress.WorldData.AmmoData.Available = playerData.Ammo;
-            _progressService.Progress.WorldData.WaveData.NextWave();
+            Debug.Log($"Ammo: {_progressService.Progress.WorldData.AmmoData.Available}");
+            //_progressService.Progress.WorldData.WaveData.NextWave();
             //_waveService.SpawnEnemies();
 
-            PlayerGameObject.GetComponent<PlayerMovement>().SetSpeed(playerData.MoveSpeed);
-            PlayerGameObject.GetComponent<PlayerRotation>().SetSpeed(playerData.RotateSpeed);
-            PlayerGameObject.GetComponent<PlayerShooter>()
+            //PlayerGameObject.GetComponent<PlayerMovement>().SetSpeed(playerData.MoveSpeed);
+            //PlayerGameObject.GetComponent<PlayerRotation>().SetSpeed(playerData.RotateSpeed);
+            player.GetComponent<PlayerShooter>()
                 .Construct(playerData,
                     _progressService.Progress.WorldData,
                     playerData.Damage,
                     playerData.AttackCooldown,
                     playerData.ReloadCooldown);
 
-            PlayerGameObject.GetComponent<Animator>().SetFloat(PlayerGameObject.GetComponent<PlayerAnimator>().AnimSpeed, playerData.SpeedFactor);
+            //PlayerGameObject.GetComponent<Animator>().SetFloat(PlayerGameObject.GetComponent<PlayerAnimator>().AnimSpeed, playerData.SpeedFactor);
 
-            var playerDeath = PlayerGameObject.GetComponent<PlayerDeath>();
+            var playerDeath = player.GetComponent<PlayerDeath>();
             PlayersWatcher.AddPlayer(playerDeath);
 
-            await CreateHud();
+            await RpcCreateHud();
         }
 
-        public async Task<GameObject> CreateHud()
+        [ClientRpc]
+        public async Task<GameObject> RpcCreateHud()
         {
+            Debug.Log("Creating HUD!");
             var hud = await InstantiateRegisteredAsync(AssetAddress.HudPath);
             
             hud.GetComponentInChildren<WaveCounter>().Construct(_progressService.Progress.WorldData);
@@ -191,8 +194,6 @@ namespace Assets.Scripts.Infrastructure.Factory
             ProgressWriters.Clear();
             _assets.CleanUp();
         }
-
-        public IAssets GetAssets() => _assets;
 
         private void Register(ISavedProgressReader progressReader)
         {

@@ -10,6 +10,8 @@ namespace Assets.Scripts.Player
     public class PlayerMovement : NetworkBehaviour, ISavedProgress
     {
         public float Speed;
+        [SyncVar(hook = nameof(SyncSpeed))]
+        private float _syncSpeed;
 
         [SerializeField] private NavMeshAgent _agent;
         [SerializeField] private PlayerAnimator _animator;
@@ -49,8 +51,33 @@ namespace Assets.Scripts.Player
             }
         }
 
-        public void SetSpeed(float speed) => 
+        [ClientRpc]
+        public void RpcSetSpeed(float speed)
+        {
+            //Debug.Log(speed);
             Speed = speed;
+        }
+
+        [Command]
+        public void CmdChangeSpeed(float newValue)
+        {
+            Debug.Log($"Client: {newValue}");
+            ChangeSpeedValue(newValue);
+        }
+
+        [Server]
+        public void ChangeSpeedValue(float newValue)
+        {
+            Debug.Log($"Server: {newValue}");
+            _syncSpeed = newValue;
+        }
+
+        private void SyncSpeed(float oldValue, float newValue)
+        {
+            Debug.Log($"Sync in: {newValue}");
+            Speed = newValue;
+            Debug.Log($"Sync out: {Speed}");
+        }
 
         private void Warp(Vector3Data to)
         {

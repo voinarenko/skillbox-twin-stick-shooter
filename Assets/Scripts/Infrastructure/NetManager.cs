@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Infrastructure.Factory;
+using Assets.Scripts.Player;
 using Assets.Scripts.StaticData;
 using Cinemachine;
 using Mirror;
@@ -8,6 +9,7 @@ namespace Assets.Scripts.Infrastructure
 {
     public class NetManager : NetworkManager
     {
+        private const string VirtualCameraTag = "VirtualCamera";
         private IGameFactory _gameFactory;
 
         private PlayerStaticData _playerData;
@@ -45,19 +47,27 @@ namespace Assets.Scripts.Infrastructure
             var playerType = (int)_playerData.PlayerTypeId;
             var message = new CreatePlayerMessage
             {
-               PlayerType = playerType
+               PlayerType = playerType,
+               Ammo = _playerData.Ammo,
+               MoveSpeed = _playerData.MoveSpeed,
+               RotateSpeed = _playerData.RotateSpeed,
+               SpeedFactor = _playerData.SpeedFactor
             };
             NetworkClient.Send(message);
             _playerSpawned = true;
         }
 
-        private void OnCreateCharacter(NetworkConnectionToClient conn, CreatePlayerMessage message)
+        private async void OnCreateCharacter(NetworkConnectionToClient conn, CreatePlayerMessage message)
         {
             var player = Instantiate(_playerPrefabs[message.PlayerType], _spawnPosition, Quaternion.identity);
-            _gameFactory.UpdatePlayerData(player);
             NetworkServer.AddPlayerForConnection(conn, player);
+            player.GetComponent<PlayerMovement>().RpcSetSpeed(message.MoveSpeed);
+            player.GetComponent<PlayerRotation>().RpcSetSpeed(message.RotateSpeed);
+            player.GetComponent<PlayerAnimator>().RpcSetSpeed(message.SpeedFactor);
 
-            var virtualCameras = GameObject.FindGameObjectsWithTag("VirtualCamera");
+            await _gameFactory.RpcUpdatePlayerData(player, _playerData);
+
+            var virtualCameras = GameObject.FindGameObjectsWithTag(VirtualCameraTag);
             foreach ( var virtualCam in virtualCameras)
             {
                 var virtualCamera = virtualCam.GetComponent<CinemachineVirtualCamera>();
