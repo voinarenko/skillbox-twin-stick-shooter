@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Infrastructure.Factory;
 using Assets.Scripts.Player;
 using Assets.Scripts.StaticData;
-using Cinemachine;
 using Mirror;
 using UnityEngine;
 
@@ -9,7 +8,6 @@ namespace Assets.Scripts.Infrastructure
 {
     public class NetManager : NetworkManager
     {
-        private const string VirtualCameraTag = "VirtualCamera";
         private IGameFactory _gameFactory;
 
         private PlayerStaticData _playerData;
@@ -64,17 +62,10 @@ namespace Assets.Scripts.Infrastructure
             player.GetComponent<PlayerMovement>().RpcSetSpeed(message.MoveSpeed);
             player.GetComponent<PlayerRotation>().RpcSetSpeed(message.RotateSpeed);
             player.GetComponent<PlayerAnimator>().RpcSetSpeed(message.SpeedFactor);
+            player.GetComponent<PlayerCameraConnector>().Connect(player);
 
-            await _gameFactory.RpcUpdatePlayerData(player, _playerData);
+            //await _gameFactory.RpcUpdatePlayerData(player, _playerData);
 
-            var virtualCameras = GameObject.FindGameObjectsWithTag(VirtualCameraTag);
-            foreach ( var virtualCam in virtualCameras)
-            {
-                var virtualCamera = virtualCam.GetComponent<CinemachineVirtualCamera>();
-                if (virtualCamera.Follow != null) return;
-                virtualCamera.Follow = player.transform;
-                virtualCamera.LookAt = player.transform;
-            }
         }
     }
 }
