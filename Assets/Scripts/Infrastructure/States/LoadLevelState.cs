@@ -53,7 +53,7 @@ namespace Assets.Scripts.Infrastructure.States
         {
             await InitUiRoot();
             await InitGameWorld();
-            InformProgressReaders();
+            //InformProgressReaders();
 
             _loadingCurtain.Hide();
             _stateMachine.Enter<GameLoopState>();
@@ -68,7 +68,7 @@ namespace Assets.Scripts.Infrastructure.States
             await InitSpawners(levelData);
             //var player = await InitPlayer(levelData);
 
-            NetManager.Construct(_gameFactory, _progressService.Progress.PlayerStaticData, levelData.InitialPlayerPosition);
+            NetManager.Construct(_progressService, _gameFactory, /*_progressService.Progress.PlayerStaticData, */levelData.InitialPlayerPosition);
 
             InitWaveChanger();
             //CameraFollow(player);
@@ -83,6 +83,8 @@ namespace Assets.Scripts.Infrastructure.States
             var manager = GameObject.FindWithTag(WaveChangerTag);
                 manager.GetComponent<WaveChanger>().Construct(_progressService, _stateMachine, _waveService);
                 manager.GetComponent<PauseListener>().Construct(_stateMachine);
+                //_progressService.Progress.WorldData.WaveData.NextWave();
+                //_waveService.SpawnEnemies();
         }
 
         private async Task InitSpawners(LevelStaticData levelData)
@@ -91,23 +93,23 @@ namespace Assets.Scripts.Infrastructure.States
                 await _gameFactory.CreateSpawner(spawnerData.Position, spawnerData.Id);
         }
 
-        private void InformProgressReaders() => 
-            _gameFactory.ProgressReaders.ForEach(x=>x.LoadProgress(_progressService.Progress));
+        //private void InformProgressReaders() => 
+        //    _gameFactory.ProgressReaders.ForEach(x=>x.LoadProgress(_progressService.Progress));
 
-        private async Task InitHud() => 
-            await _gameFactory.RpcCreateHud();
+        //private async Task InitHud() => 
+        //    await _gameFactory.CreateHud();
 
-        private async Task<GameObject> InitPlayer(LevelStaticData levelData) => 
-            await _gameFactory.CreatePlayer(levelData.InitialPlayerPosition);
+        //private async Task<GameObject> InitPlayer(LevelStaticData levelData) => 
+        //    await _gameFactory.CreatePlayer(levelData.InitialPlayerPosition);
 
         private LevelStaticData LevelStaticData() => 
             _staticData.ForLevel(SceneManager.GetActiveScene().name);
 
-        private static void CameraFollow(GameObject player)
-        {
-            var camera = GameObject.FindWithTag(CameraTag).GetComponent<CinemachineVirtualCamera>();
-            camera.Follow = player.transform;
-            camera.LookAt = player.transform;
-        }
+        //private static void CameraFollow(GameObject player)
+        //{
+        //    var camera = GameObject.FindWithTag(CameraTag).GetComponent<CinemachineVirtualCamera>();
+        //    camera.Follow = player.transform;
+        //    camera.LookAt = player.transform;
+        //}
     }
 }

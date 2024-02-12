@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Data;
+using Assets.Scripts.Player;
 using TMPro;
 using UnityEngine;
 
@@ -7,16 +8,18 @@ namespace Assets.Scripts.UI.Elements
     public class AmmoCounter : MonoBehaviour
     {
         public TextMeshProUGUI Counter;
-        private WorldData _worldData;
+        private PlayerShooter _shooter;
+        private PlayerDynamicData _playerDynamicData;
 
-        public void Construct(WorldData worldData)
+        public void Construct(GameObject player, PlayerDynamicData playerDynamicData)
         {
-            _worldData = worldData;
-            _worldData.AmmoData.Changed += UpdateCounter;
+            _shooter = player.GetComponent<PlayerShooter>();
+            _playerDynamicData = playerDynamicData;
+            _shooter.AmmoChanged += UpdateCounter;
             UpdateCounter();
         }
 
         private void UpdateCounter() => 
-            Counter.text = $"{_worldData.AmmoData.Available}";
+            Counter.text = $"{_playerDynamicData.AmmoData.Available}";
     }
 }

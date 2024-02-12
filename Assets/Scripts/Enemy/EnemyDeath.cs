@@ -58,7 +58,7 @@ namespace Assets.Scripts.Enemy
             _health.HealthChanged -= HealthChanged;
             _progressService.Progress.WorldData.WaveData.RemoveEnemy();
             _progressService.Progress.WorldData.KillData.Collect(_attack);
-            _progressService.Progress.WorldData.ScoreData.UpdateScore(this);
+            _progressService.Progress.PlayerDynamicData.ScoreData.UpdateScore(this);
             _aiBrain.SetAction(_behavior.ActionsAvailable[2]);
             _mover.enabled = false;
             _aiBrain.enabled = false;

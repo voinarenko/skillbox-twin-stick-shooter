@@ -9,7 +9,7 @@ namespace Assets.Scripts.Player
         private const string VirtualCameraTag = "VirtualCamera";
 
         [ClientRpc]
-        public void Connect(GameObject player)
+        public void RpcConnect(GameObject player)
         {
             var virtualCameras = GameObject.FindGameObjectsWithTag(VirtualCameraTag);
                 foreach ( var virtualCam in virtualCameras)

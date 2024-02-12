@@ -1,4 +1,3 @@
-using Assets.Scripts.Data;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Mirror;
 using UnityEngine;
@@ -38,18 +37,17 @@ namespace Assets.Scripts.Player
             _animator.Move(dir);
         }
 
-        public void UpdateProgress(PlayerProgress progress) => 
-            progress.WorldData.PositionOnLevel = new PositionOnLevel(CurrentLevel(), transform.position.AsVectorData());
+        //public void UpdateProgress(PlayerProgress progress) => 
+        //    progress.PlayerDynamicData.PositionOnLevel = new PositionOnLevel(CurrentLevel(), transform.position);
 
-        public void LoadProgress(PlayerProgress progress)
-        {
-            if (CurrentLevel() == progress.WorldData.PositionOnLevel.Level)
-            {
-                var savedPosition = progress.WorldData.PositionOnLevel.Position;
-                if (savedPosition != null) 
-                    Warp(savedPosition);
-            }
-        }
+        //public void LoadProgress(PlayerProgress progress)
+        //{
+        //    if (CurrentLevel() == progress.PlayerDynamicData.PositionOnLevel.Level)
+        //    {
+        //        var savedPosition = progress.PlayerDynamicData.PositionOnLevel.Position;
+        //        Warp(savedPosition);
+        //    }
+        //}
 
         [ClientRpc]
         public void RpcSetSpeed(float speed)
@@ -72,17 +70,19 @@ namespace Assets.Scripts.Player
             _syncSpeed = newValue;
         }
 
+#pragma warning disable IDE0060
         private void SyncSpeed(float oldValue, float newValue)
+#pragma warning restore IDE0060
         {
             Debug.Log($"Sync in: {newValue}");
             Speed = newValue;
             Debug.Log($"Sync out: {Speed}");
         }
 
-        private void Warp(Vector3Data to)
+        private void Warp(Vector3 to)
         {
             _agent.enabled = false;
-            transform.position = to.AsUnityVector();
+            transform.position = to;
             _agent.enabled = true;
         }
 

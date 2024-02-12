@@ -33,17 +33,17 @@ namespace Assets.Scripts.Player
 
         private State _state;
 
-        public void LoadProgress(PlayerProgress progress)
-        {
-            _state = progress.PlayerState;
-            HealthChanged?.Invoke();
-        }
+        //public void LoadProgress(PlayerProgress progress)
+        //{
+        //    _state = progress.PlayerState;
+        //    HealthChanged?.Invoke();
+        //}
 
-        public void UpdateProgress(PlayerProgress progress)
-        {
-            progress.PlayerState.CurrentHealth = Current;
-            progress.PlayerState.MaxHealth = Max;
-        }
+        //public void UpdateProgress(PlayerProgress progress)
+        //{
+        //    progress.PlayerState.CurrentHealth = Current;
+        //    progress.PlayerState.MaxHealth = Max;
+        //}
 
         public void TakeDamage(float damage)
         {

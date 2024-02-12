@@ -4,11 +4,11 @@ namespace Assets.Scripts.Infrastructure.Services.PersistentProgress
 {
     public interface ISavedProgressReader
     {
-        void LoadProgress(PlayerProgress progress);
+        //void LoadProgress(PlayerProgress progress);
     }
 
     public interface ISavedProgress : ISavedProgressReader
     {
-        void UpdateProgress(PlayerProgress progress);
+        //void UpdateProgress(PlayerProgress progress);
     }
 }

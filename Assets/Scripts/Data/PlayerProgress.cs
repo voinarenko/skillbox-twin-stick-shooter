@@ -9,10 +9,12 @@ namespace Assets.Scripts.Data
         public PlayerStaticData PlayerStaticData;
         public State PlayerState;
         public WorldData WorldData;
+        public PlayerDynamicData PlayerDynamicData;
 
-        public PlayerProgress(string initialLevel, PlayerStaticData playerStaticData)
+        public PlayerProgress(PlayerStaticData playerStaticData)
         {
-            WorldData = new WorldData(initialLevel);
+            WorldData = new WorldData();
+            PlayerDynamicData = new PlayerDynamicData();
             PlayerStaticData = playerStaticData;
             PlayerState = new State();
         }

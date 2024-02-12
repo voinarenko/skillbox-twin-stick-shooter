@@ -24,7 +24,7 @@ namespace Assets.Scripts.Infrastructure.States
         {
             _playerStaticData = payload;
             LoadProgressOrInitNew();
-            _gameStateMachine.Enter<LoadLevelState, string>(_progressService.Progress.WorldData.PositionOnLevel.Level);
+            _gameStateMachine.Enter<LoadLevelState, string>(PositionOnLevel.Level);
         }
 
         public void Exit() { }
@@ -34,7 +34,7 @@ namespace Assets.Scripts.Infrastructure.States
 
         private PlayerProgress NewProgress()
         {
-            var progress = new PlayerProgress(InitialLevel, _playerStaticData);
+            var progress = new PlayerProgress(_playerStaticData);
             progress.PlayerState.CurrentType = _playerStaticData.PlayerTypeId;
             progress.PlayerState.MaxHealth = _playerStaticData.Health;
 

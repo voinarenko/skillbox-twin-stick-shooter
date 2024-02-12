@@ -39,10 +39,10 @@ namespace Assets.Scripts.UI.Windows
 
         private void DisplayStatistics()
         {
-            ScoreEarnedText.text = $"{Progress.WorldData.ScoreData.Score}";
+            ScoreEarnedText.text = $"{Progress.PlayerDynamicData.ScoreData.Score}";
             WavesSurvivedText.text = $"{Progress.WorldData.WaveData.Encountered - 1}";
-            BulletsSpentText.text = $"{Progress.WorldData.SpentData.Bullets}";
-            ReloadsMadeText.text = $"{Progress.WorldData.SpentData.Reloads}";
+            BulletsSpentText.text = $"{Progress.PlayerDynamicData.SpentData.Bullets}";
+            ReloadsMadeText.text = $"{Progress.PlayerDynamicData.SpentData.Reloads}";
             SmallMeleesKilledText.text = $"{GetValue(EnemyType.SmallMelee)}";
             BigMeleesKilledText.text = $"{GetValue(EnemyType.BigMelee)}";
             RangedKilledText.text = $"{GetValue(EnemyType.Ranged)}";

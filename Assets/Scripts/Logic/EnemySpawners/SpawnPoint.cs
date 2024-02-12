@@ -22,15 +22,15 @@ namespace Assets.Scripts.Logic.EnemySpawners
             _progress = progress;
         }
 
-        public void LoadProgress(PlayerProgress progress)
-        {
-            //Spawn();
-        }
+        //public void LoadProgress(PlayerProgress progress)
+        //{
+        //    //Spawn();
+        //}
 
-        public void UpdateProgress(PlayerProgress progress)
-        {
-            //_progress = progress;
-        }
+        //public void UpdateProgress(PlayerProgress progress)
+        //{
+        //    //_progress = progress;
+        //}
 
         public async void Spawn()
         {

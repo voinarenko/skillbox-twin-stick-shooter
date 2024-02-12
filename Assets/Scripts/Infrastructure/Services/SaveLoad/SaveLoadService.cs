@@ -22,17 +22,17 @@ namespace Assets.Scripts.Infrastructure.Services.SaveLoad
             _settingsService = settingsService;
         }
 
-        public void SaveProgress()
-        {
-            foreach (var progressWriter in _gameFactory.ProgressWriters)
-                progressWriter.UpdateProgress(_progressService.Progress);
+        //public void SaveProgress()
+        //{
+        //    foreach (var progressWriter in _gameFactory.ProgressWriters)
+        //        progressWriter.UpdateProgress(_progressService.Progress);
 
-            PlayerPrefs.SetString(ProgressKey, _progressService.Progress.ToJson());
-        }
+        //    PlayerPrefs.SetString(ProgressKey, _progressService.Progress.ToJson());
+        //}
 
-        public PlayerProgress LoadProgress() => 
-            PlayerPrefs.GetString(ProgressKey)?
-                .ToDeserialized<PlayerProgress>();
+        //public PlayerProgress LoadProgress() => 
+        //    PlayerPrefs.GetString(ProgressKey)?
+        //        .ToDeserialized<PlayerProgress>();
 
         public void SaveSettings() => 
             PlayerPrefs.SetString(SettingsKey, _settingsService.Settings.ToJson());

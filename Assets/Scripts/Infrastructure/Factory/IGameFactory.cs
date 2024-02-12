@@ -14,12 +14,13 @@ namespace Assets.Scripts.Infrastructure.Factory
         List<ISavedProgress> ProgressWriters { get; }
 
         Task<GameObject> CreatePlayer(Vector3 at);
-        Task<GameObject> RpcCreateHud();
+        Task<GameObject> CreateHud(GameObject player);
         Task CreateSpawner(Vector3 at, string spawnerId);
         void CleanUp();
         Task<GameObject> CreateEnemy(EnemyTypeId typeId, Transform parent);
         Task<LootPiece> CreateLoot();
         Task WarmUp();
-        Task RpcUpdatePlayerData(GameObject player, PlayerStaticData playerData);
+        Task UpdatePlayerData(GameObject player, PlayerStaticData playerData);
+        void RegisterProgressWatchers(GameObject gameObject);
     }
 }
