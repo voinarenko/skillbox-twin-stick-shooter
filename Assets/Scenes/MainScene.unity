@@ -2404,7 +2404,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -7898,7 +7898,6 @@ MonoBehaviour:
   playerSpawnMethod: 0
   spawnPrefabs:
   - {fileID: 6058307181923392003, guid: cef59e2fe12165d4089d5c3be0cd9ea7, type: 3}
-  - {fileID: 8337883060083228408, guid: 57f5dbfe70df49e48a8bdf052f813c7d, type: 3}
   - {fileID: 3597646573394780680, guid: 10916be22639e8c459612759b0b63f47, type: 3}
   - {fileID: 7014245555586591149, guid: 5622f6a3a68ab6e43bd112d607905df4, type: 3}
   - {fileID: 6344807734724660034, guid: 66aa806679523be47bf7ee72329a56c7, type: 3}
@@ -17591,6 +17590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f980a7610e5a0094f81d3635c19cf994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _players: []
 --- !u!1001 &2078322564
 PrefabInstance:
   m_ObjectHideFlags: 0

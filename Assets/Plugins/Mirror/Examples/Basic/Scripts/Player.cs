@@ -1,23 +1,24 @@
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
-namespace Mirror.Examples.Basic
+namespace Assets.Plugins.Mirror.Examples.Basic.Scripts
 {
     public class Player : NetworkBehaviour
     {
         // Events that the PlayerUI will subscribe to
         public event System.Action<byte> OnPlayerNumberChanged;
-        public event System.Action<Color32> OnPlayerColorChanged;
+        public event System.Action<Color> OnPlayerColorChanged;
         public event System.Action<ushort> OnPlayerDataChanged;
 
         // Players List to manage playerNumber
-        static readonly List<Player> playersList = new List<Player>();
+        private static readonly List<Player> PlayersList = new();
 
         [Header("Player UI")]
-        public GameObject playerUIPrefab;
+        public GameObject PlayerUiPrefab;
 
-        GameObject playerUIObject;
-        PlayerUI playerUI = null;
+        private GameObject _playerUiObject;
+        private PlayerUi _playerUi;
 
         #region SyncVars
 
@@ -27,37 +28,31 @@ namespace Mirror.Examples.Basic
         /// This is appended to the player name text, e.g. "Player 01"
         /// </summary>
         [SyncVar(hook = nameof(PlayerNumberChanged))]
-        public byte playerNumber = 0;
+        private byte _playerNumber;
 
         /// <summary>
         /// Random color for the playerData text, assigned in OnStartServer
         /// </summary>
         [SyncVar(hook = nameof(PlayerColorChanged))]
-        public Color32 playerColor = Color.white;
+        private Color _playerColor = Color.white;
 
         /// <summary>
         /// This is updated by UpdateData which is called from OnStartServer via InvokeRepeating
         /// </summary>
         [SyncVar(hook = nameof(PlayerDataChanged))]
-        public ushort playerData = 0;
+        private ushort _playerData;
 
         // This is called by the hook of playerNumber SyncVar above
-        void PlayerNumberChanged(byte _, byte newPlayerNumber)
-        {
+        private void PlayerNumberChanged(byte _, byte newPlayerNumber) => 
             OnPlayerNumberChanged?.Invoke(newPlayerNumber);
-        }
 
         // This is called by the hook of playerColor SyncVar above
-        void PlayerColorChanged(Color32 _, Color32 newPlayerColor)
-        {
+        private void PlayerColorChanged(Color _, Color newPlayerColor) => 
             OnPlayerColorChanged?.Invoke(newPlayerColor);
-        }
 
         // This is called by the hook of playerData SyncVar above
-        void PlayerDataChanged(ushort _, ushort newPlayerData)
-        {
+        private void PlayerDataChanged(ushort _, ushort newPlayerData) => 
             OnPlayerDataChanged?.Invoke(newPlayerData);
-        }
 
         #endregion
 
@@ -73,13 +68,13 @@ namespace Mirror.Examples.Basic
             base.OnStartServer();
 
             // Add this to the static Players List
-            playersList.Add(this);
+            PlayersList.Add(this);
 
             // set the Player Color SyncVar
-            playerColor = Random.ColorHSV(0f, 1f, 0.9f, 0.9f, 1f, 1f);
+            _playerColor = Random.ColorHSV(0f, 1f, 0.9f, 0.9f, 1f, 1f);
 
             // set the initial player data
-            playerData = (ushort)Random.Range(100, 1000);
+            _playerData = (ushort)Random.Range(100, 1000);
 
             // Start generating updates
             InvokeRepeating(nameof(UpdateData), 1, 1);
@@ -91,16 +86,14 @@ namespace Mirror.Examples.Basic
         internal static void ResetPlayerNumbers()
         {
             byte playerNumber = 0;
-            foreach (Player player in playersList)
-                player.playerNumber = playerNumber++;
+            foreach (var player in PlayersList)
+                player._playerNumber = playerNumber++;
         }
 
         // This only runs on the server, called from OnStartServer via InvokeRepeating
         [ServerCallback]
-        void UpdateData()
-        {
-            playerData = (ushort)Random.Range(100, 1000);
-        }
+        private void UpdateData() => 
+            _playerData = (ushort)Random.Range(100, 1000);
 
         /// <summary>
         /// Invoked on the server when the object is unspawned
@@ -109,7 +102,7 @@ namespace Mirror.Examples.Basic
         public override void OnStopServer()
         {
             CancelInvoke();
-            playersList.Remove(this);
+            PlayersList.Remove(this);
         }
 
         #endregion
@@ -123,18 +116,18 @@ namespace Mirror.Examples.Basic
         public override void OnStartClient()
         {
             // Instantiate the player UI as child of the Players Panel
-            playerUIObject = Instantiate(playerUIPrefab, CanvasUI.GetPlayersPanel());
-            playerUI = playerUIObject.GetComponent<PlayerUI>();
+            _playerUiObject = Instantiate(PlayerUiPrefab, CanvasUi.GetPlayersPanel());
+            _playerUi = _playerUiObject.GetComponent<PlayerUi>();
 
             // wire up all events to handlers in PlayerUI
-            OnPlayerNumberChanged = playerUI.OnPlayerNumberChanged;
-            OnPlayerColorChanged = playerUI.OnPlayerColorChanged;
-            OnPlayerDataChanged = playerUI.OnPlayerDataChanged;
+            OnPlayerNumberChanged = _playerUi.OnPlayerNumberChanged;
+            OnPlayerColorChanged = _playerUi.OnPlayerColorChanged;
+            OnPlayerDataChanged = _playerUi.OnPlayerDataChanged;
 
             // Invoke all event handlers with the initial data from spawn payload
-            OnPlayerNumberChanged.Invoke(playerNumber);
-            OnPlayerColorChanged.Invoke(playerColor);
-            OnPlayerDataChanged.Invoke(playerData);
+            OnPlayerNumberChanged.Invoke(_playerNumber);
+            OnPlayerColorChanged.Invoke(_playerColor);
+            OnPlayerDataChanged.Invoke(_playerData);
         }
 
         /// <summary>
@@ -144,10 +137,10 @@ namespace Mirror.Examples.Basic
         public override void OnStartLocalPlayer()
         {
             // Set isLocalPlayer for this Player in UI for background shading
-            playerUI.SetLocalPlayer();
+            _playerUi.SetLocalPlayer();
 
             // Activate the main panel
-            CanvasUI.SetActive(true);
+            CanvasUi.SetActive(true);
         }
 
         /// <summary>
@@ -157,7 +150,7 @@ namespace Mirror.Examples.Basic
         public override void OnStopLocalPlayer()
         {
             // Disable the main panel for local player
-            CanvasUI.SetActive(false);
+            CanvasUi.SetActive(false);
         }
 
         /// <summary>
@@ -172,7 +165,7 @@ namespace Mirror.Examples.Basic
             OnPlayerDataChanged = null;
 
             // Remove this player's UI object
-            Destroy(playerUIObject);
+            Destroy(_playerUiObject);
         }
 
         #endregion

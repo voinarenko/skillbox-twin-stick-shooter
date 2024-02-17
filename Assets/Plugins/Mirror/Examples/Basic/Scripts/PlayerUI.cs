@@ -1,41 +1,37 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Mirror.Examples.Basic
+namespace Assets.Plugins.Mirror.Examples.Basic.Scripts
 {
-    public class PlayerUI : MonoBehaviour
+    public class PlayerUi : MonoBehaviour
     {
         [Header("Player Components")]
-        public Image image;
+        public Image Image;
 
         [Header("Child Text Objects")]
-        public Text playerNameText;
-        public Text playerDataText;
+        public Text PlayerNameText;
+        public Text PlayerDataText;
 
         // Sets a highlight color for the local player
         public void SetLocalPlayer()
         {
             // add a visual background for the local player in the UI
-            image.color = new Color(1f, 1f, 1f, 0.1f);
+            Image.color = new Color(1f, 1f, 1f, 0.1f);
         }
 
         // This value can change as clients leave and join
-        public void OnPlayerNumberChanged(byte newPlayerNumber)
-        {
-            playerNameText.text = string.Format("Player {0:00}", newPlayerNumber);
-        }
+        public void OnPlayerNumberChanged(byte newPlayerNumber) => 
+            PlayerNameText.text = $"Player {newPlayerNumber:00}";
 
         // Random color set by Player::OnStartServer
-        public void OnPlayerColorChanged(Color32 newPlayerColor)
-        {
-            playerNameText.color = newPlayerColor;
-        }
+        public void OnPlayerColorChanged(Color newPlayerColor) => 
+            PlayerNameText.color = newPlayerColor;
 
         // This updates from Player::UpdateData via InvokeRepeating on server
         public void OnPlayerDataChanged(ushort newPlayerData)
         {
             // Show the data in the UI
-            playerDataText.text = string.Format("Data: {0:000}", newPlayerData);
+            PlayerDataText.text = $"Data: {newPlayerData:000}";
         }
     }
 }

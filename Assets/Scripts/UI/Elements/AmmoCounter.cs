@@ -1,25 +1,22 @@
-﻿using Assets.Scripts.Data;
-using Assets.Scripts.Player;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 namespace Assets.Scripts.UI.Elements
 {
     public class AmmoCounter : MonoBehaviour
     {
-        public TextMeshProUGUI Counter;
-        private PlayerShooter _shooter;
-        private PlayerDynamicData _playerDynamicData;
+        [SerializeField] private TextMeshProUGUI _counter;
 
-        public void Construct(GameObject player, PlayerDynamicData playerDynamicData)
+        //public void Construct(PlayerShooter shooter)
+        //{
+        //    shooter.AmmoChanged.AddListener(UpdateCounter);
+        //    UpdateCounter(shooter.PlayerDynamicData.AmmoData.Available);
+        //}
+
+        public void UpdateCounter(int currentAmmo)
         {
-            _shooter = player.GetComponent<PlayerShooter>();
-            _playerDynamicData = playerDynamicData;
-            _shooter.AmmoChanged += UpdateCounter;
-            UpdateCounter();
+            print($"Current ammo: |{currentAmmo}|");
+            _counter.text = $"{currentAmmo}";
         }
-
-        private void UpdateCounter() => 
-            Counter.text = $"{_playerDynamicData.AmmoData.Available}";
     }
 }

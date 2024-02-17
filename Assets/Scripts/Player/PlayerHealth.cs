@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
-    [RequireComponent(typeof(PlayerAnimator))]
+    [RequireComponent(typeof(PlayerAnimator), typeof(PlayerHudConnector))]
     public class PlayerHealth : NetworkBehaviour, ISavedProgress, IHealth
     {
         public float Max
@@ -25,19 +25,24 @@ namespace Assets.Scripts.Player
             {
                 _state.CurrentHealth = value;
                 HealthChanged?.Invoke();
+                _hudConnector.PlayerHealth = value;
             }
         }
 
-        public PlayerAnimator Animator;
+        [SerializeField] private PlayerAnimator _animator;
+        [SerializeField] private PlayerHudConnector _hudConnector;
         public float Defense = 1;
 
-        private State _state;
+        private readonly State _state = new();
 
-        //public void LoadProgress(PlayerProgress progress)
-        //{
-        //    _state = progress.PlayerState;
-        //    HealthChanged?.Invoke();
-        //}
+        [ClientRpc]
+        public void RpcSetHealth(float maxHealth)
+        {
+            print($"Health: |{maxHealth}|");
+            _state.MaxHealth = maxHealth;
+            _state.ResetHealth();
+            _hudConnector.PlayerHealth = maxHealth;
+        }
 
         //public void UpdateProgress(PlayerProgress progress)
         //{
@@ -49,7 +54,7 @@ namespace Assets.Scripts.Player
         {
             if (Current <= 0) return;
             Current -= damage / Defense;
-            Animator.PlayHit();
+            _animator.PlayHit();
         }
 
         public void Heal(float cure)

@@ -1,9 +1,9 @@
 ﻿using Assets.Scripts.Logic;
-using Mirror;
+using UnityEngine;
 
 namespace Assets.Scripts.UI.Elements
 {
-    public class ActorUi : NetworkBehaviour
+    public class ActorUi : MonoBehaviour
     {
         public HealthBar HealthBar;
 
@@ -26,5 +26,8 @@ namespace Assets.Scripts.UI.Elements
 
         private void UpdateHealthBar() => 
             HealthBar.SetValue(_health.Current, _health.Max);
+
+        public void UpdateHealthBar(float currentHealth, float maxHealth) => 
+            HealthBar.SetValue(currentHealth, maxHealth);
     }
 }

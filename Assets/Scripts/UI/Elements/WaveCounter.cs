@@ -1,22 +1,24 @@
-﻿using Assets.Scripts.Data;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 namespace Assets.Scripts.UI.Elements
 {
     public class WaveCounter : MonoBehaviour
     {
-        public TextMeshProUGUI Counter;
-        private WorldData _worldData;
+        [SerializeField] private TextMeshProUGUI _counter;
+        //private WorldData _worldData;
 
-        public void Construct(WorldData worldData)
+        //public void Construct(WorldData worldData)
+        //{
+        //    _worldData = worldData;
+        //    _worldData.WaveData.WaveChanged += UpdateCounter;
+        //    UpdateCounter();
+        //}
+
+        public void UpdateCounter(int currentWave)
         {
-            _worldData = worldData;
-            _worldData.WaveData.WaveChanged += UpdateCounter;
-            UpdateCounter();
+            print($"Waves |{currentWave}|");
+            _counter.text = $"{currentWave}";
         }
-
-        private void UpdateCounter() => 
-            Counter.text = $"{_worldData.WaveData.Encountered}";
     }
 }

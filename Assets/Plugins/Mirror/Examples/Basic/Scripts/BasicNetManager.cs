@@ -1,11 +1,12 @@
+using Mirror;
 using UnityEngine;
 
-namespace Mirror.Examples.Basic
+namespace Assets.Plugins.Mirror.Examples.Basic.Scripts
 {
     [AddComponentMenu("")]
     public class BasicNetManager : NetworkManager
     {
-        public static new BasicNetManager singleton { get; private set; }
+        public static BasicNetManager Singleton { get; private set; }
 
         /// <summary>
         /// Runs on both Server and Client
@@ -14,7 +15,7 @@ namespace Mirror.Examples.Basic
         public override void Awake()
         {
             base.Awake();
-            singleton = this;
+            Singleton = this;
         }
 
         /// <summary>

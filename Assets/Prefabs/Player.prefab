@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 3759934125805238228}
   - component: {fileID: 1101090176241466216}
   - component: {fileID: 4312025408768640510}
+  - component: {fileID: 8730899007466752089}
   m_Layer: 12
   m_Name: Player
   m_TagString: Player
@@ -174,6 +175,14 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  PlayerDynamicData:
+    AmmoData:
+      Available: 0
+    ScoreData:
+      Score: 0
+    SpentData:
+      Bullets: 0
+      Reloads: 0
   Damage: 0
   ShootDelay: 0
   ReloadDelay: 0
@@ -182,6 +191,7 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 2167627874613640840, guid: 97367db1b93f952408a7b1dd026c5bc2,
     type: 3}
   _shootPoint: {fileID: 8650660490431592160}
+  _hudConnector: {fileID: 8730899007466752089}
 --- !u!114 &3770642299459928777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,7 +224,8 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  Animator: {fileID: 3770642299459928777}
+  _animator: {fileID: 3770642299459928777}
+  _hudConnector: {fileID: 8730899007466752089}
   Defense: 1
 --- !u!114 &-2252214105615708195
 MonoBehaviour:
@@ -250,9 +261,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c92967eb0653fb428689fc8cbdddd74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
   HealthBar: {fileID: 6349246112209357137}
 --- !u!114 &-221803032951296197
 MonoBehaviour:
@@ -338,6 +346,35 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+--- !u!114 &8730899007466752089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475696095942030980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 355a8a7b9650358409c19fc08f11a0ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  OnWaveNumberChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPlayerAmmoChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPlayerHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  _hudPrefab: {fileID: 8337883060083228408, guid: 57f5dbfe70df49e48a8bdf052f813c7d,
+    type: 3}
+  WaveNumber: 0
+  PlayerAmmo: 0
+  PlayerHealth: 0
 --- !u!1 &2097597898489705597
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,6 +14,8 @@ TagManager:
   - Wall
   - WaveChanger
   - Pointer
+  - HUD
+  - UIRoot
   layers:
   - Default
   - TransparentFX

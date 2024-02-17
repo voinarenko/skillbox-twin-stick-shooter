@@ -9,16 +9,15 @@ namespace Assets.Scripts.Player
         private const string VirtualCameraTag = "VirtualCamera";
 
         [ClientRpc]
-        public void RpcConnect(GameObject player)
+        public void RpcConnect()
         {
             var virtualCameras = GameObject.FindGameObjectsWithTag(VirtualCameraTag);
                 foreach ( var virtualCam in virtualCameras)
             {
-                Debug.Log($"Processing camera: {virtualCam}");
                 var virtualCamera = virtualCam.GetComponent<CinemachineVirtualCamera>();
                 if (virtualCamera.Follow != null) return;
-                virtualCamera.Follow = player.transform;
-                virtualCamera.LookAt = player.transform;
+                virtualCamera.Follow = transform;
+                virtualCamera.LookAt = transform;
             }
         }
     }

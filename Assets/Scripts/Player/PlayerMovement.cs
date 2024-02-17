@@ -25,7 +25,7 @@ namespace Assets.Scripts.Player
 
         private void Update()
         {
-            if (!isOwned) return;
+            if (!isLocalPlayer) return;
             var move = _controls.Player.Move.ReadValue<Vector2>();
             var pos = transform.position;
             var dir = new Vector3(move.x, 0, move.y);

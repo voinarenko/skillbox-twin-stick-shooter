@@ -17,16 +17,9 @@ namespace Assets.Scripts.Player
         private float _syncSpeed;
         private int _groundMask;
 
-        private void Start()
-        {
-            _pointer = Instantiate(_pointerPrefab).GetComponent<Canvas>();
-            Cursor.visible = false;
-            _groundMask = LayerMask.GetMask(GroundMaskName);
-        }
-
         private void Update()
         {
-            if (!isOwned) return;
+            if (!isLocalPlayer) return;
             var camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (!Physics.Raycast(camRay, out var groundHit, CamRayLength, _groundMask)) return;
             var playerToMouse = groundHit.point - transform.position;
@@ -35,12 +28,16 @@ namespace Assets.Scripts.Player
             _pointer.transform.position = new Vector3(groundHit.point.x, PointerPositionOffset, groundHit.point.z);
         }
 
-        [ClientRpc]
-        public void RpcSetSpeed(float speed)
+        public override void OnStartLocalPlayer()
         {
-            //Debug.Log(speed);
-            _speed = speed;
+            _pointer = Instantiate(_pointerPrefab).GetComponent<Canvas>();
+            Cursor.visible = false;
+            _groundMask = LayerMask.GetMask(GroundMaskName);
         }
+
+        [ClientRpc]
+        public void RpcSetSpeed(float speed) => 
+            _speed = speed;
 
         [Command]
         public void CmdChangeSpeed(float newValue)
@@ -56,7 +53,7 @@ namespace Assets.Scripts.Player
             _syncSpeed = newValue;
         }
 
-        private void SyncSpeed(float oldValue, float newValue)
+        private void SyncSpeed(float _, float newValue)
         {
             Debug.Log($"Sync in: {newValue}");
             _speed = newValue;

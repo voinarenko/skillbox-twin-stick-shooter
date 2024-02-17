@@ -8,7 +8,7 @@ namespace Assets.Scripts.Infrastructure
     public class PlayersWatcher : MonoBehaviour
     {
         private WaveChanger _waveChanger;
-        private readonly List<PlayerDeath> _players = new();
+        [SerializeField] private List<PlayerDeath> _players = new();
 
         private Action _changed;
 

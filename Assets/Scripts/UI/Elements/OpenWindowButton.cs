@@ -10,7 +10,7 @@ namespace Assets.Scripts.UI.Elements
         //public WindowId WindowId;
         //private IWindowService _windowService;
 
-        //public void Construct(IWindowService windowService) => _windowService = windowService;
+        //public void RpcConstruct(IWindowService windowService) => _windowService = windowService;
 
         //private void Awake() => Button.onClick.AddListener(Open);
 

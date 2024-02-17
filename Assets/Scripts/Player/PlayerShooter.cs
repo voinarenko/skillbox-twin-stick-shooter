@@ -1,17 +1,17 @@
 ﻿using Assets.Scripts.Bullet;
 using Assets.Scripts.Data;
 using Mirror;
-using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
+    [RequireComponent(typeof(PlayerAnimator), typeof(PlayerHudConnector))]
     public class PlayerShooter : NetworkBehaviour
     {
+        public PlayerDynamicData PlayerDynamicData;
         public float Damage;
         public float ShootDelay;
         public float ReloadDelay;
-        public Action AmmoChanged;
 
         private const int AmmoConsumption = 1;
         private readonly Ammo _ammo = new();
@@ -19,8 +19,8 @@ namespace Assets.Scripts.Player
         [SerializeField] private GameObject _shootEffectPrefab;
         [SerializeField] private GameObject _bulletPrefab;
         [SerializeField] private Transform _shootPoint;
+        [SerializeField] private PlayerHudConnector _hudConnector;
 
-        private PlayerDynamicData _playerDynamicData;
         private PlayerAudio _playerAudio;
         private PlayerAnimator _playerAnimator;
         private PlayerControls _controls;
@@ -32,14 +32,16 @@ namespace Assets.Scripts.Player
         private float _reload;
 
         [ClientRpc]
-        public void RpcConstruct(PlayerDynamicData playerDynamicData, int ammo, float damage, float shootDelay, float reloadDelay)
+        public void RpcConstruct(int ammo, float damage, float shootDelay, float reloadDelay)
         {
-            _playerDynamicData = playerDynamicData;
+            print("Shooter construct");
+            PlayerDynamicData = new PlayerDynamicData();
             _initialAmmo = ammo;
             Damage = damage;
             ShootDelay = shootDelay;
             ReloadDelay = reloadDelay;
-            AmmoChanged?.Invoke();
+            PlayerDynamicData.AmmoData.Available = _initialAmmo;
+            _hudConnector.PlayerAmmo = PlayerDynamicData.AmmoData.Available;
         }
 
         private void Start()
@@ -53,7 +55,7 @@ namespace Assets.Scripts.Player
 
         private void Update()
         {
-            if (!isOwned) return;
+            if (!isLocalPlayer) return;
             _shoot = _controls.Player.Shoot.ReadValue<float>();
             _reload = _controls.Player.Reload.ReadValue<float>();
 
@@ -63,12 +65,47 @@ namespace Assets.Scripts.Player
             else if (_reload > 0) 
                 Reload();
         }
-       
+
+        #region Animation methods
+
 #pragma warning disable IDE0051
         private void OnAttackStart() { }
 
-        private void OnAttack()
+        private void OnAttack() { }
+
+        private void OnAttackEnded() { }
+
+        private void OnHit() { }
+       
+        private void OnHitEnded() { }
+#pragma warning restore IDE0051
+
+        #endregion
+
+        private void Reload()
         {
+            if (!(Time.time < _reloadTime + ReloadDelay))
+            {
+                _reloadTime = Time.time;
+                PlayerDynamicData.SpentData.Reloads++;
+                _playerAnimator.Reload(true);
+                _playerAudio.Reload();
+                PlayerDynamicData.AmmoData.Available = _initialAmmo;
+                _hudConnector.PlayerAmmo = PlayerDynamicData.AmmoData.Available;
+                print($"Reload: |{_hudConnector.PlayerAmmo}|");
+                _reload = 0;
+            }
+            else _playerAnimator.Reload(false);
+        }
+
+        private void Shoot()
+        {
+            if (Time.time < _shootTime + ShootDelay) return;
+            if (PlayerDynamicData.AmmoData.Available <= 0) return;
+
+            _shootTime = Time.time;
+            _playerAnimator.Shoot();
+            _playerAudio.Shoot();
             if (_shootEffectPrefab != null)
                 Instantiate(_shootEffectPrefab, _shootPoint.position, _shootPoint.rotation);
             if (_bulletPrefab != null)
@@ -79,47 +116,15 @@ namespace Assets.Scripts.Player
                 bulletData.Damage = Damage;
             }
             ConsumeAmmo();
-        }
-
-        private void OnAttackEnded() { }
-
-        private void OnHit() { }
-       
-        private void OnHitEnded() { }
-
-#pragma warning restore IDE0051
-
-        private void Reload()
-        {
-            if (!(Time.time < _reloadTime + ReloadDelay))
-            {
-                _reloadTime = Time.time;
-                _playerDynamicData.SpentData.Reloads++;
-                _playerAnimator.Reload(true);
-                _playerAudio.Reload();
-                _playerDynamicData.AmmoData.Available = _initialAmmo;
-                AmmoChanged?.Invoke();
-                _reload = 0;
-            }
-            else _playerAnimator.Reload(false);
-        }
-
-        private void Shoot()
-        {
-            if (Time.time < _shootTime + ShootDelay) return;
-            if (_playerDynamicData.AmmoData.Available <= 0) return;
-
-            _shootTime = Time.time;
-            _playerDynamicData.SpentData.Bullets++;
-            _playerAnimator.Shoot();
-            _playerAudio.Shoot();
             _shoot = 0;
         }
 
         private void ConsumeAmmo()
         {
-            _playerDynamicData.AmmoData.Available -= _ammo.Value;
-            AmmoChanged?.Invoke();
+            PlayerDynamicData.AmmoData.Available -= _ammo.Value;
+            PlayerDynamicData.SpentData.Bullets++;
+            _hudConnector.PlayerAmmo = PlayerDynamicData.AmmoData.Available;
+            print($"Shoot: |{_hudConnector.PlayerAmmo}|");
         }
     }
 }

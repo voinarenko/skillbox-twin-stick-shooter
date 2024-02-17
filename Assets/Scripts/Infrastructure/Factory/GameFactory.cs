@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Enemy;
+﻿using Assets.Scripts.Data;
+using Assets.Scripts.Enemy;
 using Assets.Scripts.Infrastructure.AssetManagement;
 using Assets.Scripts.Infrastructure.Services.Loot;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
@@ -7,7 +8,6 @@ using Assets.Scripts.Infrastructure.Services.StaticData;
 using Assets.Scripts.Infrastructure.Services.Wave;
 using Assets.Scripts.Logic;
 using Assets.Scripts.Logic.EnemySpawners;
-using Assets.Scripts.Player;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Elements;
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ namespace Assets.Scripts.Infrastructure.Factory
         public List<ISavedProgressReader> ProgressReaders { get; } = new();
         public List<ISavedProgress> ProgressWriters { get; } = new();
 
-        private static PlayersWatcher PlayersWatcher => Object.FindAnyObjectByType<PlayersWatcher>();
+        //private static PlayersWatcher PlayersWatcher => Object.FindAnyObjectByType<PlayersWatcher>();
 
         private readonly IAssets _assets;
         private readonly IStaticDataService _staticData;
@@ -52,71 +52,70 @@ namespace Assets.Scripts.Infrastructure.Factory
             await _assets.Load<GameObject>(AssetAddress.Spawner);
         }
 
-        public async Task<GameObject> CreatePlayer(Vector3 at)
+        //public async Task<GameObject> CreatePlayer(Vector3 at)
+        //{
+        //    var playerData = _progressService.Progress.PlayerStaticData;
+        //    var prefab = await _assets.Load<GameObject>(playerData.PrefabReference);
+
+        //    return prefab;
+
+        //    //PlayerGameObject = Object.Instantiate(prefab, at, Quaternion.identity);
+        //    //RegisterProgressWatchers(PlayerGameObject);
+
+        //    //_progressService.Progress.WorldData.AmmoData.Available = playerData.Ammo;
+        //    //_progressService.Progress.WorldData.WaveData.NextWave();
+        //    ////_waveService.SpawnEnemies();
+
+        //    //PlayerGameObject.GetComponent<PlayerMovement>().SetSpeed(playerData.MoveSpeed);
+        //    //PlayerGameObject.GetComponent<PlayerRotation>().SetSpeed(playerData.RotateSpeed);
+        //    //PlayerGameObject.GetComponent<PlayerShooter>()
+        //    //    .RpcConstruct(playerData,
+        //    //        _progressService.Progress.WorldData,
+        //    //        playerData.Damage,
+        //    //        playerData.AttackCooldown,
+        //    //        playerData.ReloadCooldown);
+
+        //    //PlayerGameObject.GetComponent<Animator>().SetFloat(PlayerGameObject.GetComponent<PlayerAnimator>().AnimSpeed, playerData.SpeedFactor);
+
+        //    //var playerDeath = PlayerGameObject.GetComponent<PlayerDeath>();
+        //    //PlayersWatcher.AddPlayer(playerDeath);
+
+        //    //return PlayerGameObject;
+        //}
+
+        //public async Task UpdatePlayerData(GameObject player, PlayerStaticData playerData)
+        //{
+        //    //Debug.Log("Updating player data!");
+        //    PlayerGameObject = player;
+        //    //RegisterProgressWatchers(player);
+
+        //    //_progressService.Progress.WorldData.AmmoData.Available = playerData.Ammo;
+        //    //Debug.Log($"Ammo: {_progressService.Progress.WorldData.AmmoData.Available}");
+
+        //    //PlayerGameObject.GetComponent<PlayerMovement>().SetSpeed(playerData.MoveSpeed);
+        //    //PlayerGameObject.GetComponent<PlayerRotation>().SetSpeed(playerData.RotateSpeed);
+        //    //player.GetComponent<PlayerShooter>()
+        //    //    .RpcConstruct(playerData,
+        //    //        _progressService.Progress.WorldData,
+        //    //        playerData.Damage,
+        //    //        playerData.AttackCooldown,
+        //    //        playerData.ReloadCooldown);
+
+        //    //PlayerGameObject.GetComponent<Animator>().SetFloat(PlayerGameObject.GetComponent<PlayerAnimator>().AnimSpeed, playerData.SpeedFactor);
+
+        //    //var playerDeath = player.GetComponent<PlayerDeath>();
+        //    //PlayersWatcher.AddPlayer(playerDeath);
+
+        //    //await CreateHud(player);
+        //}
+
+        public async Task<GameObject> CreateHud(GameObject player, PlayerDynamicData playerDynamicData)
         {
-            var playerData = _progressService.Progress.PlayerStaticData;
-            var prefab = await _assets.Load<GameObject>(playerData.PrefabReference);
-
-            return prefab;
-
-            //PlayerGameObject = Object.Instantiate(prefab, at, Quaternion.identity);
-            //RegisterProgressWatchers(PlayerGameObject);
-
-            //_progressService.Progress.WorldData.AmmoData.Available = playerData.Ammo;
-            //_progressService.Progress.WorldData.WaveData.NextWave();
-            ////_waveService.SpawnEnemies();
-
-            //PlayerGameObject.GetComponent<PlayerMovement>().SetSpeed(playerData.MoveSpeed);
-            //PlayerGameObject.GetComponent<PlayerRotation>().SetSpeed(playerData.RotateSpeed);
-            //PlayerGameObject.GetComponent<PlayerShooter>()
-            //    .Construct(playerData,
-            //        _progressService.Progress.WorldData,
-            //        playerData.Damage,
-            //        playerData.AttackCooldown,
-            //        playerData.ReloadCooldown);
-
-            //PlayerGameObject.GetComponent<Animator>().SetFloat(PlayerGameObject.GetComponent<PlayerAnimator>().AnimSpeed, playerData.SpeedFactor);
-
-            //var playerDeath = PlayerGameObject.GetComponent<PlayerDeath>();
-            //PlayersWatcher.AddPlayer(playerDeath);
-
-            //return PlayerGameObject;
-        }
-
-        public async Task UpdatePlayerData(GameObject player, PlayerStaticData playerData)
-        {
-            //Debug.Log("Updating player data!");
-            PlayerGameObject = player;
-            //RegisterProgressWatchers(player);
-
-            //_progressService.Progress.WorldData.AmmoData.Available = playerData.Ammo;
-            //Debug.Log($"Ammo: {_progressService.Progress.WorldData.AmmoData.Available}");
-
-            //PlayerGameObject.GetComponent<PlayerMovement>().SetSpeed(playerData.MoveSpeed);
-            //PlayerGameObject.GetComponent<PlayerRotation>().SetSpeed(playerData.RotateSpeed);
-            //player.GetComponent<PlayerShooter>()
-            //    .Construct(playerData,
-            //        _progressService.Progress.WorldData,
-            //        playerData.Damage,
-            //        playerData.AttackCooldown,
-            //        playerData.ReloadCooldown);
-
-            //PlayerGameObject.GetComponent<Animator>().SetFloat(PlayerGameObject.GetComponent<PlayerAnimator>().AnimSpeed, playerData.SpeedFactor);
-
-            var playerDeath = player.GetComponent<PlayerDeath>();
-            PlayersWatcher.AddPlayer(playerDeath);
-
-            await CreateHud(player);
-        }
-
-        public async Task<GameObject> CreateHud(GameObject player)
-        {
-            Debug.Log("Creating HUD!");
             var hud = await InstantiateRegisteredAsync(AssetAddress.HudPath);
             
-            hud.GetComponentInChildren<WaveCounter>().Construct(_progressService.Progress.WorldData);
-            hud.GetComponentInChildren<AmmoCounter>().Construct(player, _progressService.Progress.PlayerDynamicData);
-            hud.GetComponent<ActorUi>().Construct(PlayerGameObject.GetComponent<IHealth>());
+            //hud.GetComponent<WaveCounter>().Construct(_progressService.Progress.WorldData);
+            //hud.GetComponent<AmmoCounter>().Construct(player.GetComponent<PlayerShooter>());
+            hud.GetComponent<ActorUi>().Construct(player.GetComponent<IHealth>());
 
             _perkParent = hud.GetComponent<PerkDisplay>().GetParent();
 
@@ -183,6 +182,13 @@ namespace Assets.Scripts.Infrastructure.Factory
             _waveService.SpawnPoints.Add(spawner);
         }
 
+        public async Task<GameObject> InstantiateRegisteredAsync(string prefabPath)
+        {
+            var gameObject = await _assets.Instantiate(prefabPath);
+            RegisterProgressWatchers(gameObject);
+            return gameObject;
+        }
+
         public void CleanUp()
         {
             ProgressReaders.Clear();
@@ -214,13 +220,6 @@ namespace Assets.Scripts.Infrastructure.Factory
         private GameObject InstantiateRegistered(GameObject prefab, Vector3 at)
         {
             var gameObject = Object.Instantiate(prefab, at, Quaternion.identity);
-            RegisterProgressWatchers(gameObject);
-            return gameObject;
-        }
-
-        private async Task<GameObject> InstantiateRegisteredAsync(string prefabPath)
-        {
-            var gameObject = await _assets.Instantiate(prefabPath);
             RegisterProgressWatchers(gameObject);
             return gameObject;
         }
