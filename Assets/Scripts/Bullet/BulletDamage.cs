@@ -1,9 +1,10 @@
 ﻿using Assets.Scripts.Logic;
+using Mirror;
 using UnityEngine;
 
 namespace Assets.Scripts.Bullet
 {
-    public class BulletDamage : MonoBehaviour
+    public class BulletDamage : NetworkBehaviour
     {
         public float Damage;
         public string Sender;
@@ -18,14 +19,25 @@ namespace Assets.Scripts.Bullet
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag(WallTag)) Destroy(gameObject);
+            if (other.CompareTag(WallTag)) DestroySelf();
             if (other.CompareTag(Sender)) return;
             if (!other.transform.CompareTag(EnemyTag) && !other.transform.CompareTag(PlayerTag)) return;
             if (_collided) return;
             _collided = true;
             other.transform.parent.GetComponent<IHealth>().TakeDamage(Damage);
-            Instantiate(_hitFxPrefab, transform.position, Quaternion.identity);
-            Destroy(gameObject);
+            CmdHit();
+            DestroySelf();
         }
+
+        [Command(requiresAuthority = false)]
+        private void CmdHit()
+        {
+            var effect = Instantiate(_hitFxPrefab, transform.position, Quaternion.identity);
+            NetworkServer.Spawn(effect);
+        }
+
+        [Command(requiresAuthority = false)]
+        private void DestroySelf() => 
+            NetworkServer.Destroy(gameObject);
     }
 }

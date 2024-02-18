@@ -34,7 +34,6 @@ namespace Assets.Scripts.Player
         [ClientRpc]
         public void RpcConstruct(int ammo, float damage, float shootDelay, float reloadDelay)
         {
-            print("Shooter construct");
             PlayerDynamicData = new PlayerDynamicData();
             _initialAmmo = ammo;
             Damage = damage;
@@ -103,18 +102,7 @@ namespace Assets.Scripts.Player
             if (PlayerDynamicData.AmmoData.Available <= 0) return;
 
             _shootTime = Time.time;
-            _playerAnimator.Shoot();
-            _playerAudio.Shoot();
-            if (_shootEffectPrefab != null)
-                Instantiate(_shootEffectPrefab, _shootPoint.position, _shootPoint.rotation);
-            if (_bulletPrefab != null)
-            {
-                var bullet = Instantiate(_bulletPrefab, _shootPoint.transform.position, transform.rotation);
-                var bulletData = bullet.GetComponent<BulletDamage>();
-                bulletData.Sender = tag;
-                bulletData.Damage = Damage;
-            }
-            ConsumeAmmo();
+            CmdFire();
             _shoot = 0;
         }
 
@@ -123,6 +111,35 @@ namespace Assets.Scripts.Player
             PlayerDynamicData.AmmoData.Available -= _ammo.Value;
             PlayerDynamicData.SpentData.Bullets++;
             _hudConnector.PlayerAmmo = PlayerDynamicData.AmmoData.Available;
+        }
+
+        [Command]
+        private void CmdFire()
+        {
+            if (_shootEffectPrefab != null)
+            {
+                var effect = Instantiate(_shootEffectPrefab, _shootPoint.position, _shootPoint.rotation);
+                NetworkServer.Spawn(effect);
+            }
+
+            if (_bulletPrefab != null)
+            {
+                var bullet = Instantiate(_bulletPrefab, _shootPoint.transform.position, transform.rotation);
+                NetworkServer.Spawn(bullet);
+                var bulletData = bullet.GetComponent<BulletDamage>();
+                bulletData.Sender = tag;
+                bulletData.Damage = Damage;
+            }
+
+            RpcOnFire();
+        }
+
+        [ClientRpc]
+        private void RpcOnFire()
+        {
+            _playerAnimator.Shoot();
+            _playerAudio.Shoot();
+            ConsumeAmmo();
         }
     }
 }

@@ -7878,7 +7878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9d265b79e489514ba77886a4dc613bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dontDestroyOnLoad: 1
+  dontDestroyOnLoad: 0
   runInBackground: 1
   headlessStartMode: 1
   editorAutoStart: 0
@@ -7904,6 +7904,10 @@ MonoBehaviour:
   - {fileID: 2518866861527494855, guid: efa1b80b36645e3419157009a32f01e9, type: 3}
   - {fileID: 6044457758687077175, guid: c442743a42c50604aba433e006814463, type: 3}
   - {fileID: 4189816984326436046, guid: 522a78a114917be47bcd16e8d57ea527, type: 3}
+  - {fileID: 2167627874613640840, guid: 97367db1b93f952408a7b1dd026c5bc2, type: 3}
+  - {fileID: 1336949550903370, guid: 4543ab5e3d405ec40a8d4e9aa5165030, type: 3}
+  - {fileID: 100006, guid: 2a474af3f4c27be4e9bdce39cfe4315d, type: 3}
+  - {fileID: 100000, guid: bc98890f6028f444eaa7789bde5e2eeb, type: 3}
   exceptionsDisconnect: 1
   snapshotSettings:
     bufferTimeMultiplier: 2

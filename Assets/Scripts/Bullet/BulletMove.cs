@@ -1,9 +1,10 @@
 using System.Collections;
+using Mirror;
 using UnityEngine;
 
 namespace Assets.Scripts.Bullet
 {
-    public class BulletMove : MonoBehaviour
+    public class BulletMove : NetworkBehaviour
     {
         private const string DoDisableMethodName = "DoDisable";
         private const float TimeToDestroy = 3;
@@ -58,7 +59,12 @@ namespace Assets.Scripts.Bullet
         private IEnumerator DestroyTimer()
         {
             yield return new WaitForSeconds(TimeToDestroy);
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            DestroySelf();
         }
+
+        [Command(requiresAuthority = false)]
+        private void DestroySelf() => 
+            NetworkServer.Destroy(gameObject);
     }
 }
