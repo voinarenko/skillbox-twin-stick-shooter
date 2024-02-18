@@ -7,16 +7,7 @@ namespace Assets.Scripts.UI.Elements
     {
         [SerializeField] private TextMeshProUGUI _counter;
 
-        //public void Construct(PlayerShooter shooter)
-        //{
-        //    shooter.AmmoChanged.AddListener(UpdateCounter);
-        //    UpdateCounter(shooter.PlayerDynamicData.AmmoData.Available);
-        //}
-
-        public void UpdateCounter(int currentAmmo)
-        {
-            print($"Current ammo: |{currentAmmo}|");
+        public void UpdateCounter(int currentAmmo) => 
             _counter.text = $"{currentAmmo}";
-        }
     }
 }

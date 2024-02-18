@@ -58,7 +58,6 @@ namespace Assets.Scripts.Player
         [ClientRpc]
         public void RpcConstruct(WaveData waveData, int maxHealth)
         {
-            print($"HUD connector construct");
             _waveData = waveData;
             _playerMaxHealth = maxHealth;
             _waveData.Changed += OnWaveNumberChanged;
@@ -95,11 +94,8 @@ namespace Assets.Scripts.Player
         private void WaveNumberChanged(int _, int newWaveNumber) => 
             OnWaveNumberChanged?.Invoke(newWaveNumber);
 
-        private void PlayerAmmoChanged(int newAmmoAmount)
-        {
-            print($"Ammo changed to |{newAmmoAmount}|");
+        private void PlayerAmmoChanged(int newAmmoAmount) => 
             OnPlayerAmmoChanged?.Invoke(newAmmoAmount);
-        }
 
         private void PlayerHealthChanged(float newHealthAmount) => 
             OnPlayerHealthChanged?.Invoke(newHealthAmount, _playerMaxHealth);

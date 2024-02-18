@@ -38,7 +38,6 @@ namespace Assets.Scripts.Player
         [ClientRpc]
         public void RpcSetHealth(float maxHealth)
         {
-            print($"Health: |{maxHealth}|");
             _state.MaxHealth = maxHealth;
             _state.ResetHealth();
             _hudConnector.PlayerHealth = maxHealth;

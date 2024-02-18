@@ -92,7 +92,6 @@ namespace Assets.Scripts.Player
                 _playerAudio.Reload();
                 PlayerDynamicData.AmmoData.Available = _initialAmmo;
                 _hudConnector.PlayerAmmo = PlayerDynamicData.AmmoData.Available;
-                print($"Reload: |{_hudConnector.PlayerAmmo}|");
                 _reload = 0;
             }
             else _playerAnimator.Reload(false);
@@ -124,7 +123,6 @@ namespace Assets.Scripts.Player
             PlayerDynamicData.AmmoData.Available -= _ammo.Value;
             PlayerDynamicData.SpentData.Bullets++;
             _hudConnector.PlayerAmmo = PlayerDynamicData.AmmoData.Available;
-            print($"Shoot: |{_hudConnector.PlayerAmmo}|");
         }
     }
 }

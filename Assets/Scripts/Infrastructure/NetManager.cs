@@ -74,19 +74,17 @@ namespace Assets.Scripts.Infrastructure
             var player = Instantiate(_playerPrefabs[message.PlayerType], _spawnPosition, Quaternion.identity);
             NetworkServer.AddPlayerForConnection(conn, player);
             _gameFactory.RegisterProgressWatchers(player);
+            _playersWatcher.AddPlayer(player.GetComponent<PlayerDeath>());
             player.GetComponent<PlayerHealth>().RpcSetHealth(message.Health);
             player.GetComponent<PlayerMovement>().RpcSetSpeed(message.MoveSpeed);
             player.GetComponent<PlayerRotation>().RpcSetSpeed(message.RotateSpeed);
             player.GetComponent<PlayerAnimator>().RpcSetSpeed(message.SpeedFactor);
             player.GetComponent<PlayerCameraConnector>().RpcConnect();
             player.GetComponent<PlayerHudConnector>().RpcConstruct(_worldData.WaveData, message.Health);
+            player.GetComponent<PlayerShooter>().RpcConstruct(message.Ammo, message.Damage, message.AttackCooldown, message.ReloadCooldown);
 
 
             //await _gameFactory.CreateHud(player, _playerDynamicData);
-            player.GetComponent<PlayerShooter>().RpcConstruct(message.Ammo, message.Damage, message.AttackCooldown, message.ReloadCooldown);
-            _playersWatcher.AddPlayer(player.GetComponent<PlayerDeath>());
-
-
             //var hudConnector = player.GetComponent<PlayerHudConnector>();
             //NetworkServer.Spawn(hudConnector.gameObject, player);
             //hudConnector.InitWorld(_worldData);
