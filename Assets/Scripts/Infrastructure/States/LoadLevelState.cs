@@ -6,7 +6,6 @@ using Assets.Scripts.Logic;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Services.Factory;
 using System.Threading.Tasks;
-using Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -83,8 +82,8 @@ namespace Assets.Scripts.Infrastructure.States
             var manager = GameObject.FindWithTag(WaveChangerTag);
                 manager.GetComponent<WaveChanger>().Construct(_progressService, _stateMachine, _waveService);
                 manager.GetComponent<PauseListener>().Construct(_stateMachine);
-                //_progressService.Progress.WorldData.WaveData.NextWave();
-                //_waveService.SpawnEnemies();
+                _progressService.Progress.WorldData.WaveData.NextWave();
+                _waveService.SpawnEnemies();
         }
 
         private async Task InitSpawners(LevelStaticData levelData)

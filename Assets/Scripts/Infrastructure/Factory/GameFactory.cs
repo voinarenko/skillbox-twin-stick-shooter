@@ -136,7 +136,7 @@ namespace Assets.Scripts.Infrastructure.Factory
             health.Max = enemyData.Health;
 
             enemy.GetComponent<ActorUi>().Construct(health);
-            enemy.GetComponent<EnemyMoveToPlayer>().Construct(PlayerGameObject.transform);
+            //enemy.GetComponent<EnemyMoveToPlayer>().Construct(PlayerGameObject.transform);
 
             var agent = enemy.GetComponent<NavMeshAgent>();
             agent.speed = enemyData.MoveSpeed;
@@ -145,7 +145,7 @@ namespace Assets.Scripts.Infrastructure.Factory
             agent.acceleration = enemyData.Acceleration;
 
             var attack = enemy.GetComponent<EnemyAttack>();
-            attack.Construct(PlayerGameObject.transform);
+            //attack.Construct(PlayerGameObject.transform);
             attack.Type = (EnemyType)enemyData.EnemyTypeId;
             attack.Damage = enemyData.Damage + enemyData.Damage * enemyData.BoostFactor *
                 (_progressService.Progress.WorldData.WaveData.Encountered - 1);

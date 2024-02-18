@@ -14,12 +14,13 @@ namespace Assets.Scripts.Enemy
         public event Action Completed;
 
         private const string PlayerTag = "Player";
+        private EnemyBehavior _behavior;
+        private EnemyAttack _attack;
 
-
-        public void Construct(Transform playerTransform)
+        private void Start()
         {
-            PlayerTransform = playerTransform;
-            playerTransform.GetComponent<PlayerDeath>().Happened += PlayerKilled;
+            _behavior = GetComponent<EnemyBehavior>();
+            _attack = GetComponent<EnemyAttack>();
         }
 
         private void Update()
@@ -27,8 +28,13 @@ namespace Assets.Scripts.Enemy
             if (PlayerTransform == null)
             {
                 var player = GameObject.FindWithTag(PlayerTag);
-                PlayerTransform = player.GetComponent<PlayerMovement>().transform;
-                player.GetComponent<PlayerDeath>().Happened += PlayerKilled;
+                if (player != null) {
+                    PlayerTransform = player.GetComponent<PlayerMovement>().transform;
+                    player.GetComponent<PlayerDeath>().Happened += PlayerKilled;
+                    PlayerTransform.GetComponent<PlayerDeath>().Happened += PlayerKilled;
+                    _behavior.PlayerHealth = player.GetComponent<PlayerHealth>();
+                    _attack.Construct(PlayerTransform);
+                }
             }
             SetDestinationForAgent();
             if (PlayerNearby) CheckDistance();

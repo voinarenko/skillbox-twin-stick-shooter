@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Enemy.UtilityAi;
 using Assets.Scripts.Logic;
 using UnityEngine;
-using UnityEngine.AI;
 using Action = Assets.Scripts.Enemy.UtilityAi.Action;
 
 namespace Assets.Scripts.Enemy
@@ -18,7 +17,7 @@ namespace Assets.Scripts.Enemy
         private void Start()
         {
             Mover = GetComponent<EnemyMoveToPlayer>();
-            PlayerHealth = Mover.PlayerTransform.GetComponent<IHealth>();
+            //PlayerHealth = Mover.PlayerTransform.GetComponent<IHealth>();
             _aiBrain = GetComponent<AiBrain>();
             _attacker = GetComponent<EnemyAttack>();
             _attacker.Completed += Completed;
