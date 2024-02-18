@@ -1,4 +1,7 @@
 ﻿using System;
+using Assets.Scripts.Player;
+using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Assets.Scripts.Data
 {
@@ -6,8 +9,7 @@ namespace Assets.Scripts.Data
     public class WaveData
     {
         public int Encountered;
-        public event Action<int> Changed;
-        public event Action EnemyAdded;
+        public event Action Changed;
         public event Action EnemyRemoved;
 
         private int _currentEnemies;
@@ -15,14 +17,12 @@ namespace Assets.Scripts.Data
         public void NextWave()
         {
             Encountered++;
-            Changed?.Invoke(Encountered);
+            Changed?.Invoke();
+            if (Encountered > 1) Object.FindAnyObjectByType<PlayerHudConnector>().WaveNumber = Encountered;
         }
 
-        public void AddEnemy()
-        {
+        public void AddEnemy() => 
             _currentEnemies++;
-            EnemyAdded?.Invoke();
-        }
 
         public void RemoveEnemy()
         {

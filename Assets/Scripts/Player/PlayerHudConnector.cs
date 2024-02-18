@@ -60,7 +60,8 @@ namespace Assets.Scripts.Player
         {
             _waveData = waveData;
             _playerMaxHealth = maxHealth;
-            _waveData.Changed += OnWaveNumberChanged;
+            WaveNumber = _waveData.Encountered;
+            OnWaveNumberChanged?.Invoke(WaveNumber);
         }
 
         #region Client
@@ -83,7 +84,6 @@ namespace Assets.Scripts.Player
 
         public override void OnStopLocalPlayer()
         {
-            _waveData.Changed -= OnWaveNumberChanged;
             OnWaveNumberChanged -= _waveCounter.UpdateCounter;
             OnPlayerAmmoChanged -= _ammoCounter.UpdateCounter;
             OnPlayerHealthChanged -= _actorUi.UpdateHealthBar;

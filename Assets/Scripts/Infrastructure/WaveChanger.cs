@@ -10,7 +10,6 @@ namespace Assets.Scripts.Infrastructure
     {
         private const string FinalScene = "FinalScene";
 
-        private IPersistentProgressService _progressService;
         private IGameStateMachine _stateMachine;
         private IWaveService _waveService;
         
@@ -19,12 +18,13 @@ namespace Assets.Scripts.Infrastructure
 
         public void Construct(IPersistentProgressService progressService, IGameStateMachine stateMachine, IWaveService waveService)
         {
-            _progressService = progressService;
             _stateMachine = stateMachine;
             _waveService = waveService;
-            _waveData = _progressService.Progress.WorldData.WaveData;
+            _waveData = progressService.Progress.WorldData.WaveData;
             _waveData.EnemyRemoved += CheckEnemies;
         }
+
+        private void OnDestroy() => _waveData.EnemyRemoved -= CheckEnemies;
 
         public void Init(SceneLoader sceneLoader) => 
             _sceneLoader = sceneLoader;
