@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Player;
+using UnityEngine;
 
 namespace Assets.Scripts.Enemy
 {
@@ -21,8 +22,11 @@ namespace Assets.Scripts.Enemy
             TriggerObserver.TriggerExit -= TriggerExit;
         }
 
-        private void TriggerEnter(Collider other) => 
+        private void TriggerEnter(Collider other)
+        {
+            Follow.InitTarget(other.GetComponentInParent<PlayerHealth>().gameObject);
             Follow.PlayerNearby = true;
+        }
 
         private void TriggerExit(Collider other) => 
             Follow.PlayerNearby = false;

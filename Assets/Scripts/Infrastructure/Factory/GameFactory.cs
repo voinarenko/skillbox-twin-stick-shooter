@@ -149,7 +149,7 @@ namespace Assets.Scripts.Infrastructure.Factory
             attack.AttackCooldown = enemyData.AttackCooldown;
 
             var death = enemy.GetComponent<EnemyDeath>();
-            death.Construct(_progressService);
+            death.Construct(_progressService.Progress);
             death.Value = enemyData.KillValue;
 
             var lootSpawner = enemy.GetComponentInChildren<LootSpawner>();

@@ -361,20 +361,11 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  OnWaveNumberChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  OnPlayerAmmoChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  OnPlayerHealthChanged:
-    m_PersistentCalls:
-      m_Calls: []
+  PerkParent: {fileID: 0}
+  _playerMaxHealth: 0
+  WaveNumber: 0
   _hudPrefab: {fileID: 8337883060083228408, guid: 57f5dbfe70df49e48a8bdf052f813c7d,
     type: 3}
-  WaveNumber: 0
-  PlayerAmmo: 0
-  PlayerHealth: 0
 --- !u!1 &2097597898489705597
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,7 +377,7 @@ GameObject:
   - component: {fileID: 8650660490431592160}
   m_Layer: 12
   m_Name: ShootPoint
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

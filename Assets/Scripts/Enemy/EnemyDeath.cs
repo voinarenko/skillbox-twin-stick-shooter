@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Enemy.UtilityAi;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using System.Collections;
+using Assets.Scripts.Data;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
@@ -19,7 +20,7 @@ namespace Assets.Scripts.Enemy
 
         private const float TimeToDestroy = 3;
         private const float TimeToSpawnLoot = 2.5f;
-        private IPersistentProgressService _progressService;
+        private PlayerProgress _progress;
         private EnemyMoveToPlayer _mover;
         private EnemyHealth _health;
         private EnemyAnimator _animator;
@@ -29,8 +30,8 @@ namespace Assets.Scripts.Enemy
         private EnemyBehavior _behavior;
         private BoxCollider _collider;
 
-        public void Construct(IPersistentProgressService progressService) => 
-            _progressService = progressService;
+        public void Construct(PlayerProgress progress) => 
+            _progress = progress;
 
         private void Start()
         {
@@ -56,10 +57,9 @@ namespace Assets.Scripts.Enemy
         {
             _collider.enabled = false;
             _health.HealthChanged -= HealthChanged;
-            print($"World data: |{_progressService.Progress.WorldData.WaveData}|");
-            _progressService.Progress.WorldData.WaveData.RemoveEnemy();
-            _progressService.Progress.WorldData.KillData.Collect(_attack);
-            _progressService.Progress.PlayerDynamicData.ScoreData.UpdateScore(this);
+            _progress.WorldData.WaveData.RemoveEnemy();
+            _progress.WorldData.KillData.Collect(_attack);
+            _progress.PlayerDynamicData.ScoreData.UpdateScore(this);
             _aiBrain.SetAction(_behavior.ActionsAvailable[2]);
             _mover.enabled = false;
             _aiBrain.enabled = false;

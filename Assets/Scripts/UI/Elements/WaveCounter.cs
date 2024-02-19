@@ -7,10 +7,7 @@ namespace Assets.Scripts.UI.Elements
     {
         [SerializeField] private TextMeshProUGUI _counter;
 
-        public void UpdateCounter(int currentWave)
-        {
-            print($"Waves |{currentWave}|");
+        public void UpdateCounter(int currentWave) => 
             _counter.text = $"{currentWave}";
-        }
     }
 }

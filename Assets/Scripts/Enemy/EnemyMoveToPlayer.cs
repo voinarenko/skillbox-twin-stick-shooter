@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts.Player;
 using Mirror;
 using System;
+using System.Linq;
+using Assets.Scripts.Infrastructure;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,17 +11,18 @@ namespace Assets.Scripts.Enemy
     public class EnemyMoveToPlayer : NetworkBehaviour
     {
         public NavMeshAgent Agent;
-        public Transform PlayerTransform;
-
-        public bool PlayerNearby;
         public event Action Completed;
 
-        private const string PlayerTag = "Player";
+        public bool PlayerNearby { get; set; }
+
+        private PlayersWatcher _playersWatcher;
+        private Transform _playerTransform;
         private EnemyBehavior _behavior;
         private EnemyAttack _attack;
 
         private void Start()
         {
+            _playersWatcher = FindAnyObjectByType<PlayersWatcher>();
             _behavior = GetComponent<EnemyBehavior>();
             _attack = GetComponent<EnemyAttack>();
         }
@@ -27,37 +30,63 @@ namespace Assets.Scripts.Enemy
         private void Update()
         {
             if (!isServer) return;
-            if (PlayerTransform == null)
+            if (_playerTransform == null)
             {
-                var player = GameObject.FindWithTag(PlayerTag);
-                if (player != null) {
-                    PlayerTransform = player.GetComponent<PlayerMovement>().transform;
-                    player.GetComponent<PlayerDeath>().Happened += PlayerKilled;
-                    _behavior.PlayerHealth = player.GetComponent<PlayerHealth>();
-                    _attack.Construct(PlayerTransform);
+                var player = FindTarget();
+                if (player != null) 
+                    InitTarget(player);
+            }
+            else
+            {
+                SetDestinationForAgent();
+                if (PlayerNearby) CheckDistance();
+            }
+        }
+
+        public void InitTarget(GameObject player)
+        {
+            print(player);
+            _playerTransform = player.GetComponent<PlayerMovement>().transform;
+            player.GetComponent<PlayerDeath>().Happened += PlayerKilled;
+            _behavior.PlayerHealth = player.GetComponent<PlayerHealth>();
+            _attack.Construct(_playerTransform);
+        }
+
+        public void SetDestinationForAgent()
+        {
+            if (_playerTransform)
+                Agent.destination = _playerTransform.position;
+        }
+
+        private GameObject FindTarget()
+        {
+            var targets = _playersWatcher.GetConnectors();
+            var target = targets.FirstOrDefault()!.gameObject;
+            if (targets.Count > 1 && target != null)
+            {
+                Agent.destination = target.transform.position;
+                var distance = Agent.remainingDistance;
+                foreach (var t in targets)
+                {
+                    Agent.destination = t.transform.position;
+                    var newDistance = Agent.remainingDistance;
+                    if (newDistance < distance) target = t.gameObject;
                 }
             }
-            SetDestinationForAgent();
-            if (PlayerNearby) CheckDistance();
+            return target;
         }
 
         private void PlayerKilled(PlayerDeath player)
         {
             player.Happened -= PlayerKilled;
-            PlayerTransform = null;
+            _playerTransform = null;
         }
 
         private void CheckDistance()
         {
             var dist = Agent.remainingDistance;
-            if (!float.IsPositiveInfinity(dist) && Agent.remainingDistance <= Agent.stoppingDistance && PlayerTransform != null) 
+            if (!float.IsPositiveInfinity(dist) && Agent.remainingDistance <= Agent.stoppingDistance && _playerTransform != null) 
                 Completed?.Invoke();
-        }
-
-        public void SetDestinationForAgent()
-        {
-            if (PlayerTransform)
-                Agent.destination = PlayerTransform.position;
         }
     }
 }

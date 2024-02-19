@@ -96,11 +96,8 @@ namespace Assets.Scripts.Player
 
         #endregion
 
-        private void WaveNumberChanged(int _, int newWaveNumber)
-        {
-            print($"HUD wave: {_}/{newWaveNumber}");
+        private void WaveNumberChanged(int _, int newWaveNumber) => 
             OnWaveNumberChanged?.Invoke(newWaveNumber);
-        }
 
         private void PlayerAmmoChanged(int newAmmoAmount) => 
             OnPlayerAmmoChanged?.Invoke(newAmmoAmount);
