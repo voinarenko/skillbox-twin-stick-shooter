@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Data;
-using Assets.Scripts.Enemy;
+﻿using Assets.Scripts.Enemy;
 using Assets.Scripts.Infrastructure.AssetManagement;
 using Assets.Scripts.Infrastructure.Services.Loot;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
@@ -33,8 +32,7 @@ namespace Assets.Scripts.Infrastructure.Factory
         private readonly ILootService _lootService;
 
 
-        private GameObject PlayerGameObject { get; set; }
-        private Transform _perkParent;
+        //private GameObject PlayerGameObject { get; set; }
 
         public GameFactory(IAssets assets, IStaticDataService staticData, IRandomService randomService, IPersistentProgressService progressService, IWaveService waveService, ILootService lootService)
         {
@@ -109,18 +107,18 @@ namespace Assets.Scripts.Infrastructure.Factory
         //    //await CreateHud(player);
         //}
 
-        public async Task<GameObject> CreateHud(GameObject player, PlayerDynamicData playerDynamicData)
-        {
-            var hud = await InstantiateRegisteredAsync(AssetAddress.HudPath);
+        //public async Task<GameObject> CreateHud(GameObject player, PlayerDynamicData playerDynamicData)
+        //{
+        //    var hud = await InstantiateRegisteredAsync(AssetAddress.HudPath);
             
-            //hud.GetComponent<WaveCounter>().Construct(_progressService.Progress.WorldData);
-            //hud.GetComponent<AmmoCounter>().Construct(player.GetComponent<PlayerShooter>());
-            hud.GetComponent<ActorUi>().Construct(player.GetComponent<IHealth>());
+        //    //hud.GetComponent<WaveCounter>().Construct(_progressService.Progress.WorldData);
+        //    //hud.GetComponent<AmmoCounter>().Construct(player.GetComponent<PlayerShooter>());
+        //    hud.GetComponent<ActorUi>().Construct(player.GetComponent<IHealth>());
 
-            _perkParent = hud.GetComponent<PerkDisplay>().GetParent();
+        //    _perkParent = hud.GetComponent<PerkDisplay>().GetParent();
 
-            return hud;
-        }
+        //    return hud;
+        //}
 
         public async Task<GameObject> CreateEnemy(EnemyTypeId typeId, Transform parent)
         {
@@ -128,7 +126,7 @@ namespace Assets.Scripts.Infrastructure.Factory
 
             var prefab = await _assets.Load<GameObject>(enemyData.PrefabReference);
 
-            var enemy = Object.Instantiate(prefab, parent.position, Quaternion.identity, parent);
+            var enemy = Object.Instantiate(prefab, parent.position, Quaternion.identity);
 
             var health = enemy.GetComponent<IHealth>();
             health.Current = enemyData.Health + enemyData.Health * enemyData.BoostFactor *
@@ -136,7 +134,6 @@ namespace Assets.Scripts.Infrastructure.Factory
             health.Max = enemyData.Health;
 
             enemy.GetComponent<ActorUi>().Construct(health);
-            //enemy.GetComponent<EnemyMoveToPlayer>().Construct(PlayerGameObject.transform);
 
             var agent = enemy.GetComponent<NavMeshAgent>();
             agent.speed = enemyData.MoveSpeed;
@@ -145,7 +142,6 @@ namespace Assets.Scripts.Infrastructure.Factory
             agent.acceleration = enemyData.Acceleration;
 
             var attack = enemy.GetComponent<EnemyAttack>();
-            //attack.Construct(PlayerGameObject.transform);
             attack.Type = (EnemyType)enemyData.EnemyTypeId;
             attack.Damage = enemyData.Damage + enemyData.Damage * enemyData.BoostFactor *
                 (_progressService.Progress.WorldData.WaveData.Encountered - 1);
@@ -167,11 +163,11 @@ namespace Assets.Scripts.Infrastructure.Factory
             var prefab = await _assets.Load<GameObject>(AssetAddress.Loot);
             var lootPiece = InstantiateRegistered(prefab)
                 .GetComponent<LootPiece>();
-            lootPiece.Construct(_progressService.Progress.WorldData, _lootService, _perkParent);
+            lootPiece.Construct(_progressService.Progress.WorldData, _lootService);
             return lootPiece;
         }
 
-        public async Task CreateSpawner(Vector3 at, string spawnerId)
+        public async Task<GameObject> CreateSpawner(Vector3 at, string spawnerId)
         {
             var prefab = await _assets.Load<GameObject>(AssetAddress.Spawner);
             var spawner = InstantiateRegistered(prefab, at)
@@ -180,6 +176,8 @@ namespace Assets.Scripts.Infrastructure.Factory
             spawner.Id = spawnerId;
             _waveService.SpawnPoints ??= new List<SpawnPoint>();
             _waveService.SpawnPoints.Add(spawner);
+
+            return spawner.gameObject;
         }
 
         public async Task<GameObject> InstantiateRegisteredAsync(string prefabPath)

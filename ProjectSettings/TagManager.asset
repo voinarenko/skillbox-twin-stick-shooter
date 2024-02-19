@@ -16,6 +16,7 @@ TagManager:
   - Pointer
   - HUD
   - UIRoot
+  - Dead
   layers:
   - Default
   - TransparentFX

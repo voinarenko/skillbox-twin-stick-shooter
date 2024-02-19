@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 using UnityEngine.AI;
 
 namespace Assets.Scripts.Enemy
 {
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(EnemyAnimator))]
-    public class AnimateAlongAgent : MonoBehaviour
+    public class AnimateAlongAgent : NetworkBehaviour
     {
         private const float MinimalVelocity = 0.1f;
         
@@ -14,6 +15,7 @@ namespace Assets.Scripts.Enemy
 
         private void Update()
         {
+            if (!isServer) return;
             if(ShouldMove())
                 Animator.Move();
             else

@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 2384452741857392058}
   - component: {fileID: -4739684663247853521}
   - component: {fileID: 2257335528506979915}
+  - component: {fileID: 8068145237150705071}
   m_Layer: 16
   m_Name: Bullet
   m_TagString: Bullet
@@ -156,6 +157,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3da2b55390f603945bb5163ccc14f820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   _trailConfig: {fileID: 11400000, guid: 79cae040cd591154fa12b930fca31c3f, type: 2}
   _renderer: {fileID: -2521852740558504257}
   _speed: 0.1
@@ -317,6 +321,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c5840075d6d2f6478f90ed6ab8c9535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   Damage: 10
   Sender: 
   _hitFxPrefab: {fileID: 100000, guid: bc98890f6028f444eaa7789bde5e2eeb, type: 3}
@@ -384,6 +391,40 @@ MonoBehaviour:
   syncPosition: 1
   syncRotation: 1
   syncScale: 0
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 1
+  coordinateSpace: 0
+  sendIntervalMultiplier: 1
+  timelineOffset: 0
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  onlySyncOnChange: 1
+  compressRotation: 1
+  bufferResetMultiplier: 3
+  positionSensitivity: 0.01
+  rotationSensitivity: 0.01
+  scaleSensitivity: 0.01
+--- !u!114 &8068145237150705071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2167627874613640840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b20dc110904e47f8a154cdcf6433eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  target: {fileID: 2167627874613640841}
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 1
   interpolatePosition: 1
   interpolateRotation: 1
   interpolateScale: 1

@@ -1,11 +1,12 @@
 ﻿using Assets.Scripts.Player;
+using Mirror;
 using System;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Assets.Scripts.Enemy
 {
-    public class EnemyMoveToPlayer : MonoBehaviour
+    public class EnemyMoveToPlayer : NetworkBehaviour
     {
         public NavMeshAgent Agent;
         public Transform PlayerTransform;
@@ -25,13 +26,13 @@ namespace Assets.Scripts.Enemy
 
         private void Update()
         {
+            if (!isServer) return;
             if (PlayerTransform == null)
             {
                 var player = GameObject.FindWithTag(PlayerTag);
                 if (player != null) {
                     PlayerTransform = player.GetComponent<PlayerMovement>().transform;
                     player.GetComponent<PlayerDeath>().Happened += PlayerKilled;
-                    PlayerTransform.GetComponent<PlayerDeath>().Happened += PlayerKilled;
                     _behavior.PlayerHealth = player.GetComponent<PlayerHealth>();
                     _attack.Construct(PlayerTransform);
                 }

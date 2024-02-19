@@ -24,7 +24,11 @@ namespace Assets.Scripts.Infrastructure
             _waveData.EnemyRemoved += CheckEnemies;
         }
 
-        private void OnDestroy() => _waveData.EnemyRemoved -= CheckEnemies;
+        private void OnDestroy()
+        {
+            if (_waveData != null) 
+                _waveData.EnemyRemoved -= CheckEnemies;
+        }
 
         public void Init(SceneLoader sceneLoader) => 
             _sceneLoader = sceneLoader;

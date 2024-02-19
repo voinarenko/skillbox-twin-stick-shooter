@@ -22,15 +22,13 @@ namespace Assets.Scripts.Enemy
         private WorldData _worldData;
         private Consumable _consumable;
         private Perk _perk;
-        private Transform _perkParent;
         private bool _picked;
         private bool _isConsumable;
 
-        public void Construct(WorldData worldData, ILootService lootService, Transform perkParent)
+        public void Construct(WorldData worldData, ILootService lootService)
         {
             _worldData = worldData;
             _lootService = lootService;
-            _perkParent = perkParent;
         }
 
         public void Initialize(Consumable loot)
@@ -65,7 +63,7 @@ namespace Assets.Scripts.Enemy
             ShowText();
             
             if (_isConsumable) _lootService.Process(_consumable, player);
-            else _lootService.Process(_perk, player, _perkParent);
+            else _lootService.Process(_perk, player, player.GetComponent<PlayerHudConnector>().PerkParent);
 
             Destroy(gameObject, TimeToDestroy);
         }

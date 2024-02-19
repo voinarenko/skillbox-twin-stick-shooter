@@ -4,7 +4,6 @@ using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.StaticData;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Assets.Scripts.Data;
 using UnityEngine;
 
 namespace Assets.Scripts.Infrastructure.Factory
@@ -13,16 +12,16 @@ namespace Assets.Scripts.Infrastructure.Factory
     {
         List<ISavedProgressReader> ProgressReaders { get; }
         List<ISavedProgress> ProgressWriters { get; }
-
+        
         //Task<GameObject> CreatePlayer(Vector3 at);
-        Task<GameObject> CreateHud(GameObject player, PlayerDynamicData playerDynamicData);
-        Task CreateSpawner(Vector3 at, string spawnerId);
+        //Task<GameObject> CreateHud(GameObject player, PlayerDynamicData playerDynamicData);
+        Task<GameObject> CreateSpawner(Vector3 at, string spawnerId);
         void CleanUp();
         Task<GameObject> CreateEnemy(EnemyTypeId typeId, Transform parent);
         Task<LootPiece> CreateLoot();
         Task WarmUp();
         //Task UpdatePlayerData(GameObject player, PlayerStaticData playerData);
         void RegisterProgressWatchers(GameObject gameObject);
-        Task<GameObject> InstantiateRegisteredAsync(string prefabPath);
+        //Task<GameObject> InstantiateRegisteredAsync(string prefabPath);
     }
 }

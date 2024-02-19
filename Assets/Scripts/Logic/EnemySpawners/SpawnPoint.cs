@@ -2,11 +2,11 @@
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.Randomizer;
 using Assets.Scripts.StaticData;
-using UnityEngine;
+using Mirror;
 
 namespace Assets.Scripts.Logic.EnemySpawners
 {
-    public class SpawnPoint : MonoBehaviour, ISavedProgress
+    public class SpawnPoint : NetworkBehaviour, ISavedProgress
     {
         public string Id { get; set; }
 
@@ -21,19 +21,11 @@ namespace Assets.Scripts.Logic.EnemySpawners
             _progress = progress;
         }
 
-        //public void LoadProgress(PlayerProgress progress)
-        //{
-        //    //Spawn();
-        //}
-
-        //public void UpdateProgress(PlayerProgress progress)
-        //{
-        //    //_progress = progress;
-        //}
-
         public async void Spawn()
         {
-            await _factory.CreateEnemy(GenerateRandomEnemy(), transform);
+            if (!isServer) return;
+            var enemy = await _factory.CreateEnemy(GenerateRandomEnemy(), transform);
+            NetworkServer.Spawn(enemy);
             _progress.Progress.WorldData.WaveData.AddEnemy();
         }
 

@@ -6,6 +6,7 @@ using Assets.Scripts.Logic;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Services.Factory;
 using System.Threading.Tasks;
+using Mirror;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,7 +15,6 @@ namespace Assets.Scripts.Infrastructure.States
     public class LoadLevelState : IPayloadedState<string>
     {
         private const string WaveChangerTag = "WaveChanger";
-        private const string CameraTag = "VirtualCamera";
         private static NetManager NetManager => Object.FindAnyObjectByType<NetManager>();
         private readonly IPersistentProgressService _progressService;
         private readonly IGameFactory _gameFactory;
@@ -51,8 +51,7 @@ namespace Assets.Scripts.Infrastructure.States
         private async void OnLoaded()
         {
             await InitUiRoot();
-            await InitGameWorld();
-            //InformProgressReaders();
+            InitGameWorld();
 
             _loadingCurtain.Hide();
             _stateMachine.Enter<GameLoopState>();
@@ -61,20 +60,11 @@ namespace Assets.Scripts.Infrastructure.States
         private async Task InitUiRoot() => 
             await _uiFactory.CreateUiRoot();
 
-        private async Task InitGameWorld()
+        private void InitGameWorld()
         {
             var levelData = LevelStaticData();
-            await InitSpawners(levelData);
-            //var player = await InitPlayer(levelData);
-
-            NetManager.Construct(_progressService, _gameFactory, /*_progressService.Progress.PlayerStaticData, */levelData.InitialPlayerPosition);
-
+            NetManager.Construct(_progressService, _gameFactory, _waveService, levelData);
             InitWaveChanger();
-            //CameraFollow(player);
-
-            //await InitHud();
- 
-            //NetManager.SpawnPlayer(player);
         }
 
         private void InitWaveChanger()
@@ -82,33 +72,9 @@ namespace Assets.Scripts.Infrastructure.States
             var manager = GameObject.FindWithTag(WaveChangerTag);
                 manager.GetComponent<WaveChanger>().Construct(_progressService, _stateMachine, _waveService);
                 manager.GetComponent<PauseListener>().Construct(_stateMachine);
-                _progressService.Progress.WorldData.WaveData.NextWave();
-                _waveService.SpawnEnemies();
         }
-
-        private async Task InitSpawners(LevelStaticData levelData)
-        {
-            foreach (var spawnerData in levelData.EnemySpawners)
-                await _gameFactory.CreateSpawner(spawnerData.Position, spawnerData.Id);
-        }
-
-        //private void InformProgressReaders() => 
-        //    _gameFactory.ProgressReaders.ForEach(x=>x.LoadProgress(_progressService.Progress));
-
-        //private async Task InitHud() => 
-        //    await _gameFactory.CreateHud();
-
-        //private async Task<GameObject> InitPlayer(LevelStaticData levelData) => 
-        //    await _gameFactory.CreatePlayer(levelData.InitialPlayerPosition);
 
         private LevelStaticData LevelStaticData() => 
             _staticData.ForLevel(SceneManager.GetActiveScene().name);
-
-        //private static void CameraFollow(GameObject player)
-        //{
-        //    var camera = GameObject.FindWithTag(CameraTag).GetComponent<CinemachineVirtualCamera>();
-        //    camera.Follow = player.transform;
-        //    camera.LookAt = player.transform;
-        //}
     }
 }

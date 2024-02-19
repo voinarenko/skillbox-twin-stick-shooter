@@ -1,6 +1,5 @@
-﻿using System;
-using Assets.Scripts.Player;
-using UnityEngine;
+﻿using Assets.Scripts.Player;
+using System;
 using Object = UnityEngine.Object;
 
 namespace Assets.Scripts.Data
@@ -9,7 +8,6 @@ namespace Assets.Scripts.Data
     public class WaveData
     {
         public int Encountered;
-        public event Action Changed;
         public event Action EnemyRemoved;
 
         private int _currentEnemies;
@@ -17,7 +15,6 @@ namespace Assets.Scripts.Data
         public void NextWave()
         {
             Encountered++;
-            Changed?.Invoke();
             if (Encountered > 1) Object.FindAnyObjectByType<PlayerHudConnector>().WaveNumber = Encountered;
         }
 

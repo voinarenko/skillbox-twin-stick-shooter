@@ -1,7 +1,7 @@
-﻿using Assets.Scripts.UI.Elements;
+﻿using Assets.Scripts.Data;
+using Assets.Scripts.UI.Elements;
 using Mirror;
 using System;
-using Assets.Scripts.Data;
 using UnityEngine;
 
 namespace Assets.Scripts.Player
@@ -12,9 +12,11 @@ namespace Assets.Scripts.Player
         public event Action<int> OnPlayerAmmoChanged;
         public event Action<float, float> OnPlayerHealthChanged;
 
+        public Transform PerkParent;
         [SerializeField] private float _playerMaxHealth;
 
         private int _playerAmmo;
+
         public int PlayerAmmo
         {
             get => _playerAmmo;
@@ -27,6 +29,7 @@ namespace Assets.Scripts.Player
         }
 
         private float _playerHealth;
+
         public float PlayerHealth
         {
             get => _playerHealth;
@@ -55,6 +58,7 @@ namespace Assets.Scripts.Player
         private ActorUi _actorUi;
         private WaveData _waveData;
 
+
         [ClientRpc]
         public void RpcConstruct(WaveData waveData, int maxHealth)
         {
@@ -72,6 +76,7 @@ namespace Assets.Scripts.Player
             _waveCounter = _hudObject.GetComponent<WaveCounter>();
             _ammoCounter = _hudObject.GetComponent<AmmoCounter>();
             _actorUi = _hudObject.GetComponent<ActorUi>();
+            PerkParent = _hudObject.GetComponent<PerkDisplay>().GetParent();
 
             OnWaveNumberChanged += _waveCounter.UpdateCounter;
             OnPlayerAmmoChanged += _ammoCounter.UpdateCounter;

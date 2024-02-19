@@ -1,6 +1,8 @@
-﻿using Assets.Scripts.Data;
+﻿using System.Threading.Tasks;
+using Assets.Scripts.Data;
 using Assets.Scripts.Infrastructure.Factory;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
+using Assets.Scripts.Infrastructure.Services.Wave;
 using Assets.Scripts.Player;
 using Assets.Scripts.StaticData;
 using Mirror;
@@ -11,34 +13,41 @@ namespace Assets.Scripts.Infrastructure
     public class NetManager : NetworkManager
     {
         private IGameFactory _gameFactory;
+        private IWaveService _waveService;
+        private LevelStaticData _levelStaticData;
 
         private PlayerStaticData _playerStaticData;
         private PlayersWatcher _playersWatcher;
         [SerializeField] private GameObject[] _playerPrefabs;
 
         private Vector3 _spawnPosition;
-        
+
         private bool _playerSpawned;
         private bool _playerConnected;
 
         private WorldData _worldData;
         private IPersistentProgressService _progressService;
 
-        public void Construct(IPersistentProgressService progressService, IGameFactory gameFactory, /*PlayerStaticData playerData, */Vector3 position)
+        public void Construct(IPersistentProgressService progressService, IGameFactory gameFactory, IWaveService waveService, LevelStaticData levelStaticData)
         {
             _progressService = progressService;
             _gameFactory = gameFactory;
+            _waveService = waveService;
+            _levelStaticData = levelStaticData;
             _playerStaticData = progressService.Progress.PlayerStaticData;
             _worldData = progressService.Progress.WorldData;
             //_playerStaticData = playerData;
-            _spawnPosition = position;
+            _spawnPosition = levelStaticData.InitialPlayerPosition;
             _playersWatcher = FindAnyObjectByType<PlayersWatcher>();
         }
 
-        public override void OnStartServer()
+        public override async void OnStartServer()
         {
             base.OnStartServer();
             NetworkServer.RegisterHandler<CreatePlayerMessage>(OnCreateCharacter);
+            await CreateSpawners();
+            _progressService.Progress.WorldData.WaveData.NextWave();
+            _waveService.SpawnEnemies();
         }
 
         public override void OnClientConnect()
@@ -67,6 +76,15 @@ namespace Assets.Scripts.Infrastructure
             };
             NetworkClient.Send(message);
             _playerSpawned = true;
+        }
+
+        private async Task CreateSpawners()
+        {
+            foreach (var spawnerData in _levelStaticData.EnemySpawners)
+            {
+                var spawner = await _gameFactory.CreateSpawner(spawnerData.Position, spawnerData.Id);
+                NetworkServer.Spawn(spawner);
+            }
         }
 
         private void OnCreateCharacter(NetworkConnectionToClient conn, CreatePlayerMessage message)
