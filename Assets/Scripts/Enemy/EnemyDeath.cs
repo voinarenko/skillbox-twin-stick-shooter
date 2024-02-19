@@ -56,6 +56,7 @@ namespace Assets.Scripts.Enemy
         {
             _collider.enabled = false;
             _health.HealthChanged -= HealthChanged;
+            print($"World data: |{_progressService.Progress.WorldData.WaveData}|");
             _progressService.Progress.WorldData.WaveData.RemoveEnemy();
             _progressService.Progress.WorldData.KillData.Collect(_attack);
             _progressService.Progress.PlayerDynamicData.ScoreData.UpdateScore(this);

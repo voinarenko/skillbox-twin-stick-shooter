@@ -8,7 +8,8 @@ namespace Assets.Scripts.Infrastructure
     public class PlayersWatcher : MonoBehaviour
     {
         private WaveChanger _waveChanger;
-        [SerializeField] private List<PlayerDeath> _players = new();
+        [SerializeField] private List<PlayerDeath> _playerDeaths = new();
+        [SerializeField] private List<PlayerHudConnector> _playerHudConnectors = new();
 
         private Action _changed;
 
@@ -20,21 +21,26 @@ namespace Assets.Scripts.Infrastructure
 
         public void AddPlayer(PlayerDeath player)
         {
-            _players.Add(player);
+            _playerDeaths.Add(player);
+            _playerHudConnectors.Add(player.GetComponent<PlayerHudConnector>());
             _changed?.Invoke();
             player.Happened += RemovePlayer;
         }
 
+        public List<PlayerHudConnector> GetConnectors() => 
+            _playerHudConnectors;
+
         private void RemovePlayer(PlayerDeath player)
         {
-            _players.Remove(player);
+            _playerDeaths.Remove(player);
+            _playerHudConnectors.Remove(player.GetComponent<PlayerHudConnector>());
             _changed?.Invoke();
             player.Happened -= RemovePlayer;
         }
 
         private void OnPlayersChanged()
         {
-            if (_players.Count <= 0) _waveChanger.GameOver();
+            if (_playerDeaths.Count <= 0) _waveChanger.GameOver();
         }
     }
 }
