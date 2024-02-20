@@ -3178,6 +3178,11 @@ PrefabInstance:
       propertyPath: m_Size.z
       value: 0.55
       objectReference: {fileID: 0}
+    - target: {fileID: 8287807627213343045, guid: c537a4d337fc14d418fee2ced4b58814,
+        type: 3}
+      propertyPath: _assetId
+      value: 3263762709
+      objectReference: {fileID: 0}
     - target: {fileID: 8448274562106646493, guid: c537a4d337fc14d418fee2ced4b58814,
         type: 3}
       propertyPath: m_LocalPosition.x

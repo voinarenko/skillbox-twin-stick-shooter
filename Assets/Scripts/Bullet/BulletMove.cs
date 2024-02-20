@@ -63,11 +63,8 @@ namespace Assets.Scripts.Bullet
             DestroySelf();
         }
 
-        [Command(requiresAuthority = false)]
-        private void DestroySelf()
-        {
-            NetworkServer.UnSpawn(gameObject);
-            Destroy(gameObject);
-        }
+        [Server]
+        private void DestroySelf() => 
+            NetworkServer.Destroy(gameObject);
     }
 }

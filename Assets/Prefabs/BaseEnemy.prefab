@@ -284,9 +284,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7b0491ff5624d546865ce2406f1510b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   Agent: {fileID: 8649501591300120365}
-  PlayerTransform: {fileID: 0}
-  PlayerNearby: 0
 --- !u!114 &3281882712681335410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,6 +314,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8b4e9bb788e178479b562ba76de426a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   Agent: {fileID: 8649501591300120365}
   Animator: {fileID: 9193984182133261566}
 --- !u!114 &1740678622543289402
@@ -704,6 +708,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8267130259864479344, guid: d35d3ef35f99ba14db6021f164e0d320,
+        type: 3}
+      propertyPath: _assetId
+      value: 193583331
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

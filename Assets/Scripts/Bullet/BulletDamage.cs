@@ -29,18 +29,15 @@ namespace Assets.Scripts.Bullet
             DestroySelf();
         }
 
-        [Command(requiresAuthority = false)]
+        [Server]
         private void CmdHit()
         {
             var effect = Instantiate(_hitFxPrefab, transform.position, Quaternion.identity);
             NetworkServer.Spawn(effect);
         }
 
-        [Command(requiresAuthority = false)]
-        private void DestroySelf()
-        {
-            NetworkServer.UnSpawn(gameObject);
-            Destroy(gameObject);
-        }
+        [Server]
+        private void DestroySelf() => 
+            NetworkServer.Destroy(gameObject);
     }
 }

@@ -7909,6 +7909,9 @@ MonoBehaviour:
   - {fileID: 100006, guid: 2a474af3f4c27be4e9bdce39cfe4315d, type: 3}
   - {fileID: 100000, guid: bc98890f6028f444eaa7789bde5e2eeb, type: 3}
   - {fileID: 1544726802727955534, guid: d171ba8c039d34248b92df76f629a035, type: 3}
+  - {fileID: 4945866355247197177, guid: efc3ea9b032575a44b5b4e6c5532dcee, type: 3}
+  - {fileID: 100000, guid: 6d4aaf064b43ace428499a835ba9b383, type: 3}
+  - {fileID: 3634758806780902263, guid: d35d3ef35f99ba14db6021f164e0d320, type: 3}
   exceptionsDisconnect: 1
   snapshotSettings:
     bufferTimeMultiplier: 2
@@ -17595,7 +17598,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f980a7610e5a0094f81d3635c19cf994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _players: []
+  _playerDeaths: []
+  _playerHudConnectors: []
 --- !u!1001 &2078322564
 PrefabInstance:
   m_ObjectHideFlags: 0

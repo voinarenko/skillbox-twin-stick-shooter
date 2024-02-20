@@ -60,17 +60,21 @@ namespace Assets.Scripts.Enemy
 
         private GameObject FindTarget()
         {
+            GameObject target = null;
             var targets = _playersWatcher.GetConnectors();
-            var target = targets.FirstOrDefault()!.gameObject;
-            if (targets.Count > 1 && target != null)
+            if (targets != null)
             {
-                Agent.destination = target.transform.position;
-                var distance = Agent.remainingDistance;
-                foreach (var t in targets)
+                target = targets.FirstOrDefault()!.gameObject;
+                if (targets.Count > 1 && target != null)
                 {
-                    Agent.destination = t.transform.position;
-                    var newDistance = Agent.remainingDistance;
-                    if (newDistance < distance) target = t.gameObject;
+                    Agent.destination = target.transform.position;
+                    var distance = Agent.remainingDistance;
+                    foreach (var t in targets)
+                    {
+                        Agent.destination = t.transform.position;
+                        var newDistance = Agent.remainingDistance;
+                        if (newDistance < distance) target = t.gameObject;
+                    }
                 }
             }
             return target;
