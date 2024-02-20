@@ -3,11 +3,11 @@ using Assets.Scripts.Infrastructure.Factory;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.Randomizer;
 using Assets.Scripts.StaticData;
-using UnityEngine;
+using Mirror;
 
 namespace Assets.Scripts.Enemy
 {
-    public class LootSpawner : MonoBehaviour
+    public class LootSpawner : NetworkBehaviour
     {
         private IPersistentProgressService _progressService;
         public EnemyDeath EnemyDeath;
@@ -30,6 +30,7 @@ namespace Assets.Scripts.Enemy
             if (!SpawnAllowed()) return;
 
             var loot = await _factory.CreateLoot();
+            NetworkServer.Spawn(loot.gameObject);
             loot.transform.position = transform.position;
 
             if (GenerateLoot() < 20)

@@ -59,7 +59,6 @@ namespace Assets.Scripts.Bullet
         private IEnumerator DestroyTimer()
         {
             yield return new WaitForSeconds(TimeToDestroy);
-            //Destroy(gameObject);
             DestroySelf();
         }
 

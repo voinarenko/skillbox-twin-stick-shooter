@@ -1,13 +1,15 @@
-﻿using Assets.Scripts.Data;
+﻿using System.Collections;
+using Assets.Scripts.Data;
 using Assets.Scripts.Infrastructure.Services.Loot;
 using Assets.Scripts.Player;
 using DG.Tweening;
+using Mirror;
 using TMPro;
 using UnityEngine;
 
 namespace Assets.Scripts.Enemy
 {
-    public class LootPiece : MonoBehaviour
+    public class LootPiece : NetworkBehaviour
     {
         public Renderer Sphere;
         public GameObject PickupFxPrefab;
@@ -65,7 +67,7 @@ namespace Assets.Scripts.Enemy
             if (_isConsumable) _lootService.Process(_consumable, player);
             else _lootService.Process(_perk, player, player.GetComponent<PlayerHudConnector>().PerkParent);
 
-            Destroy(gameObject, TimeToDestroy);
+            StartCoroutine(DestroyTimer());
         }
 
         private void UpdateWorldData()
@@ -78,13 +80,26 @@ namespace Assets.Scripts.Enemy
             Sphere.transform.DOScale(0,TimeToHide).OnComplete(() => 
                 Sphere.gameObject.SetActive(false));
 
-        private void PlayPickupFx() => 
-            Instantiate(PickupFxPrefab, transform.position, Quaternion.identity);
+        private void PlayPickupFx()
+        {
+            var effect = Instantiate(PickupFxPrefab, transform.position, Quaternion.identity);
+            NetworkServer.Spawn(effect);
+        }
 
         private void ShowText()
         {
             LootText.text = _isConsumable ? $"{_consumable.Type}" : $"{_perk.Type}";
             PickupPopup.SetActive(true);
         }
+
+        private IEnumerator DestroyTimer()
+        {
+            yield return new WaitForSeconds(TimeToDestroy);
+            DestroySelf();
+        }
+
+        [Server]
+        private void DestroySelf() => 
+            NetworkServer.Destroy(gameObject);
     }
 }
