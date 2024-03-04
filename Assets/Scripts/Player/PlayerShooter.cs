@@ -8,12 +8,14 @@ namespace Assets.Scripts.Player
     [RequireComponent(typeof(PlayerAnimator), typeof(PlayerHudConnector))]
     public class PlayerShooter : NetworkBehaviour
     {
+        public DataStorage Storage;
         public PlayerDynamicData PlayerDynamicData;
         public float Damage;
         public float ShootDelay;
         public float ReloadDelay;
 
         private const int AmmoConsumption = 1;
+        private const string StorageTag = "Storage";
         private readonly Ammo _ammo = new();
 
         [SerializeField] private GameObject _shootEffectPrefab;
@@ -34,27 +36,28 @@ namespace Assets.Scripts.Player
         [ClientRpc]
         public void RpcConstruct(int ammo, float damage, float shootDelay, float reloadDelay)
         {
-            PlayerDynamicData = new PlayerDynamicData();
             _initialAmmo = ammo;
             Damage = damage;
             ShootDelay = shootDelay;
             ReloadDelay = reloadDelay;
-            PlayerDynamicData.AmmoData.Available = _initialAmmo;
-            _hudConnector.PlayerAmmo = PlayerDynamicData.AmmoData.Available;
         }
 
         private void Start()
         {
+            Storage = GameObject.FindWithTag(StorageTag).GetComponent<DataStorage>();
+            PlayerDynamicData = Storage.PlayerDynamicData;
+            PlayerDynamicData.AmmoData.Available = _initialAmmo;
             _playerAudio = GetComponent<PlayerAudio>();
             _playerAnimator = GetComponent<PlayerAnimator>();
             _controls = new PlayerControls();
             _controls.Enable();
             _ammo.Value = AmmoConsumption;
+            _hudConnector.PlayerAmmo = PlayerDynamicData.AmmoData.Available;
         }
 
         private void Update()
         {
-            if (!isLocalPlayer) return;
+            if (!isOwned) return;
             _shoot = _controls.Player.Shoot.ReadValue<float>();
             _reload = _controls.Player.Reload.ReadValue<float>();
 
@@ -103,6 +106,7 @@ namespace Assets.Scripts.Player
 
             _shootTime = Time.time;
             CmdFire();
+            ConsumeAmmo();
             _shoot = 0;
         }
 
@@ -125,10 +129,10 @@ namespace Assets.Scripts.Player
             if (_bulletPrefab != null)
             {
                 var bullet = Instantiate(_bulletPrefab, _shootPoint.transform.position, transform.rotation);
-                NetworkServer.Spawn(bullet);
                 var bulletData = bullet.GetComponent<BulletDamage>();
                 bulletData.Sender = tag;
                 bulletData.Damage = Damage;
+                NetworkServer.Spawn(bullet);
             }
 
             RpcOnFire();
@@ -139,7 +143,6 @@ namespace Assets.Scripts.Player
         {
             _playerAnimator.Shoot();
             _playerAudio.Shoot();
-            ConsumeAmmo();
         }
     }
 }

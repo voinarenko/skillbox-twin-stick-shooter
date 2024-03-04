@@ -7911,7 +7911,7 @@ MonoBehaviour:
   - {fileID: 1544726802727955534, guid: d171ba8c039d34248b92df76f629a035, type: 3}
   - {fileID: 4945866355247197177, guid: efc3ea9b032575a44b5b4e6c5532dcee, type: 3}
   - {fileID: 100000, guid: 6d4aaf064b43ace428499a835ba9b383, type: 3}
-  - {fileID: 3634758806780902263, guid: d35d3ef35f99ba14db6021f164e0d320, type: 3}
+  - {fileID: 100004, guid: 7867af58a6ec48846ae807eb4022fbaa, type: 3}
   exceptionsDisconnect: 1
   snapshotSettings:
     bufferTimeMultiplier: 2
@@ -16596,6 +16596,50 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1798323562}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1799616852
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1799616853}
+  - component: {fileID: 1799616854}
+  m_Layer: 0
+  m_Name: PlayerData
+  m_TagString: Storage
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1799616853
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799616852}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.41822848, y: 2.8803897, z: -3.6378272}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1799616854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799616852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38a4c4be125b2e346b8936a4fecdf324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1805871856
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17574,6 +17618,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70ba558fadd0c694c8a0e5615f643531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
 --- !u!114 &2076767274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17600,6 +17647,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerDeaths: []
   _playerHudConnectors: []
+  _playerShooters: []
 --- !u!1001 &2078322564
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18691,3 +18739,4 @@ SceneRoots:
   - {fileID: 1637898373}
   - {fileID: 850795972}
   - {fileID: 1184719609}
+  - {fileID: 1799616853}

@@ -21,8 +21,11 @@ namespace Assets.Scripts.UI.Elements
                 Construct(health);
         }
 
-        //private void OnDestroy() =>
-        //    _health.HealthChanged -= UpdateHealthBar;
+        private void OnDestroy()
+        {
+            if (_health != null) 
+                _health.HealthChanged -= UpdateHealthBar;
+        }
 
         private void UpdateHealthBar() => 
             HealthBar.SetValue(_health.Current, _health.Max);

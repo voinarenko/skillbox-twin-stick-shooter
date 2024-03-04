@@ -2,6 +2,7 @@
 using Assets.Scripts.Logic;
 using System.Collections.Generic;
 using System.Linq;
+using Mirror;
 using UnityEngine;
 using UnityEngine.AI;
 using Action = System.Action;
@@ -9,7 +10,7 @@ using Action = System.Action;
 namespace Assets.Scripts.Enemy
 {
     [RequireComponent(typeof(EnemyAnimator))]
-    public class EnemyAttack : MonoBehaviour
+    public class EnemyAttack : NetworkBehaviour
     {
         public NavMeshAgent Agent;
         public EnemyAudio Audio;
@@ -50,13 +51,14 @@ namespace Assets.Scripts.Enemy
         {
             UpdateCooldown();
             if (CanAttack())
-                StartAttack();
+                RpcStartAttack();
         }
 
 #pragma warning disable IDE0051
         private void OnAttackStart() => 
             Agent.speed = 0;
 
+        [Command(requiresAuthority = false)]
         private void OnAttack()
         {
             if (Type == EnemyType.Ranged)
@@ -69,6 +71,7 @@ namespace Assets.Scripts.Enemy
                     var bulletData = bullet.GetComponent<BulletDamage>();
                     bulletData.Sender = tag;
                     bulletData.Damage = Damage;
+                    NetworkServer.Spawn(bullet);
                 }
 
                 Audio.Shoot();
@@ -80,12 +83,14 @@ namespace Assets.Scripts.Enemy
                     if (!Hit(out var hit, hitPoint)) continue;
                     PhysicsDebug.DrawDebug(hitPoint.position, Cleavage, AttackTime);
                     if (!hit.CompareTag(PlayerTag)) return;
-                    hit.transform.parent.GetComponent<IHealth>().TakeDamage(Damage);
+                    hit.transform.parent.GetComponent<IHealth>().RpcTakeDamage(Damage);
 
                     Audio.Attack();
                 }
             }
         }
+
+        [Command(requiresAuthority = false)]
 
         private void OnAttackEnded()
         {
@@ -114,7 +119,8 @@ namespace Assets.Scripts.Enemy
         public void DisableAttack() => 
             _attackIsActive = false;
 
-        private void StartAttack()
+        [ClientRpc]
+        private void RpcStartAttack()
         {
             transform.LookAt(_playerTransform);
             if (Type == EnemyType.Ranged)

@@ -2,12 +2,12 @@
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.SaveLoad;
 using Assets.Scripts.Infrastructure.Services.StaticData;
+using Assets.Scripts.Infrastructure.Services.Wave;
 using Assets.Scripts.Logic;
 using Assets.Scripts.UI.Services.Factory;
 using Assets.Scripts.UI.Services.Windows;
 using System;
 using System.Collections.Generic;
-using Assets.Scripts.Infrastructure.Services.Wave;
 
 namespace Assets.Scripts.Infrastructure.States
 {

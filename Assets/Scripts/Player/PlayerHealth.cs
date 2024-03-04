@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Data;
-using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Logic;
 using Mirror;
 using System;
@@ -8,15 +7,15 @@ using UnityEngine;
 namespace Assets.Scripts.Player
 {
     [RequireComponent(typeof(PlayerAnimator), typeof(PlayerHudConnector))]
-    public class PlayerHealth : NetworkBehaviour, ISavedProgress, IHealth
+    public class PlayerHealth : NetworkBehaviour, IHealth
     {
+        public event Action HealthChanged;
+
         public float Max
         {
             get => _state.MaxHealth;
             set => _state.MaxHealth = value;
         }
-
-        public event Action HealthChanged;
 
         public float Current
         {
@@ -29,12 +28,13 @@ namespace Assets.Scripts.Player
             }
         }
 
-        [SerializeField] private PlayerAnimator _animator;
-        [SerializeField] private PlayerHudConnector _hudConnector;
         public float Defense = 1;
 
         private readonly State _state = new();
 
+        [SerializeField] private PlayerAnimator _animator;
+        [SerializeField] private PlayerHudConnector _hudConnector;
+        
         [ClientRpc]
         public void RpcSetHealth(float maxHealth)
         {
@@ -43,20 +43,16 @@ namespace Assets.Scripts.Player
             _hudConnector.PlayerHealth = maxHealth;
         }
 
-        //public void UpdateProgress(PlayerProgress progress)
-        //{
-        //    progress.PlayerState.CurrentHealth = Current;
-        //    progress.PlayerState.MaxHealth = Max;
-        //}
-
-        public void TakeDamage(float damage)
+        [ClientRpc]
+        public void RpcTakeDamage(float damage)
         {
             if (Current <= 0) return;
             Current -= damage / Defense;
             _animator.PlayHit();
         }
 
-        public void Heal(float cure)
+        [ClientRpc]
+        public void RpcHeal(float cure)
         {
             Current += cure;
             if (Current > Max) Current = Max;

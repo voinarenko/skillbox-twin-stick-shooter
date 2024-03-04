@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 1101090176241466216}
   - component: {fileID: 4312025408768640510}
   - component: {fileID: 8730899007466752089}
+  - component: {fileID: -3998701122961852266}
   m_Layer: 12
   m_Name: Player
   m_TagString: Player
@@ -175,6 +176,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  Storage: {fileID: 0}
   PlayerDynamicData:
     AmmoData:
       Available: 0
@@ -224,9 +226,9 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  Defense: 1
   _animator: {fileID: 3770642299459928777}
   _hudConnector: {fileID: 8730899007466752089}
-  Defense: 1
 --- !u!114 &-2252214105615708195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,13 +244,13 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  Agent: {fileID: 7901589542009476601}
-  Health: {fileID: 9058767553230839065}
-  Move: {fileID: 5884183835665077832}
-  Rotate: {fileID: 4173493268443023469}
-  Attack: {fileID: 4991387619256362426}
-  Animator: {fileID: 3770642299459928777}
-  DeathFx: {fileID: 100006, guid: 2a474af3f4c27be4e9bdce39cfe4315d, type: 3}
+  _agent: {fileID: 7901589542009476601}
+  _health: {fileID: 9058767553230839065}
+  _move: {fileID: 5884183835665077832}
+  _rotate: {fileID: 4173493268443023469}
+  _attack: {fileID: 4991387619256362426}
+  _animator: {fileID: 3770642299459928777}
+  _deathFx: {fileID: 100006, guid: 2a474af3f4c27be4e9bdce39cfe4315d, type: 3}
 --- !u!114 &699903321175522657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,11 +363,33 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  PerkParent: {fileID: 0}
+  _perkParent: {fileID: 0}
+  _perkTimer: {fileID: 7149551455169277793, guid: 6cfd8f739b304c54e94db11e9245ccf4,
+    type: 3}
+  _sprites:
+  - {fileID: 21300000, guid: 8c013fbd1dde7bc4db457cfd3b7b7ffa, type: 3}
+  - {fileID: 21300000, guid: e6cb1a66600f59a42be6a2ce0b23befc, type: 3}
+  - {fileID: 21300000, guid: 84f667a0eed51a340b7b37327afb72ea, type: 3}
+  - {fileID: 21300000, guid: 7b7de2430deee964da27ba2590989b37, type: 3}
+  _duration: 60
+  _multiplier: 1.2
   _playerMaxHealth: 0
   WaveNumber: 0
   _hudPrefab: {fileID: 8337883060083228408, guid: 57f5dbfe70df49e48a8bdf052f813c7d,
     type: 3}
+--- !u!114 &-3998701122961852266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475696095942030980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627a818544bc94f43917dd9e119a6ce9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shooter: {fileID: 4991387619256362426}
 --- !u!1 &2097597898489705597
 GameObject:
   m_ObjectHideFlags: 0

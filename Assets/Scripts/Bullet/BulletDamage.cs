@@ -19,12 +19,13 @@ namespace Assets.Scripts.Bullet
 
         private void OnTriggerEnter(Collider other)
         {
+            if (!isServer) return;
             if (other.CompareTag(WallTag)) DestroySelf();
             if (other.CompareTag(Sender)) return;
             if (!other.transform.CompareTag(EnemyTag) && !other.transform.CompareTag(PlayerTag)) return;
             if (_collided) return;
             _collided = true;
-            other.transform.parent.GetComponent<IHealth>().TakeDamage(Damage);
+            other.transform.parent.GetComponent<IHealth>().RpcTakeDamage(Damage);
             CmdHit();
             DestroySelf();
         }

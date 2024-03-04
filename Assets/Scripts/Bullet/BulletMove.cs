@@ -29,6 +29,7 @@ namespace Assets.Scripts.Bullet
 
         private void Update()
         {
+            if (!isServer) return;
             if (transform == null) return; 
             transform.position += transform.forward * _speed;
         }

@@ -8,7 +8,7 @@ namespace Assets.Scripts.Infrastructure
 {
     public class WaveChanger : MonoBehaviour
     {
-        private const string FinalScene = "FinalScene";
+        private const string FinalSceneName = "FinalScene";
 
         private IGameStateMachine _stateMachine;
         private IWaveService _waveService;
@@ -34,7 +34,7 @@ namespace Assets.Scripts.Infrastructure
             _sceneLoader = sceneLoader;
 
         public void GameOver() => 
-            _sceneLoader.Load(FinalScene, onLoaded: EnterStats);
+            _sceneLoader.Load(FinalSceneName, onLoaded: EnterStats);
 
         private void EnterStats() =>
             _stateMachine.Enter<LoadStatsState>();

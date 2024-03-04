@@ -6,7 +6,6 @@ using Assets.Scripts.Logic;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Services.Factory;
 using System.Threading.Tasks;
-using Mirror;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

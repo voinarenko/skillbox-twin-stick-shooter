@@ -20,7 +20,7 @@ namespace Assets.Scripts.Infrastructure.Services.Loot
         }
         
         public void Process(Consumable loot, GameObject player) => 
-            player.GetComponent<PlayerHealth>().Heal(_staticData.ForConsumable(loot.Type).Amount);
+            player.GetComponent<PlayerHealth>().RpcHeal(_staticData.ForConsumable(loot.Type).Amount);
 
         public async void Process(Perk loot, GameObject player, Transform perkParent)
         {
@@ -70,6 +70,8 @@ namespace Assets.Scripts.Infrastructure.Services.Loot
                     shooter.ReloadDelay *= timer.Multiplier;
                     break;
             }
+
+            timer.Completed -= RemovePerk;
             Object.Destroy(timer.gameObject);
         }
     }

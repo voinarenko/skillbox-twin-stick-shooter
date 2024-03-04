@@ -44,7 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 650f1ab172c1d0f4982a756fe2c5c65f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyDeath: {fileID: 8558893123410710316}
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  _enemyDeath: {fileID: 8558893123410710316}
 --- !u!1 &509412302310125863
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,6 +253,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f340a44fcbac4744a9d63411cf60eee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
 --- !u!195 &8649501591300120365
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -331,6 +337,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eb1ce48cb2cd904c9d1e8fe1441a1e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   Agent: {fileID: 8649501591300120365}
   Audio: {fileID: 509864416557740173}
   ShootEffectPrefab: {fileID: 0}
@@ -357,6 +366,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac74fd555762e2c479fb663c901aa7b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   Animator: {fileID: 9193984182133261566}
   _current: 20
   _max: 20
@@ -372,10 +384,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cc236d31c3f61f4da51f824d9fe5cba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DeathFx: {fileID: 100004, guid: 7867af58a6ec48846ae807eb4022fbaa, type: 3}
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   Value: 0
-  LootText: {fileID: 7278753867159428971}
-  PickupPopup: {fileID: 3733426827426534466}
+  _deathFx: {fileID: 100004, guid: 7867af58a6ec48846ae807eb4022fbaa, type: 3}
+  _lootText: {fileID: 7278753867159428971}
+  _pickupPopup: {fileID: 3733426827426534466}
 --- !u!114 &8608780446151486639
 MonoBehaviour:
   m_ObjectHideFlags: 0

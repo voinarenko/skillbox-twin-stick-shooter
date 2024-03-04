@@ -1,7 +1,10 @@
 ﻿using Assets.Scripts.Data;
+using Assets.Scripts.Enemy;
+using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Elements;
 using Mirror;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Player
@@ -12,9 +15,18 @@ namespace Assets.Scripts.Player
         public event Action<int> OnPlayerAmmoChanged;
         public event Action<float, float> OnPlayerHealthChanged;
 
-        public Transform PerkParent;
+        [SerializeField] private Transform _perkParent;
+        [SerializeField] private GameObject _perkTimer;
+
+        [Header("Perk Data")]
+        [SerializeField] private List<Sprite> _sprites;
+        [SerializeField] private float _duration = 60f;
+        [SerializeField] private float _multiplier = 1.2f;
+
+        [Header("Player Data")]
         [SerializeField] private float _playerMaxHealth;
 
+        private Perk _perk;
         private int _playerAmmo;
 
         public int PlayerAmmo
@@ -58,7 +70,6 @@ namespace Assets.Scripts.Player
         private ActorUi _actorUi;
         private WaveData _waveData;
 
-
         [ClientRpc]
         public void RpcConstruct(WaveData waveData, int maxHealth)
         {
@@ -66,6 +77,24 @@ namespace Assets.Scripts.Player
             _playerMaxHealth = maxHealth;
             WaveNumber = _waveData.Encountered;
             OnWaveNumberChanged?.Invoke(WaveNumber);
+        }
+
+        [ClientRpc]
+        public void RpcGetPerk(int id)
+        {
+            if (isLocalPlayer)
+            {
+                var timer = Instantiate(_perkTimer, _perkParent).GetComponent<PerkTimer>();
+
+                timer.Type = (PerkTypeId)id;
+                print($"perk: |{id}|");
+                timer.Icon = _sprites[id];
+                timer.Duration = _duration;
+                timer.Multiplier = _multiplier;
+
+                ApplyPerk(timer, gameObject);
+                timer.Completed += RemovePerk;
+            }
         }
 
         #region Client
@@ -76,7 +105,7 @@ namespace Assets.Scripts.Player
             _waveCounter = _hudObject.GetComponent<WaveCounter>();
             _ammoCounter = _hudObject.GetComponent<AmmoCounter>();
             _actorUi = _hudObject.GetComponent<ActorUi>();
-            PerkParent = _hudObject.GetComponent<PerkDisplay>().GetParent();
+            _perkParent = _hudObject.GetComponent<PerkDisplay>().GetParent();
 
             OnWaveNumberChanged += _waveCounter.UpdateCounter;
             OnPlayerAmmoChanged += _ammoCounter.UpdateCounter;
@@ -104,5 +133,51 @@ namespace Assets.Scripts.Player
 
         private void PlayerHealthChanged(float newHealthAmount) => 
             OnPlayerHealthChanged?.Invoke(newHealthAmount, _playerMaxHealth);
+
+        private static void ApplyPerk(PerkTimer timer, GameObject player)
+        {
+            timer.Player = player;
+            var shooter = player.GetComponent<PlayerShooter>();
+            switch (timer.Type)
+            {
+                case PerkTypeId.Damage:
+                    shooter.Damage *= timer.Multiplier;
+                    break;
+                case PerkTypeId.Defense:
+                    player.GetComponent<PlayerHealth>().Defense *= timer.Multiplier;
+                    break;
+                case PerkTypeId.MoveSpeed:
+                    player.GetComponent<PlayerMovement>().Speed *= timer.Multiplier;
+                    break;
+                case PerkTypeId.AttackSpeed:
+                    shooter.ShootDelay /= timer.Multiplier;
+                    shooter.ReloadDelay /= timer.Multiplier;
+                    break;
+            }
+        }
+
+        private static void RemovePerk(PerkTimer timer, GameObject player)
+        {
+            var shooter = player.GetComponent<PlayerShooter>();
+            switch (timer.Type)
+            {
+                case PerkTypeId.Damage:
+                    shooter.Damage /= timer.Multiplier;
+                    break;
+                case PerkTypeId.Defense:
+                    player.GetComponent<PlayerHealth>().Defense /= timer.Multiplier;
+                    break;
+                case PerkTypeId.MoveSpeed:
+                    player.GetComponent<PlayerMovement>().Speed /= timer.Multiplier;
+                    break;
+                case PerkTypeId.AttackSpeed:
+                    shooter.ShootDelay *= timer.Multiplier;
+                    shooter.ReloadDelay *= timer.Multiplier;
+                    break;
+            }
+
+            timer.Completed -= RemovePerk;
+            Destroy(timer.gameObject);
+        }
     }
 }

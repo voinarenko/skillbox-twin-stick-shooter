@@ -63,7 +63,7 @@ namespace Assets.Scripts.Player
             _syncSpeed = newValue;
         }
 
-        private void SyncSpeed(float oldValue, float newValue)
+        private void SyncSpeed(float _, float newValue)
         {
             Debug.Log($"Sync in: {newValue}");
             _speed = newValue;

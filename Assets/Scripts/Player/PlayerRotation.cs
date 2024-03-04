@@ -19,7 +19,7 @@ namespace Assets.Scripts.Player
 
         private void Update()
         {
-            if (!isLocalPlayer) return;
+            if (!isOwned) return;
             var camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (!Physics.Raycast(camRay, out var groundHit, CamRayLength, _groundMask)) return;
             var playerToMouse = groundHit.point - transform.position;

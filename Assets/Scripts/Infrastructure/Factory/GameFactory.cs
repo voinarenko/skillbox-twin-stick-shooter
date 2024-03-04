@@ -21,8 +21,9 @@ namespace Assets.Scripts.Infrastructure.Factory
     {
         public List<ISavedProgressReader> ProgressReaders { get; } = new();
         public List<ISavedProgress> ProgressWriters { get; } = new();
-
-        //private static PlayersWatcher PlayersWatcher => Object.FindAnyObjectByType<PlayersWatcher>();
+        
+        private const string WaveChangerTag = "WaveChanger";
+        private static PlayersWatcher PlayersWatcher => GameObject.FindWithTag(WaveChangerTag).GetComponent<PlayersWatcher>();
 
         private readonly IAssets _assets;
         private readonly IStaticDataService _staticData;
@@ -30,9 +31,6 @@ namespace Assets.Scripts.Infrastructure.Factory
         private readonly IPersistentProgressService _progressService;
         private readonly IWaveService _waveService;
         private readonly ILootService _lootService;
-
-
-        //private GameObject PlayerGameObject { get; set; }
 
         public GameFactory(IAssets assets, IStaticDataService staticData, IRandomService randomService, IPersistentProgressService progressService, IWaveService waveService, ILootService lootService)
         {
@@ -49,76 +47,6 @@ namespace Assets.Scripts.Infrastructure.Factory
             await _assets.Load<GameObject>(AssetAddress.Loot);
             await _assets.Load<GameObject>(AssetAddress.Spawner);
         }
-
-        //public async Task<GameObject> CreatePlayer(Vector3 at)
-        //{
-        //    var playerData = _progressService.Progress.PlayerStaticData;
-        //    var prefab = await _assets.Load<GameObject>(playerData.PrefabReference);
-
-        //    return prefab;
-
-        //    //PlayerGameObject = Object.Instantiate(prefab, at, Quaternion.identity);
-        //    //RegisterProgressWatchers(PlayerGameObject);
-
-        //    //_progressService.Progress.WorldData.AmmoData.Available = playerData.Ammo;
-        //    //_progressService.Progress.WorldData.WaveData.NextWave();
-        //    ////_waveService.SpawnEnemies();
-
-        //    //PlayerGameObject.GetComponent<PlayerMovement>().SetSpeed(playerData.MoveSpeed);
-        //    //PlayerGameObject.GetComponent<PlayerRotation>().SetSpeed(playerData.RotateSpeed);
-        //    //PlayerGameObject.GetComponent<PlayerShooter>()
-        //    //    .RpcConstruct(playerData,
-        //    //        _progressService.Progress.WorldData,
-        //    //        playerData.Damage,
-        //    //        playerData.AttackCooldown,
-        //    //        playerData.ReloadCooldown);
-
-        //    //PlayerGameObject.GetComponent<Animator>().SetFloat(PlayerGameObject.GetComponent<PlayerAnimator>().AnimSpeed, playerData.SpeedFactor);
-
-        //    //var playerDeath = PlayerGameObject.GetComponent<PlayerDeath>();
-        //    //PlayersWatcher.AddPlayer(playerDeath);
-
-        //    //return PlayerGameObject;
-        //}
-
-        //public async Task UpdatePlayerData(GameObject player, PlayerStaticData playerData)
-        //{
-        //    //Debug.Log("Updating player data!");
-        //    PlayerGameObject = player;
-        //    //RegisterProgressWatchers(player);
-
-        //    //_progressService.Progress.WorldData.AmmoData.Available = playerData.Ammo;
-        //    //Debug.Log($"Ammo: {_progressService.Progress.WorldData.AmmoData.Available}");
-
-        //    //PlayerGameObject.GetComponent<PlayerMovement>().SetSpeed(playerData.MoveSpeed);
-        //    //PlayerGameObject.GetComponent<PlayerRotation>().SetSpeed(playerData.RotateSpeed);
-        //    //player.GetComponent<PlayerShooter>()
-        //    //    .RpcConstruct(playerData,
-        //    //        _progressService.Progress.WorldData,
-        //    //        playerData.Damage,
-        //    //        playerData.AttackCooldown,
-        //    //        playerData.ReloadCooldown);
-
-        //    //PlayerGameObject.GetComponent<Animator>().SetFloat(PlayerGameObject.GetComponent<PlayerAnimator>().AnimSpeed, playerData.SpeedFactor);
-
-        //    //var playerDeath = player.GetComponent<PlayerDeath>();
-        //    //PlayersWatcher.AddPlayer(playerDeath);
-
-        //    //await CreateHud(player);
-        //}
-
-        //public async Task<GameObject> CreateHud(GameObject player, PlayerDynamicData playerDynamicData)
-        //{
-        //    var hud = await InstantiateRegisteredAsync(AssetAddress.HudPath);
-            
-        //    //hud.GetComponent<WaveCounter>().Construct(_progressService.Progress.WorldData);
-        //    //hud.GetComponent<AmmoCounter>().Construct(player.GetComponent<PlayerShooter>());
-        //    hud.GetComponent<ActorUi>().Construct(player.GetComponent<IHealth>());
-
-        //    _perkParent = hud.GetComponent<PerkDisplay>().GetParent();
-
-        //    return hud;
-        //}
 
         public async Task<GameObject> CreateEnemy(EnemyTypeId typeId, Transform parent)
         {
@@ -149,7 +77,7 @@ namespace Assets.Scripts.Infrastructure.Factory
             attack.AttackCooldown = enemyData.AttackCooldown;
 
             var death = enemy.GetComponent<EnemyDeath>();
-            death.Construct(_progressService.Progress);
+            death.Construct(_progressService.Progress, PlayersWatcher);
             death.Value = enemyData.KillValue;
 
             var lootSpawner = enemy.GetComponentInChildren<LootSpawner>();
@@ -161,17 +89,15 @@ namespace Assets.Scripts.Infrastructure.Factory
         public async Task<LootPiece> CreateLoot()
         {
             var prefab = await _assets.Load<GameObject>(AssetAddress.Loot);
-            var lootPiece = InstantiateRegistered(prefab)
-                .GetComponent<LootPiece>();
-            lootPiece.Construct(_progressService.Progress.WorldData, _lootService);
+            var lootPiece = InstantiateRegistered(prefab).GetComponent<LootPiece>();
+            lootPiece.Construct(_lootService);
             return lootPiece;
         }
 
         public async Task<GameObject> CreateSpawner(Vector3 at, string spawnerId)
         {
             var prefab = await _assets.Load<GameObject>(AssetAddress.Spawner);
-            var spawner = InstantiateRegistered(prefab, at)
-                .GetComponent<SpawnPoint>();
+            var spawner = InstantiateRegistered(prefab, at).GetComponent<SpawnPoint>();
             spawner.Construct(this, _randomService, _progressService);
             spawner.Id = spawnerId;
             _waveService.SpawnPoints ??= new List<SpawnPoint>();

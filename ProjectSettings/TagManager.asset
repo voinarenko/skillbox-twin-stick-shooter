@@ -17,6 +17,8 @@ TagManager:
   - HUD
   - UIRoot
   - Dead
+  - Storage
+  - PerkArea
   layers:
   - Default
   - TransparentFX

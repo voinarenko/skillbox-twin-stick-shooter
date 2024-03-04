@@ -1,54 +1,61 @@
-﻿using Assets.Scripts.Infrastructure.Services.PersistentProgress;
-using Mirror;
+﻿using Mirror;
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using NetworkServer = Mirror.NetworkServer;
 
 namespace Assets.Scripts.Player
 {
     public class PlayerDeath : NetworkBehaviour
     {
         private const string DeadTag = "Dead";
-        public NavMeshAgent Agent;
-        public PlayerHealth Health;
-        public PlayerMovement Move;
-        public PlayerRotation Rotate;
-        public PlayerShooter Attack;
-        public PlayerAnimator Animator;
-        public GameObject DeathFx;
+        [SerializeField] private NavMeshAgent _agent;
+        [SerializeField] private PlayerHealth _health;
+        [SerializeField] private PlayerMovement _move;
+        [SerializeField] private PlayerRotation _rotate;
+        [SerializeField] private PlayerShooter _attack;
+        [SerializeField] private PlayerAnimator _animator;
+        [SerializeField] private GameObject _deathFx;
 
         public event Action<PlayerDeath> Happened;
 
         private bool _isDead;
 
-        private void Start() => 
-            Health.HealthChanged += HealthChanged;
+        private void Start() =>
+            _health.HealthChanged += HealthChanged;
 
         private void OnDestroy() => 
-            Health.HealthChanged -= HealthChanged;
+            _health.HealthChanged -= HealthChanged;
 
         private void HealthChanged()
         {
-            if (!_isDead && Health.Current <= 0) Die();
+            if (!_isDead && _health.Current <= 0) Die();
         }
 
         private void Die()
         {
             _isDead = true;
-            Move.enabled = false;
-            Rotate.enabled = false;
-            Attack.enabled = false;
-            Animator.PlayDeath();
+            _move.enabled = false;
+            _rotate.enabled = false;
+            _attack.enabled = false;
+            _animator.PlayDeath();
             tag = DeadTag;
             Happened?.Invoke(this);
 
-            Instantiate(DeathFx, transform.position, Quaternion.identity);
+            SpawnEffect();
+        }
+
+        [Server]
+        private void SpawnEffect()
+        {
+            var effect = Instantiate(_deathFx, transform.position, Quaternion.identity);
+            NetworkServer.Spawn(effect);
         }
 
 #pragma warning disable IDE0051
 
         private void OnDeath() => 
-            Agent.isStopped = true;
+            _agent.isStopped = true;
 #pragma warning restore IDE0051
     }
 }

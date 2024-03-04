@@ -331,19 +331,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1d9c4b0252e973468c254fc4ac5703a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScoreEarnedText: {fileID: 5108185277147729528}
-  WavesSurvivedText: {fileID: 79628615220224421}
-  BulletsSpentText: {fileID: 328490117098972855}
-  ReloadsMadeText: {fileID: 6345499310318747336}
-  SmallMeleesKilledText: {fileID: 3260372924700449613}
-  BigMeleesKilledText: {fileID: 5966183445168277809}
-  RangedKilledText: {fileID: 946329609626571835}
-  HealthPickedText: {fileID: 950322982749047555}
-  DefensePickedText: {fileID: 8268720306885682372}
-  MoveSpeedPickedText: {fileID: 6453572949319610595}
-  DamagePickedText: {fileID: 3628845713849587357}
-  AttackSpeedPickedText: {fileID: 686981376794607603}
-  ReturnButton: {fileID: 6604602927539635977}
+  _scoreEarnedText: {fileID: 5108185277147729528}
+  _wavesSurvivedText: {fileID: 79628615220224421}
+  _bulletsSpentText: {fileID: 328490117098972855}
+  _reloadsMadeText: {fileID: 6345499310318747336}
+  _smallMeleesKilledText: {fileID: 3260372924700449613}
+  _bigMeleesKilledText: {fileID: 5966183445168277809}
+  _rangedKilledText: {fileID: 946329609626571835}
+  _healthPickedText: {fileID: 950322982749047555}
+  _defensePickedText: {fileID: 8268720306885682372}
+  _moveSpeedPickedText: {fileID: 6453572949319610595}
+  _damagePickedText: {fileID: 3628845713849587357}
+  _attackSpeedPickedText: {fileID: 686981376794607603}
+  _returnButton: {fileID: 6604602927539635977}
 --- !u!1 &3582079402160779602
 GameObject:
   m_ObjectHideFlags: 0
@@ -630,7 +630,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 86.55
+  m_fontSize: 72.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1256,7 +1256,7 @@ PrefabInstance:
     - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
       propertyPath: m_fontSize
-      value: 33
+      value: 28.15
       objectReference: {fileID: 0}
     - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
@@ -1412,7 +1412,7 @@ PrefabInstance:
     - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
       propertyPath: m_fontSize
-      value: 33
+      value: 32.2
       objectReference: {fileID: 0}
     - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
@@ -1880,7 +1880,7 @@ PrefabInstance:
     - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
       propertyPath: m_fontSize
-      value: 33
+      value: 27.7
       objectReference: {fileID: 0}
     - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
@@ -2504,7 +2504,7 @@ PrefabInstance:
     - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}
       propertyPath: m_fontSize
-      value: 33
+      value: 32.15
       objectReference: {fileID: 0}
     - target: {fileID: 1921493100126484345, guid: d04eabbc776ebcc4babe23791fb0e584,
         type: 3}

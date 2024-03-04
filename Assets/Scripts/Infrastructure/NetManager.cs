@@ -1,11 +1,11 @@
-﻿using System.Threading.Tasks;
-using Assets.Scripts.Data;
+﻿using Assets.Scripts.Data;
 using Assets.Scripts.Infrastructure.Factory;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.Wave;
 using Assets.Scripts.Player;
 using Assets.Scripts.StaticData;
 using Mirror;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.Infrastructure
@@ -36,7 +36,6 @@ namespace Assets.Scripts.Infrastructure
             _levelStaticData = levelStaticData;
             _playerStaticData = progressService.Progress.PlayerStaticData;
             _worldData = progressService.Progress.WorldData;
-            //_playerStaticData = playerData;
             _spawnPosition = levelStaticData.InitialPlayerPosition;
             _playersWatcher = FindAnyObjectByType<PlayersWatcher>();
         }
@@ -100,20 +99,6 @@ namespace Assets.Scripts.Infrastructure
             player.GetComponent<PlayerCameraConnector>().RpcConnect();
             player.GetComponent<PlayerHudConnector>().RpcConstruct(_worldData.WaveData, message.Health);
             player.GetComponent<PlayerShooter>().RpcConstruct(message.Ammo, message.Damage, message.AttackCooldown, message.ReloadCooldown);
-
-
-            //await _gameFactory.CreateHud(player, _playerDynamicData);
-            //var hudConnector = player.GetComponent<PlayerHudConnector>();
-            //NetworkServer.Spawn(hudConnector.gameObject, player);
-            //hudConnector.InitWorld(_worldData);
-            //hudConnector.RpcInitPlayer();
-            //hud.GetComponent<WaveCounter>().Construct(_worldData);
-            //hud.GetComponent<AmmoCounter>().Construct(player, _playerDynamicData);
-            //hud.GetComponent<ActorUi>().Construct(player.GetComponent<IHealth>());
-
-            //Debug.Log($"Player's ammo: {_worldData.AmmoData.Available}");
-            //await _gameFactory.UpdatePlayerData(player, _playerStaticData);
-
         }
     }
 }

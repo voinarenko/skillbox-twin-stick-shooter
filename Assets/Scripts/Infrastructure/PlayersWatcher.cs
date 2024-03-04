@@ -1,46 +1,53 @@
-﻿using System;
+﻿using Assets.Scripts.Player;
 using System.Collections.Generic;
-using Assets.Scripts.Player;
 using UnityEngine;
 
 namespace Assets.Scripts.Infrastructure
 {
     public class PlayersWatcher : MonoBehaviour
     {
-        private WaveChanger _waveChanger;
+        private const string StorageTag = "Storage";
         [SerializeField] private List<PlayerDeath> _playerDeaths = new();
         [SerializeField] private List<PlayerHudConnector> _playerHudConnectors = new();
+        [SerializeField] private List<PlayerShooter> _playerShooters = new();
 
-        private Action _changed;
+        private DataStorage _storage;
+        private WaveChanger _waveChanger;
 
         private void Start()
         {
+            _storage = GameObject.FindWithTag(StorageTag).GetComponent<DataStorage>();
             _waveChanger = GetComponent<WaveChanger>();
-            _changed += OnPlayersChanged;
         }
 
         public void AddPlayer(PlayerDeath player)
         {
             _playerDeaths.Add(player);
             _playerHudConnectors.Add(player.GetComponent<PlayerHudConnector>());
-            _changed?.Invoke();
+            _playerShooters.Add(player.GetComponent<PlayerShooter>());
             player.Happened += RemovePlayer;
         }
 
         public List<PlayerHudConnector> GetConnectors() => 
             _playerHudConnectors;
 
+        public void UpdateScore(int score)
+        {
+            foreach (var shooter in _playerShooters) 
+                shooter.PlayerDynamicData.ScoreData.UpdateScore(score/_playerShooters.Count);
+        }
+
         private void RemovePlayer(PlayerDeath player)
         {
             _playerDeaths.Remove(player);
             _playerHudConnectors.Remove(player.GetComponent<PlayerHudConnector>());
-            _changed?.Invoke();
-            player.Happened -= RemovePlayer;
-        }
+            var shooter = player.GetComponent<PlayerShooter>();
+            _storage.PlayerDynamicData = shooter.PlayerDynamicData;
+            _playerShooters.Remove(shooter);
 
-        private void OnPlayersChanged()
-        {
-            if (_playerDeaths.Count <= 0) _waveChanger.GameOver();
+            player.Happened -= RemovePlayer;
+            if (_playerDeaths.Count <= 0) 
+                _waveChanger.GameOver();
         }
     }
 }

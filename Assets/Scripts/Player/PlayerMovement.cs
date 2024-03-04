@@ -2,15 +2,12 @@ using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Mirror;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Player
 {
     public class PlayerMovement : NetworkBehaviour, ISavedProgress
     {
         public float Speed;
-        [SyncVar(hook = nameof(SyncSpeed))]
-        private float _syncSpeed;
 
         [SerializeField] private NavMeshAgent _agent;
         [SerializeField] private PlayerAnimator _animator;
@@ -25,7 +22,7 @@ namespace Assets.Scripts.Player
 
         private void Update()
         {
-            if (!isLocalPlayer) return;
+            if (!isOwned) return;
             var move = _controls.Player.Move.ReadValue<Vector2>();
             var pos = transform.position;
             var dir = new Vector3(move.x, 0, move.y);
@@ -37,56 +34,8 @@ namespace Assets.Scripts.Player
             _animator.Move(dir);
         }
 
-        //public void UpdateProgress(PlayerProgress progress) => 
-        //    progress.PlayerDynamicData.PositionOnLevel = new PositionOnLevel(CurrentLevel(), transform.position);
-
-        //public void LoadProgress(PlayerProgress progress)
-        //{
-        //    if (CurrentLevel() == progress.PlayerDynamicData.PositionOnLevel.Level)
-        //    {
-        //        var savedPosition = progress.PlayerDynamicData.PositionOnLevel.Position;
-        //        Warp(savedPosition);
-        //    }
-        //}
-
         [ClientRpc]
-        public void RpcSetSpeed(float speed)
-        {
-            //Debug.Log(speed);
+        public void RpcSetSpeed(float speed) => 
             Speed = speed;
-        }
-
-        [Command]
-        public void CmdChangeSpeed(float newValue)
-        {
-            Debug.Log($"Client: {newValue}");
-            ChangeSpeedValue(newValue);
-        }
-
-        [Server]
-        public void ChangeSpeedValue(float newValue)
-        {
-            Debug.Log($"Server: {newValue}");
-            _syncSpeed = newValue;
-        }
-
-#pragma warning disable IDE0060
-        private void SyncSpeed(float oldValue, float newValue)
-#pragma warning restore IDE0060
-        {
-            Debug.Log($"Sync in: {newValue}");
-            Speed = newValue;
-            Debug.Log($"Sync out: {Speed}");
-        }
-
-        private void Warp(Vector3 to)
-        {
-            _agent.enabled = false;
-            transform.position = to;
-            _agent.enabled = true;
-        }
-
-        private static string CurrentLevel() => 
-            SceneManager.GetActiveScene().name;
     }
 }

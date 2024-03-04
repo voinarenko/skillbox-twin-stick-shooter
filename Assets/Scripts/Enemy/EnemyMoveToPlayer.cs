@@ -10,10 +10,9 @@ namespace Assets.Scripts.Enemy
 {
     public class EnemyMoveToPlayer : NetworkBehaviour
     {
+        public bool PlayerNearby { get; set; }
         public NavMeshAgent Agent;
         public event Action Completed;
-
-        public bool PlayerNearby { get; set; }
 
         private PlayersWatcher _playersWatcher;
         private Transform _playerTransform;
@@ -45,7 +44,6 @@ namespace Assets.Scripts.Enemy
 
         public void InitTarget(GameObject player)
         {
-            print(player);
             _playerTransform = player.GetComponent<PlayerMovement>().transform;
             player.GetComponent<PlayerDeath>().Happened += PlayerKilled;
             _behavior.PlayerHealth = player.GetComponent<PlayerHealth>();
@@ -62,7 +60,7 @@ namespace Assets.Scripts.Enemy
         {
             GameObject target = null;
             var targets = _playersWatcher.GetConnectors();
-            if (targets != null)
+            if (targets.Count > 0)
             {
                 target = targets.FirstOrDefault()!.gameObject;
                 if (targets.Count > 1 && target != null)
