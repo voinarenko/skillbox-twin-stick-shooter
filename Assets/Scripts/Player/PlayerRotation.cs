@@ -13,8 +13,6 @@ namespace Assets.Scripts.Player
         [SerializeField] private GameObject _pointerPrefab;
 
         [SerializeField] private float _speed;
-        [SyncVar(hook = nameof(SyncSpeed))]
-        private float _syncSpeed;
         private int _groundMask;
 
         private void Update()
@@ -38,26 +36,5 @@ namespace Assets.Scripts.Player
         [ClientRpc]
         public void RpcSetSpeed(float speed) => 
             _speed = speed;
-
-        [Command]
-        public void CmdChangeSpeed(float newValue)
-        {
-            Debug.Log($"Client: {newValue}");
-            ChangeSpeedValue(newValue);
-        }
-
-        [Server]
-        public void ChangeSpeedValue(float newValue)
-        {
-            Debug.Log($"Server: {newValue}");
-            _syncSpeed = newValue;
-        }
-
-        private void SyncSpeed(float _, float newValue)
-        {
-            Debug.Log($"Sync in: {newValue}");
-            _speed = newValue;
-            Debug.Log($"Sync out: {_speed}");
-        }
     }
 }

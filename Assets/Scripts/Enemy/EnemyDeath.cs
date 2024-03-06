@@ -1,8 +1,8 @@
 ﻿using Assets.Scripts.Data;
 using Assets.Scripts.Enemy.UtilityAi;
+using Assets.Scripts.Infrastructure;
 using Mirror;
 using System.Collections;
-using Assets.Scripts.Infrastructure;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
@@ -15,12 +15,13 @@ namespace Assets.Scripts.Enemy
     {
         public event Action Happened;
         [SyncVar] public int Value;
+        private const float TimeToDestroy = 3;
+        private const float TimeToSpawnLoot = 2.5f;
+
         [SerializeField] private GameObject _deathFx;
         [SerializeField] private TextMeshPro _lootText;
         [SerializeField] private GameObject _pickupPopup;
 
-        private const float TimeToDestroy = 3;
-        private const float TimeToSpawnLoot = 2.5f;
         private PlayerProgress _progress;
         private PlayersWatcher _watcher;
         private EnemyMoveToPlayer _mover;

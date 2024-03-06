@@ -6,8 +6,8 @@ namespace Assets.Scripts.Bullet
 {
     public class BulletDamage : NetworkBehaviour
     {
-        public float Damage;
-        public string Sender;
+        public float Damage { get; set; }
+        public string Sender { get; set; }
 
         private const string PlayerTag = "Player";
         private const string EnemyTag = "Enemy";

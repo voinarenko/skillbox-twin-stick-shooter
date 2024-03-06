@@ -240,9 +240,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca9b1878533add44be0bdcb54aaa945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConfirmButton: {fileID: 3574457708133285581}
-  RestartButton: {fileID: 5709338644924309017}
-  ReturnButton: {fileID: 2386350001898137773}
+  _confirmButton: {fileID: 3574457708133285581}
+  _restartButton: {fileID: 5709338644924309017}
+  _returnButton: {fileID: 2386350001898137773}
   _masterSlider: {fileID: 3046676126484340963}
   _musicSlider: {fileID: 2998580284372032790}
   _effectsSlider: {fileID: 6086964800026834684}
@@ -376,7 +376,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 104.8
+  m_fontSize: 77.75
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -510,7 +510,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 86.3
+  m_fontSize: 72.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -644,7 +644,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 101.5
+  m_fontSize: 77.75
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -928,7 +928,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 104.8
+  m_fontSize: 77.75
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

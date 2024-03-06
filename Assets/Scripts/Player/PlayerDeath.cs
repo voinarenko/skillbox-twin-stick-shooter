@@ -8,7 +8,10 @@ namespace Assets.Scripts.Player
 {
     public class PlayerDeath : NetworkBehaviour
     {
+        public event Action<PlayerDeath> Happened;
+
         private const string DeadTag = "Dead";
+
         [SerializeField] private NavMeshAgent _agent;
         [SerializeField] private PlayerHealth _health;
         [SerializeField] private PlayerMovement _move;
@@ -16,9 +19,7 @@ namespace Assets.Scripts.Player
         [SerializeField] private PlayerShooter _attack;
         [SerializeField] private PlayerAnimator _animator;
         [SerializeField] private GameObject _deathFx;
-
-        public event Action<PlayerDeath> Happened;
-
+        
         private bool _isDead;
 
         private void Start() =>

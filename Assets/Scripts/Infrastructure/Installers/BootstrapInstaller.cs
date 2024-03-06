@@ -34,8 +34,8 @@ namespace Assets.Scripts.Infrastructure.Installers
             BindAudioService();
             BindSettingsService();
             BindWaveService();
-            Container.Bind<ILootService>().To<LootService>().AsSingle();
-            Container.Bind<IPerkFactory>().To<PerkFactory>().AsSingle();
+            BindLootService();
+            BindPerkFactory();
 
         }
 
@@ -128,6 +128,17 @@ namespace Assets.Scripts.Infrastructure.Installers
             Container
                 .Bind<IWaveService>()
                 .To<WaveService>()
+                .AsSingle();
+
+        private void BindLootService() => 
+            Container.Bind<ILootService>()
+                .To<LootService>()
+                .AsSingle();
+
+        private void BindPerkFactory() => 
+            Container
+                .Bind<IPerkFactory>()
+                .To<PerkFactory>()
                 .AsSingle();
     }
 }

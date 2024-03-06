@@ -96,7 +96,6 @@ namespace Assets.Scripts.Infrastructure
         {
             var player = Instantiate(_playerPrefabs[message.PlayerType], _spawnPosition, Quaternion.identity);
             NetworkServer.AddPlayerForConnection(conn, player);
-            _gameFactory.RegisterProgressWatchers(player);
             _playersWatcher.Construct(_progressService);
             _playersWatcher.AddPlayer(player.GetComponent<PlayerDeath>());
             player.GetComponent<PlayerHealth>().RpcSetHealth(message.Health);

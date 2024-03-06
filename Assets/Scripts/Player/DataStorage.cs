@@ -5,16 +5,16 @@ namespace Assets.Scripts.Player
 {
     public class DataStorage : MonoBehaviour
     {
-        public PlayerDynamicData PlayerDynamicData;// { get; set; }
-        public int WavesEncountered;// { get; set; }
-        public int SmallMeleeEnemyKilled;// { get; set; }
-        public int BigMeleeEnemyKilled;// { get; set; }
-        public int RangedEnemyKilled;// { get; set; }
-        public int HealthCollected;// { get; private set; }
-        public int DefenseCollected;// { get; private set; }
-        public int MoveSpeedCollected;// { get; private set; }
-        public int DamageCollected;// { get; private set; }
-        public int AttackSpeedCollected;// { get; private set; }
+        public PlayerDynamicData PlayerDynamicData { get; private set; }
+        public int WavesEncountered { get; private set; }
+        public int SmallMeleeEnemyKilled { get; private set; }
+        public int BigMeleeEnemyKilled { get; private set; }
+        public int RangedEnemyKilled { get; private set; }
+        public int HealthCollected { get; private set; }
+        public int DefenseCollected { get; private set; }
+        public int MoveSpeedCollected { get; private set; }
+        public int DamageCollected { get; private set; }
+        public int AttackSpeedCollected { get; private set; }
 
         private void Start()
         {

@@ -2120,6 +2120,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1740678622543289402, guid: c537a4d337fc14d418fee2ced4b58814,
         type: 3}
+      propertyPath: _hitPoints.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1740678622543289402, guid: c537a4d337fc14d418fee2ced4b58814,
+        type: 3}
       propertyPath: HitPoints.Array.data[0]
       value: 
       objectReference: {fileID: 97969018304832661}
@@ -2128,6 +2133,16 @@ PrefabInstance:
       propertyPath: HitPoints.Array.data[1]
       value: 
       objectReference: {fileID: 8961750619926266256}
+    - target: {fileID: 1740678622543289402, guid: c537a4d337fc14d418fee2ced4b58814,
+        type: 3}
+      propertyPath: _hitPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 8961750619926266256}
+    - target: {fileID: 1740678622543289402, guid: c537a4d337fc14d418fee2ced4b58814,
+        type: 3}
+      propertyPath: _hitPoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 97969018304832661}
     - target: {fileID: 2954913780570074599, guid: c537a4d337fc14d418fee2ced4b58814,
         type: 3}
       propertyPath: m_Avatar

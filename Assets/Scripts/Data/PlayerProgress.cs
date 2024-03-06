@@ -1,5 +1,5 @@
-﻿using System;
-using Assets.Scripts.StaticData;
+﻿using Assets.Scripts.StaticData;
+using System;
 
 namespace Assets.Scripts.Data
 {
@@ -9,12 +9,10 @@ namespace Assets.Scripts.Data
         public PlayerStaticData PlayerStaticData;
         public State PlayerState;
         public WorldData WorldData;
-        public PlayerDynamicData PlayerDynamicData;
 
         public PlayerProgress(PlayerStaticData playerStaticData)
         {
             WorldData = new WorldData();
-            PlayerDynamicData = new PlayerDynamicData();
             PlayerStaticData = playerStaticData;
             PlayerState = new State();
         }

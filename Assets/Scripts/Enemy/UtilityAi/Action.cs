@@ -4,7 +4,6 @@ namespace Assets.Scripts.Enemy.UtilityAi
 {
     public abstract class Action : ScriptableObject
     {
-        public string Name;
         public Consideration[] Considerations;
         public float Score
         {
@@ -14,7 +13,7 @@ namespace Assets.Scripts.Enemy.UtilityAi
 
         private float _score;
 
-        public virtual void Awake() => 
+        public void Awake() => 
             Score = 0;
 
         public abstract void Execute(EnemyBehavior enemy);

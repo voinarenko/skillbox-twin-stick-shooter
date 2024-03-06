@@ -2408,7 +2408,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1740678622543289402, guid: c537a4d337fc14d418fee2ced4b58814,
         type: 3}
+      propertyPath: _hitPoints.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1740678622543289402, guid: c537a4d337fc14d418fee2ced4b58814,
+        type: 3}
       propertyPath: HitPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 7243298822501140884}
+    - target: {fileID: 1740678622543289402, guid: c537a4d337fc14d418fee2ced4b58814,
+        type: 3}
+      propertyPath: _hitPoints.Array.data[0]
       value: 
       objectReference: {fileID: 7243298822501140884}
     - target: {fileID: 3792692793871577069, guid: c537a4d337fc14d418fee2ced4b58814,

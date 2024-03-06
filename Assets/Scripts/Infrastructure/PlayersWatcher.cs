@@ -11,9 +11,9 @@ namespace Assets.Scripts.Infrastructure
     {
         public int Players => _playerDeaths.Count;
 
-        [SerializeField] private List<PlayerDeath> _playerDeaths = new();
-        [SerializeField] private List<PlayerHudConnector> _playerHudConnectors = new();
-        [SerializeField] private List<PlayerScore> _playerScores = new();
+        private readonly List<PlayerDeath> _playerDeaths = new();
+        private readonly List<PlayerHudConnector> _playerHudConnectors = new();
+        private readonly List<PlayerScore> _playerScores = new();
 
         private IPersistentProgressService _progressService;
 

@@ -1,9 +1,8 @@
 ﻿using Assets.Scripts.Infrastructure.Services.StaticData;
+using Assets.Scripts.Infrastructure.States;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Elements.Buttons;
 using System;
-using Assets.Scripts.Infrastructure;
-using Assets.Scripts.Infrastructure.States;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,24 +11,24 @@ namespace Assets.Scripts.UI.Elements
 {
     public class PlayerSelector : MonoBehaviour
     {
-        public LeftButton LeftButton;
-        public RightButton RightButton;
-        public PlayButton PlayButton;
+        private readonly Array _playerTypes = Enum.GetValues(typeof(PlayerTypeId));
+        
+        [SerializeField] private LeftButton _leftButton;
+        [SerializeField] private RightButton _rightButton;
+        [SerializeField] private PlayButton PlayButton;
 
-        public TextMeshProUGUI PlayerType;
-        public Image PlayerImage;
+        [SerializeField] private TextMeshProUGUI _playerTypeText;
+        [SerializeField] private Image _playerImage;
 
-        public Slider HealthSlider;
-        public Slider DamageSlider;
-        public Slider AmmoSlider;
-        public Slider SpeedSlider;
-        public Slider ShootSlider;
-        public Slider ReloadSlider;
+        [SerializeField] private Slider _healthSlider;
+        [SerializeField] private Slider _damageSlider;
+        [SerializeField] private Slider _ammoSlider;
+        [SerializeField] private Slider _speedSlider;
+        [SerializeField] private Slider _shootSlider;
+        [SerializeField] private Slider _reloadSlider;
 
         private IStaticDataService _staticData;
         private IGameStateMachine _stateMachine;
-        private NetManager _netManager;
-        private readonly Array _playerTypes = Enum.GetValues(typeof(PlayerTypeId));
         private int _playerType;
 
         public void Construct(IStaticDataService staticData, IGameStateMachine stateMachine)
@@ -41,16 +40,15 @@ namespace Assets.Scripts.UI.Elements
 
         private void Awake()
         {
-            LeftButton.Clicked += SwitchLeft;
-            RightButton.Clicked += SwitchRight;
+            _leftButton.Clicked += SwitchLeft;
+            _rightButton.Clicked += SwitchRight;
             PlayButton.Clicked += Play;
-            _netManager = FindAnyObjectByType<NetManager>();
         }
 
         private void OnDestroy()
         {
-            LeftButton.Clicked -= SwitchLeft;
-            RightButton.Clicked -= SwitchRight;
+            _leftButton.Clicked -= SwitchLeft;
+            _rightButton.Clicked -= SwitchRight;
             PlayButton.Clicked -= Play;
         }
 
@@ -68,23 +66,20 @@ namespace Assets.Scripts.UI.Elements
             UpdateData(_playerType);
         }
 
-        private void Play()
-        {
-            //_netManager.StartGame();
+        private void Play() => 
             _stateMachine.Enter<LoadProgressState, PlayerStaticData>(_staticData.ForPlayer((PlayerTypeId)_playerType));
-        }
 
         private void UpdateData(int playerTypeId)
         {
             var playerStaticData = _staticData.ForPlayer((PlayerTypeId)playerTypeId);
-            PlayerType.text = playerStaticData.PlayerTypeId.ToString();
-            PlayerImage.sprite = playerStaticData.Image;
-            HealthSlider.value = playerStaticData.Health;
-            DamageSlider.value = playerStaticData.Damage;
-            AmmoSlider.value = playerStaticData.Ammo;
-            SpeedSlider.value = playerStaticData.MoveSpeed;
-            ShootSlider.value = playerStaticData.AttackCooldown;
-            ReloadSlider.value = playerStaticData.ReloadCooldown;
+            _playerTypeText.text = playerStaticData.PlayerTypeId.ToString();
+            _playerImage.sprite = playerStaticData.Image;
+            _healthSlider.value = playerStaticData.Health;
+            _damageSlider.value = playerStaticData.Damage;
+            _ammoSlider.value = playerStaticData.Ammo;
+            _speedSlider.value = playerStaticData.MoveSpeed;
+            _shootSlider.value = playerStaticData.AttackCooldown;
+            _reloadSlider.value = playerStaticData.ReloadCooldown;
         }
     }
 }

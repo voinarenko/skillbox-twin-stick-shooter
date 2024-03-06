@@ -19,9 +19,6 @@ namespace Assets.Scripts.Infrastructure.Factory
 {
     public class GameFactory : IGameFactory
     {
-        public List<ISavedProgressReader> ProgressReaders { get; } = new();
-        public List<ISavedProgress> ProgressWriters { get; } = new();
-        
         private const string WaveChangerTag = "WaveChanger";
         private static PlayersWatcher PlayersWatcher => GameObject.FindWithTag(WaveChangerTag).GetComponent<PlayersWatcher>();
 
@@ -89,7 +86,7 @@ namespace Assets.Scripts.Infrastructure.Factory
         public async Task<LootPiece> CreateLoot()
         {
             var prefab = await _assets.Load<GameObject>(AssetAddress.Loot);
-            var lootPiece = InstantiateRegistered(prefab).GetComponent<LootPiece>();
+            var lootPiece = Object.Instantiate(prefab).GetComponent<LootPiece>();
             lootPiece.Construct(_lootService);
             return lootPiece;
         }
@@ -97,7 +94,7 @@ namespace Assets.Scripts.Infrastructure.Factory
         public async Task<GameObject> CreateSpawner(Vector3 at, string spawnerId)
         {
             var prefab = await _assets.Load<GameObject>(AssetAddress.Spawner);
-            var spawner = InstantiateRegistered(prefab, at).GetComponent<SpawnPoint>();
+            var spawner = Object.Instantiate(prefab, at, Quaternion.identity).GetComponent<SpawnPoint>();
             spawner.Construct(this, _randomService, _progressService);
             spawner.Id = spawnerId;
             _waveService.SpawnPoints ??= new List<SpawnPoint>();
@@ -106,52 +103,7 @@ namespace Assets.Scripts.Infrastructure.Factory
             return spawner.gameObject;
         }
 
-        public async Task<GameObject> InstantiateRegisteredAsync(string prefabPath)
-        {
-            var gameObject = await _assets.Instantiate(prefabPath);
-            RegisterProgressWatchers(gameObject);
-            return gameObject;
-        }
-
-        public void CleanUp()
-        {
-            ProgressReaders.Clear();
-            ProgressWriters.Clear();
+        public void CleanUp() => 
             _assets.CleanUp();
-        }
-
-        private void Register(ISavedProgressReader progressReader)
-        {
-            if (progressReader is ISavedProgress progressPiece)
-            {
-                if (!ProgressWriters.Contains(progressPiece)) 
-                    ProgressWriters.Add(progressPiece);
-            }
-
-            if (!ProgressReaders.Contains(progressReader))
-            {
-                ProgressReaders.Add(progressReader);
-            }
-        }
-
-        private GameObject InstantiateRegistered(GameObject prefab)
-        {
-            var gameObject = Object.Instantiate(prefab);
-            RegisterProgressWatchers(gameObject);
-            return gameObject;
-        }
-
-        private GameObject InstantiateRegistered(GameObject prefab, Vector3 at)
-        {
-            var gameObject = Object.Instantiate(prefab, at, Quaternion.identity);
-            RegisterProgressWatchers(gameObject);
-            return gameObject;
-        }
-
-        public void RegisterProgressWatchers(GameObject gameObject)
-        {
-            foreach (var progressReader in gameObject.GetComponentsInChildren<ISavedProgressReader>())
-                Register(progressReader);
-        }
     }
 }

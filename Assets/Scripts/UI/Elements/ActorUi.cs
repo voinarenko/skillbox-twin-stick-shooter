@@ -27,10 +27,10 @@ namespace Assets.Scripts.UI.Elements
                 _health.HealthChanged -= UpdateHealthBar;
         }
 
-        private void UpdateHealthBar() => 
-            HealthBar.SetValue(_health.Current, _health.Max);
-
         public void UpdateHealthBar(float currentHealth, float maxHealth) => 
             HealthBar.SetValue(currentHealth, maxHealth);
+
+        private void UpdateHealthBar() => 
+            HealthBar.SetValue(_health.Current, _health.Max);
     }
 }

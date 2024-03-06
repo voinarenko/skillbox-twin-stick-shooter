@@ -293,7 +293,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  Agent: {fileID: 8649501591300120365}
 --- !u!114 &3281882712681335410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,8 +305,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a0eef7f890de7742adb923f3e6bd8b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TriggerObserver: {fileID: 6005476269164500990}
-  Follow: {fileID: 753518817303938587}
+  _triggerObserver: {fileID: 6005476269164500990}
+  _follow: {fileID: 753518817303938587}
 --- !u!114 &5073035938676008861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,8 +322,8 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  Agent: {fileID: 8649501591300120365}
-  Animator: {fileID: 9193984182133261566}
+  _agent: {fileID: 8649501591300120365}
+  _animator: {fileID: 9193984182133261566}
 --- !u!114 &1740678622543289402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,20 +339,15 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  Agent: {fileID: 8649501591300120365}
-  Audio: {fileID: 509864416557740173}
-  ShootEffectPrefab: {fileID: 0}
-  BulletPrefab: {fileID: 0}
-  ShootPoint: {fileID: 0}
-  Animator: {fileID: 9193984182133261566}
-  Type: 0
-  AttackCooldown: 3
-  Cleavage: 0.5
-  HitPoints: []
-  Damage: 10
-  _isAttacking: 0
-  _attackIsActive: 0
-  _savedSpeed: 0
+  _agent: {fileID: 8649501591300120365}
+  _audio: {fileID: 509864416557740173}
+  _shootEffectPrefab: {fileID: 1336949550903370, guid: 4543ab5e3d405ec40a8d4e9aa5165030,
+    type: 3}
+  _bulletPrefab: {fileID: 2167627874613640840, guid: 97367db1b93f952408a7b1dd026c5bc2,
+    type: 3}
+  _animator: {fileID: 9193984182133261566}
+  _shootPoint: {fileID: 0}
+  _hitPoints: []
 --- !u!114 &3284828866856555970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,7 +363,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  Animator: {fileID: 9193984182133261566}
+  _animator: {fileID: 9193984182133261566}
 --- !u!114 &8558893123410710316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -414,6 +408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e68b6c63176bec46b9a02a310f0aa1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyAttack: {fileID: 1740678622543289402}
 --- !u!114 &-606367621403601221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,11 +421,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4d06b049207b1541a0af1482942ea00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Mover: {fileID: 0}
   ActionsAvailable:
   - {fileID: 11400000, guid: 27c7e9381eeb4444984c2de969cd768f, type: 2}
   - {fileID: 11400000, guid: 26ac5ddf85a7e2c44b13535ee40fa573, type: 2}
   - {fileID: 11400000, guid: 276bd4d2cbd2ba34c934a4dac77a8f34, type: 2}
+  _aiBrain: {fileID: -4366050693132424147}
+  _attacker: {fileID: 1740678622543289402}
 --- !u!114 &-4366050693132424147
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,13 +1,12 @@
-using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Mirror;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerMovement : NetworkBehaviour, ISavedProgress
+    public class PlayerMovement : NetworkBehaviour
     {
-        public float Speed;
+        public float Speed { get; set; }
 
         [SerializeField] private NavMeshAgent _agent;
         [SerializeField] private PlayerAnimator _animator;

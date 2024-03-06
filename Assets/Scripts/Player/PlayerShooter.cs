@@ -8,11 +8,11 @@ namespace Assets.Scripts.Player
     [RequireComponent(typeof(PlayerAnimator), typeof(PlayerHudConnector))]
     public class PlayerShooter : NetworkBehaviour
     {
-        public DataStorage Storage;
-        private PlayerDynamicData _playerDynamicData;
-        public float Damage;
-        public float ShootDelay;
-        public float ReloadDelay;
+        public DataStorage Storage { get; private set; }
+
+        public float Damage { get; set; }
+        public float ShootDelay { get; set; }
+        public float ReloadDelay { get; set; }
 
         private const int AmmoConsumption = 1;
         private const string StorageTag = "Storage";
@@ -23,6 +23,7 @@ namespace Assets.Scripts.Player
         [SerializeField] private Transform _shootPoint;
         [SerializeField] private PlayerHudConnector _hudConnector;
 
+        private PlayerDynamicData _playerDynamicData;
         private PlayerAudio _playerAudio;
         private PlayerAnimator _playerAnimator;
         private PlayerControls _controls;

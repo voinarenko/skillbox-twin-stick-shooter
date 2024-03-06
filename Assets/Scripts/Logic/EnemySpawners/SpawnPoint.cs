@@ -6,7 +6,7 @@ using Mirror;
 
 namespace Assets.Scripts.Logic.EnemySpawners
 {
-    public class SpawnPoint : NetworkBehaviour, ISavedProgress
+    public class SpawnPoint : NetworkBehaviour
     {
         public string Id { get; set; }
 

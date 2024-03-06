@@ -10,19 +10,19 @@ namespace Assets.Scripts.Enemy
     {
         private const float MinimalVelocity = 0.1f;
         
-        public NavMeshAgent Agent;
-        public EnemyAnimator Animator;
+        [SerializeField] private NavMeshAgent _agent;
+        [SerializeField] private EnemyAnimator _animator;
 
         private void Update()
         {
             if (!isServer) return;
             if(ShouldMove())
-                Animator.Move();
+                _animator.Move();
             else
-                Animator.StopMoving();
+                _animator.StopMoving();
         }
 
         private bool ShouldMove() => 
-            Agent.velocity.magnitude > MinimalVelocity && Agent.remainingDistance > Agent.radius;
+            _agent.velocity.magnitude > MinimalVelocity && _agent.remainingDistance > _agent.radius;
     }
 }

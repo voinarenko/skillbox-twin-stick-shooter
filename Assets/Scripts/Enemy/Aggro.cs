@@ -5,33 +5,33 @@ namespace Assets.Scripts.Enemy
 {
     public class Aggro : MonoBehaviour
     {
-        public TriggerObserver TriggerObserver;
-        public EnemyMoveToPlayer Follow;
+        [SerializeField] private TriggerObserver _triggerObserver;
+        [SerializeField] private EnemyMoveToPlayer _follow;
 
         private void Start()
         {
-            TriggerObserver.TriggerEnter += TriggerEnter;
-            TriggerObserver.TriggerExit += TriggerExit;
+            _triggerObserver.TriggerEnter += TriggerEnter;
+            _triggerObserver.TriggerExit += TriggerExit;
 
             SwitchFollow(true);
         }
 
         private void OnDestroy()
         {
-            TriggerObserver.TriggerEnter -= TriggerEnter;
-            TriggerObserver.TriggerExit -= TriggerExit;
+            _triggerObserver.TriggerEnter -= TriggerEnter;
+            _triggerObserver.TriggerExit -= TriggerExit;
         }
 
         private void TriggerEnter(Collider other)
         {
-            Follow.InitTarget(other.GetComponentInParent<PlayerHealth>().gameObject);
-            Follow.PlayerNearby = true;
+            _follow.InitTarget(other.GetComponentInParent<PlayerHealth>().gameObject);
+            _follow.PlayerNearby = true;
         }
 
         private void TriggerExit(Collider other) => 
-            Follow.PlayerNearby = false;
+            _follow.PlayerNearby = false;
 
         private void SwitchFollow(bool value) => 
-            Follow.enabled = value;
+            _follow.enabled = value;
     }
 }

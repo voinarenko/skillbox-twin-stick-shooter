@@ -11,8 +11,9 @@ namespace Assets.Scripts.Enemy
     public class EnemyMoveToPlayer : NetworkBehaviour
     {
         public bool PlayerNearby { get; set; }
-        public NavMeshAgent Agent;
+        public NavMeshAgent Agent { get; private set; }
         public event Action Completed;
+
 
         private PlayersWatcher _playersWatcher;
         private Transform _playerTransform;
@@ -21,6 +22,7 @@ namespace Assets.Scripts.Enemy
 
         private void Start()
         {
+            Agent = GetComponent<NavMeshAgent>();
             _playersWatcher = FindAnyObjectByType<PlayersWatcher>();
             _behavior = GetComponent<EnemyBehavior>();
             _attack = GetComponent<EnemyAttack>();

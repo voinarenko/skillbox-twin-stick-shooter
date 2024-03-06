@@ -261,7 +261,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 68.1
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -600,7 +600,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 90.4
+  m_fontSize: 96.15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -967,17 +967,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bb1a98a962852d4780b22d035aa52cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LeftButton: {fileID: 3394949560304127546}
-  RightButton: {fileID: 5873039251613282005}
+  _leftButton: {fileID: 3394949560304127546}
+  _rightButton: {fileID: 5873039251613282005}
   PlayButton: {fileID: 6659747975075721180}
-  PlayerType: {fileID: 1810424993692537963}
-  PlayerImage: {fileID: 5829653840423939948}
-  HealthSlider: {fileID: 2382889362944803086}
-  DamageSlider: {fileID: 6405694121423708009}
-  AmmoSlider: {fileID: 4064642348659068586}
-  SpeedSlider: {fileID: 8455895926881260840}
-  ShootSlider: {fileID: 7833138332632040795}
-  ReloadSlider: {fileID: 3188354052981312338}
+  _playerTypeText: {fileID: 1810424993692537963}
+  _playerImage: {fileID: 5829653840423939948}
+  _healthSlider: {fileID: 2382889362944803086}
+  _damageSlider: {fileID: 6405694121423708009}
+  _ammoSlider: {fileID: 4064642348659068586}
+  _speedSlider: {fileID: 8455895926881260840}
+  _shootSlider: {fileID: 7833138332632040795}
+  _reloadSlider: {fileID: 3188354052981312338}
 --- !u!1 &7859638232316845610
 GameObject:
   m_ObjectHideFlags: 0
@@ -1729,7 +1729,7 @@ PrefabInstance:
     - target: {fileID: 2838570886110559907, guid: b67aacf15fdb529439b2b2f40eb561dd,
         type: 3}
       propertyPath: m_fontSize
-      value: 70.8
+      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 2838570886110559907, guid: b67aacf15fdb529439b2b2f40eb561dd,
         type: 3}
@@ -1900,7 +1900,7 @@ PrefabInstance:
     - target: {fileID: 2838570886110559907, guid: b67aacf15fdb529439b2b2f40eb561dd,
         type: 3}
       propertyPath: m_fontSize
-      value: 70.8
+      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 2838570886110559907, guid: b67aacf15fdb529439b2b2f40eb561dd,
         type: 3}
@@ -2615,7 +2615,7 @@ PrefabInstance:
     - target: {fileID: 2838570886110559907, guid: b67aacf15fdb529439b2b2f40eb561dd,
         type: 3}
       propertyPath: m_fontSize
-      value: 70.8
+      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 2838570886110559907, guid: b67aacf15fdb529439b2b2f40eb561dd,
         type: 3}

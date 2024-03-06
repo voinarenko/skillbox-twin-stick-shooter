@@ -6,11 +6,5 @@ namespace Assets.Scripts.Data
     public class AmmoData
     {
         public int Available;
-
-        //public void Consume(Ammo ammo)
-        //{
-        //    Available -= ammo.Value;
-        //    Changed.Invoke();
-        //}
     }
 }

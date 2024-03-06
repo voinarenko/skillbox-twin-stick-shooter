@@ -8,12 +8,12 @@ namespace Assets.Scripts.UI.Elements
 {
     public class PerkTimer : MonoBehaviour
     {
-        public GameObject Player;
-        public PerkTypeId Type;
-        public Sprite Icon;
-        public float Duration;
-        public float Multiplier;
         public event Action<PerkTimer, GameObject> Completed;
+        public GameObject Player { get; set; }
+        public PerkTypeId Type { get; set; }
+        public Sprite Icon { get; set; }
+        public float Duration { get; set; }
+        public float Multiplier { get; set; }
 
         [SerializeField] private Image _icon;
         [SerializeField] private TextMeshProUGUI _timerText;

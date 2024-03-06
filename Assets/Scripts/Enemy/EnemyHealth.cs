@@ -8,9 +8,10 @@ namespace Assets.Scripts.Enemy
     [RequireComponent(typeof(EnemyAnimator))]
     public class EnemyHealth : NetworkBehaviour, IHealth
     {
-        public EnemyAnimator Animator;
-
         public event Action HealthChanged;
+        
+        [SerializeField] private EnemyAnimator _animator;
+
 
         [field: SyncVar]
         public float Current { get; set; }
@@ -21,7 +22,7 @@ namespace Assets.Scripts.Enemy
         public void RpcTakeDamage(float damage)
         {
             Current -= damage;
-            Animator.PlayHit();
+            _animator.PlayHit();
 
             HealthChanged?.Invoke();
         }

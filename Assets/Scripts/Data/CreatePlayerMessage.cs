@@ -1,6 +1,6 @@
 ﻿using Mirror;
 
-namespace Assets.Scripts.Infrastructure
+namespace Assets.Scripts.Data
 {
     public struct CreatePlayerMessage : NetworkMessage
     {

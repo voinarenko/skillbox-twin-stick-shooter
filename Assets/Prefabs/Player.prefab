@@ -162,6 +162,8 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  _animator: {fileID: 3867229433349509769}
+  _playerAnimator: {fileID: 3770642299459928777}
 --- !u!114 &4991387619256362426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,14 +180,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   Storage: {fileID: 0}
-  PlayerDynamicData:
-    AmmoData:
-      Available: 0
-    ScoreData:
-      Score: 0
-    SpentData:
-      Bullets: 0
-      Reloads: 0
   Damage: 0
   ShootDelay: 0
   ReloadDelay: 0
@@ -390,6 +384,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 627a818544bc94f43917dd9e119a6ce9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   _shooter: {fileID: 4991387619256362426}
 --- !u!114 &-6355614027878610099
 MonoBehaviour:

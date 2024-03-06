@@ -3138,6 +3138,11 @@ PrefabInstance:
       objectReference: {fileID: 3561177039936926879}
     - target: {fileID: 1740678622543289402, guid: c537a4d337fc14d418fee2ced4b58814,
         type: 3}
+      propertyPath: _shootPoint
+      value: 
+      objectReference: {fileID: 3561177039936926879}
+    - target: {fileID: 1740678622543289402, guid: c537a4d337fc14d418fee2ced4b58814,
+        type: 3}
       propertyPath: BulletPrefab
       value: 
       objectReference: {fileID: 2167627874613640840, guid: 97367db1b93f952408a7b1dd026c5bc2,

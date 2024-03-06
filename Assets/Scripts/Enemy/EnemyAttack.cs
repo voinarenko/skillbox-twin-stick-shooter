@@ -12,31 +12,33 @@ namespace Assets.Scripts.Enemy
     [RequireComponent(typeof(EnemyAnimator))]
     public class EnemyAttack : NetworkBehaviour
     {
-        public NavMeshAgent Agent;
-        public EnemyAudio Audio;
-        public GameObject ShootEffectPrefab;
-        public GameObject BulletPrefab;
-        public Transform ShootPoint;
-        public EnemyAnimator Animator;
-
-        public EnemyType Type;
-        public float AttackCooldown = 3f;
-        public float Cleavage = 0.5f;
-        public List<Transform> HitPoints;
-        public float Damage = 10f;
         public event Action Completed;
+        public EnemyType Type { get; set; }
+        public float AttackCooldown { get; set; }
+        public float Cleavage { get; set; }
+        public float Damage { get; set; }
 
         private const string PlayerLayerMask = "Player";
         private const string PlayerTag = "Player";
         private const float AttackTime = 0.1f;
+
+        [SerializeField] private NavMeshAgent _agent;
+        [SerializeField] private EnemyAudio _audio;
+        [SerializeField] private GameObject _shootEffectPrefab;
+        [SerializeField] private GameObject _bulletPrefab;
+        [SerializeField] private EnemyAnimator _animator;
+        [SerializeField] private Transform _shootPoint;
+        [SerializeField] private List<Transform> _hitPoints;
+
+
         private Transform _playerTransform;
         private float _attackCooldown;
         private int _layerMask;
         private readonly Collider[] _hits = new Collider[1];
 
-        [SerializeField] private bool _isAttacking;
-        [SerializeField] private bool _attackIsActive;
-        [SerializeField] private float _savedSpeed;
+        private bool _isAttacking;
+        private bool _attackIsActive;
+        private float _savedSpeed;
 
         public void Construct(Transform playerTransform) => 
             _playerTransform = playerTransform;
@@ -45,7 +47,7 @@ namespace Assets.Scripts.Enemy
             _layerMask = 1 << LayerMask.NameToLayer(PlayerLayerMask);
 
         private void Start() => 
-            _savedSpeed = Agent.speed;
+            _savedSpeed = _agent.speed;
 
         private void Update()
         {
@@ -56,36 +58,36 @@ namespace Assets.Scripts.Enemy
 
 #pragma warning disable IDE0051
         private void OnAttackStart() => 
-            Agent.speed = 0;
+            _agent.speed = 0;
 
         [Command(requiresAuthority = false)]
         private void OnAttack()
         {
             if (Type == EnemyType.Ranged)
             {
-                if (ShootEffectPrefab != null) 
-                    Instantiate(ShootEffectPrefab, ShootPoint.position, ShootPoint.rotation);
-                if (BulletPrefab != null)
+                if (_shootEffectPrefab != null) 
+                    Instantiate(_shootEffectPrefab, _shootPoint.position, _shootPoint.rotation);
+                if (_bulletPrefab != null)
                 {
-                    var bullet = Instantiate(BulletPrefab, ShootPoint.transform.position, transform.rotation);
+                    var bullet = Instantiate(_bulletPrefab, _shootPoint.transform.position, transform.rotation);
                     var bulletData = bullet.GetComponent<BulletDamage>();
                     bulletData.Sender = tag;
                     bulletData.Damage = Damage;
                     NetworkServer.Spawn(bullet);
                 }
 
-                Audio.Shoot();
+                _audio.Shoot();
             }
             else
             {
-                foreach (var hitPoint in HitPoints)
+                foreach (var hitPoint in _hitPoints)
                 {
                     if (!Hit(out var hit, hitPoint)) continue;
                     PhysicsDebug.DrawDebug(hitPoint.position, Cleavage, AttackTime);
                     if (!hit.CompareTag(PlayerTag)) return;
                     hit.transform.parent.GetComponent<IHealth>().RpcTakeDamage(Damage);
 
-                    Audio.Attack();
+                    _audio.Attack();
                 }
             }
         }
@@ -94,19 +96,19 @@ namespace Assets.Scripts.Enemy
 
         private void OnAttackEnded()
         {
-            Agent.speed = _savedSpeed;
+            _agent.speed = _savedSpeed;
             _attackCooldown = AttackCooldown;
             _isAttacking = false;
-            if (Type == EnemyType.Ranged) Audio.Reload();
+            if (Type == EnemyType.Ranged) _audio.Reload();
             Completed?.Invoke();
         }
 
         private void OnHit() => 
-            Agent.speed = 0;
+            _agent.speed = 0;
 
         private void OnHitEnded()
         {
-            Agent.speed = _savedSpeed;
+            _agent.speed = _savedSpeed;
             Completed?.Invoke();
        }
 
@@ -124,9 +126,9 @@ namespace Assets.Scripts.Enemy
         {
             transform.LookAt(_playerTransform);
             if (Type == EnemyType.Ranged)
-                Animator.PlayShoot();
+                _animator.PlayShoot();
             else
-                Animator.PlayAttack();
+                _animator.PlayAttack();
             _isAttacking = true;
         }
 

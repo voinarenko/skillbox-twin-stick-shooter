@@ -194,11 +194,8 @@ namespace Assets.Scripts.Player
         [ClientRpc]
         public void RpcGameOver()
         {
-            if (isLocalPlayer)
-            {
-                print("game over");
+            if (isLocalPlayer) 
                 Changer.GameOver();
-            }
         }
     }
 }
