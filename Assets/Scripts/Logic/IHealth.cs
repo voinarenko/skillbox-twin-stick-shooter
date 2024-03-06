@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.Logic
 {
@@ -7,6 +8,6 @@ namespace Assets.Scripts.Logic
         event Action HealthChanged;
         float Current { get; set; }
         float Max { get; set; }
-        void TakeDamage(float damage);
+        void RpcTakeDamage(float damage);
     }
 }

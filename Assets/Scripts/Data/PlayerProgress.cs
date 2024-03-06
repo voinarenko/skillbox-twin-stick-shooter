@@ -1,5 +1,5 @@
-﻿using System;
-using Assets.Scripts.StaticData;
+﻿using Assets.Scripts.StaticData;
+using System;
 
 namespace Assets.Scripts.Data
 {
@@ -10,9 +10,9 @@ namespace Assets.Scripts.Data
         public State PlayerState;
         public WorldData WorldData;
 
-        public PlayerProgress(string initialLevel, PlayerStaticData playerStaticData)
+        public PlayerProgress(PlayerStaticData playerStaticData)
         {
-            WorldData = new WorldData(initialLevel);
+            WorldData = new WorldData();
             PlayerStaticData = playerStaticData;
             PlayerState = new State();
         }

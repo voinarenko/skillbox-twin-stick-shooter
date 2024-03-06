@@ -15,9 +15,9 @@
         public void Enter() => 
             _sceneLoader.Load(InitialScene, onLoaded: EnterMainMenu);
 
+        public void Exit() { }
+
         private void EnterMainMenu() => 
             _stateMachine.Enter<LoadMenuState>();
-
-        public void Exit() { }
     }
 }

@@ -11,13 +11,13 @@ namespace Assets.Scripts.UI.Windows
 {
     public abstract class BaseWindow : MonoBehaviour
     {
-        private IPersistentProgressService _progressService;
         protected ISaveLoadService SaveLoadService;
         protected IAudioService AudioService;
         protected ISettingsService SettingsService;
         protected IGameStateMachine StateMachine;
         protected IStaticDataService StaticData;
         protected PlayerProgress Progress => _progressService.Progress;
+        private IPersistentProgressService _progressService;
 
         public void Construct(IPersistentProgressService progressService, IGameStateMachine stateMachine)
         {

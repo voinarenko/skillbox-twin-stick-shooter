@@ -33,9 +33,6 @@ namespace Assets.Scripts.Infrastructure.AssetManagement
         public Task<GameObject> Instantiate(string address) => 
             Addressables.InstantiateAsync(address).Task;
 
-        public Task<GameObject> Instantiate(string address, Vector3 at) => 
-            Addressables.InstantiateAsync(address, at, Quaternion.identity).Task;
-
         public void CleanUp()
         {
             foreach (var resourceHandles in _handles.Values)

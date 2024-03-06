@@ -1,5 +1,7 @@
-﻿using Assets.Scripts.Enemy.UtilityAi;
-using Assets.Scripts.Infrastructure.Services.PersistentProgress;
+﻿using Assets.Scripts.Data;
+using Assets.Scripts.Enemy.UtilityAi;
+using Assets.Scripts.Infrastructure;
+using Mirror;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -9,17 +11,19 @@ using Action = System.Action;
 namespace Assets.Scripts.Enemy
 {
     [RequireComponent(typeof(EnemyHealth), typeof(EnemyAnimator), typeof(NavMeshAgent))]
-    public class EnemyDeath : MonoBehaviour
+    public class EnemyDeath : NetworkBehaviour
     {
-        public GameObject DeathFx;
         public event Action Happened;
-        public int Value;
-        public TextMeshPro LootText;
-        public GameObject PickupPopup;
-
+        [SyncVar] public int Value;
         private const float TimeToDestroy = 3;
         private const float TimeToSpawnLoot = 2.5f;
-        private IPersistentProgressService _progressService;
+
+        [SerializeField] private GameObject _deathFx;
+        [SerializeField] private TextMeshPro _lootText;
+        [SerializeField] private GameObject _pickupPopup;
+
+        private PlayerProgress _progress;
+        private PlayersWatcher _watcher;
         private EnemyMoveToPlayer _mover;
         private EnemyHealth _health;
         private EnemyAnimator _animator;
@@ -29,8 +33,11 @@ namespace Assets.Scripts.Enemy
         private EnemyBehavior _behavior;
         private BoxCollider _collider;
 
-        public void Construct(IPersistentProgressService progressService) => 
-            _progressService = progressService;
+        public void Construct(PlayerProgress progress, PlayersWatcher watcher)
+        {
+            _progress = progress;
+            _watcher = watcher;
+        }
 
         private void Start()
         {
@@ -49,16 +56,16 @@ namespace Assets.Scripts.Enemy
         private void HealthChanged()
         {
             if (_health.Current <= 0)
-                Die();
+                RpcDie();
         }
 
-        private void Die()
+        [ClientRpc]
+        private void RpcDie()
         {
+            CmdUpdateGlobalData();
+            CmdUpdateScore();
             _collider.enabled = false;
             _health.HealthChanged -= HealthChanged;
-            _progressService.Progress.WorldData.WaveData.RemoveEnemy();
-            _progressService.Progress.WorldData.KillData.Collect(_attack);
-            _progressService.Progress.WorldData.ScoreData.UpdateScore(this);
             _aiBrain.SetAction(_behavior.ActionsAvailable[2]);
             _mover.enabled = false;
             _aiBrain.enabled = false;
@@ -67,16 +74,28 @@ namespace Assets.Scripts.Enemy
             _agent.speed = 0;
             _attack.enabled = false;
             _animator.PlayDeath();
-            SpawnDeathFx();
-            ShowText();
+            CmdSpawnDeathFx();
+            CmdShowText();
             StartCoroutine(Inform());
             Destroy(gameObject, TimeToDestroy);
         }
 
-        private void ShowText()
+        [Command(requiresAuthority = false)]
+        private void CmdUpdateScore() => 
+            _watcher.UpdateScore(Value);
+
+        [Command(requiresAuthority = false)]
+        private void CmdUpdateGlobalData()
         {
-            LootText.text = $"{Value}";
-            PickupPopup.SetActive(true);
+            _progress.WorldData.WaveData.RemoveEnemy();
+            _progress.WorldData.KillData.Collect(_attack);
+        }
+
+        [Command(requiresAuthority = false)]
+        private void CmdShowText()
+        {
+            _lootText.text = $"{Value/_watcher.Players}";
+            _pickupPopup.SetActive(true);
         }
 
         private IEnumerator Inform()
@@ -85,8 +104,12 @@ namespace Assets.Scripts.Enemy
             Happened?.Invoke();
         }
 
-        private void SpawnDeathFx() => 
-            Instantiate(DeathFx, transform.position, Quaternion.identity);
+        [Command(requiresAuthority = false)]
+        private void CmdSpawnDeathFx()
+        {
+            var effect = Instantiate(_deathFx, transform.position, Quaternion.identity);
+            NetworkServer.Spawn(effect);
+        }
 
 #pragma warning disable IDE0051
         private void OnDeath() => 

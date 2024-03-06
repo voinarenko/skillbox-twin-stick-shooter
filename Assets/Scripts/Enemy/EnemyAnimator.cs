@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 
 namespace Assets.Scripts.Enemy
 {
-    public class EnemyAnimator : MonoBehaviour
+    public class EnemyAnimator : NetworkBehaviour
     {
         private static readonly int Die = Animator.StringToHash("Die");
         private static readonly int Hit = Animator.StringToHash("Hit");

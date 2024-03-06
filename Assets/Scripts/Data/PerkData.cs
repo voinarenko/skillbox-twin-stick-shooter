@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Assets.Scripts.StaticData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.StaticData;
 
 namespace Assets.Scripts.Data
 {

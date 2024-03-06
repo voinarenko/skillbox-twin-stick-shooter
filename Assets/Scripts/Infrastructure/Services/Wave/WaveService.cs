@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Logic.EnemySpawners;
 using System.Collections.Generic;
+using System.Linq;
+using Mirror;
 
 namespace Assets.Scripts.Infrastructure.Services.Wave
 {
@@ -16,8 +18,7 @@ namespace Assets.Scripts.Infrastructure.Services.Wave
         public void SpawnEnemies()
         {
             for (var i = 0; i < _progressService.Progress.WorldData.WaveData.Encountered; i++)
-                foreach (var point in SpawnPoints)
-                    point.Spawn();
+                foreach (var point in SpawnPoints.Where(point => point.GetComponent<NetworkIdentity>().isServer)) point.Spawn();
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using System;
-using Assets.Scripts.StaticData;
+﻿using Assets.Scripts.StaticData;
+using System;
 
 namespace Assets.Scripts.Data
 {

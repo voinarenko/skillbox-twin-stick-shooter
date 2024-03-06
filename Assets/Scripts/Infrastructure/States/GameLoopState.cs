@@ -18,14 +18,14 @@ namespace Assets.Scripts.Infrastructure.States
             _waveService = waveService;
         }
 
-        public void Exit() => 
-            _waveService.SpawnPoints.Clear();
-
         public void Enter()
         {
             var manager = GameObject.FindWithTag(WaveChangerTag);
             manager.GetComponent<WaveChanger>().Init(_sceneLoader);
             manager.GetComponent<PauseListener>().Init(_windowService, _sceneLoader);
         }
+
+        public void Exit() => 
+            _waveService.SpawnPoints?.Clear();
     }
 }

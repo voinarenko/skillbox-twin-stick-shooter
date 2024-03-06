@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Assets.Scripts.StaticData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.StaticData;
 
 namespace Assets.Scripts.Data
 {
@@ -10,10 +10,8 @@ namespace Assets.Scripts.Data
     {
         public List<KeyValuePair<ConsumableTypeId, int>> Collected = new();
 
-        public ConsumableData()
-        {
+        public ConsumableData() => 
             Collected.Add(new KeyValuePair<ConsumableTypeId, int>(ConsumableTypeId.Health, 0));
-        }
 
         public void Collect(Consumable loot)
         {

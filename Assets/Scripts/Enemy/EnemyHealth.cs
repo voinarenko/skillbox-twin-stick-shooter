@@ -1,37 +1,28 @@
-﻿using System;
-using Assets.Scripts.Logic;
+﻿using Assets.Scripts.Logic;
+using Mirror;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Enemy
 {
     [RequireComponent(typeof(EnemyAnimator))]
-    public class EnemyHealth : MonoBehaviour, IHealth
+    public class EnemyHealth : NetworkBehaviour, IHealth
     {
-        public EnemyAnimator Animator;
-
-        [SerializeField]
-        private float _current;
-        [SerializeField]
-        private float _max;
-
         public event Action HealthChanged;
+        
+        [SerializeField] private EnemyAnimator _animator;
 
-        public float Current
-        {
-            get => _current;
-            set => _current = value;
-        }
 
-        public float Max
-        {
-            get => _max;
-            set => _max = value;
-        }
+        [field: SyncVar]
+        public float Current { get; set; }
 
-        public void TakeDamage(float damage)
+        [field: SyncVar]
+        public float Max { get; set; }
+
+        public void RpcTakeDamage(float damage)
         {
             Current -= damage;
-            Animator.PlayHit();
+            _animator.PlayHit();
 
             HealthChanged?.Invoke();
         }

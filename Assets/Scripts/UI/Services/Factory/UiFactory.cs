@@ -1,15 +1,14 @@
 ﻿using Assets.Scripts.Infrastructure.AssetManagement;
+using Assets.Scripts.Infrastructure.Services.Audio;
+using Assets.Scripts.Infrastructure.Services.Parameters;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
+using Assets.Scripts.Infrastructure.Services.SaveLoad;
 using Assets.Scripts.Infrastructure.Services.StaticData;
 using Assets.Scripts.Infrastructure.States;
+using Assets.Scripts.UI.Elements;
 using Assets.Scripts.UI.Services.Windows;
 using Assets.Scripts.UI.Windows;
 using System.Threading.Tasks;
-using Assets.Scripts.Infrastructure;
-using Assets.Scripts.Infrastructure.Services.Audio;
-using Assets.Scripts.Infrastructure.Services.Parameters;
-using Assets.Scripts.Infrastructure.Services.SaveLoad;
-using Assets.Scripts.UI.Elements;
 using UnityEngine;
 
 namespace Assets.Scripts.UI.Services.Factory

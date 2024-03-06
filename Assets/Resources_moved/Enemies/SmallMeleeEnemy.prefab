@@ -2108,9 +2108,19 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 615630079722879486, guid: c537a4d337fc14d418fee2ced4b58814,
+        type: 3}
+      propertyPath: _assetId
+      value: 3908473981
+      objectReference: {fileID: 0}
     - target: {fileID: 1740678622543289402, guid: c537a4d337fc14d418fee2ced4b58814,
         type: 3}
       propertyPath: HitPoints.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1740678622543289402, guid: c537a4d337fc14d418fee2ced4b58814,
+        type: 3}
+      propertyPath: _hitPoints.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1740678622543289402, guid: c537a4d337fc14d418fee2ced4b58814,
@@ -2123,6 +2133,16 @@ PrefabInstance:
       propertyPath: HitPoints.Array.data[1]
       value: 
       objectReference: {fileID: 8961750619926266256}
+    - target: {fileID: 1740678622543289402, guid: c537a4d337fc14d418fee2ced4b58814,
+        type: 3}
+      propertyPath: _hitPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 8961750619926266256}
+    - target: {fileID: 1740678622543289402, guid: c537a4d337fc14d418fee2ced4b58814,
+        type: 3}
+      propertyPath: _hitPoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 97969018304832661}
     - target: {fileID: 2954913780570074599, guid: c537a4d337fc14d418fee2ced4b58814,
         type: 3}
       propertyPath: m_Avatar
@@ -2162,6 +2182,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Center.z
       value: -0.06073346
+      objectReference: {fileID: 0}
+    - target: {fileID: 8287807627213343045, guid: c537a4d337fc14d418fee2ced4b58814,
+        type: 3}
+      propertyPath: _assetId
+      value: 3908473981
       objectReference: {fileID: 0}
     - target: {fileID: 8448274562106646493, guid: c537a4d337fc14d418fee2ced4b58814,
         type: 3}

@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Enemy;
-using System;
+﻿using System;
 
 namespace Assets.Scripts.Data
 {
@@ -8,7 +7,7 @@ namespace Assets.Scripts.Data
     {
         public int Score;
 
-        public void UpdateScore(EnemyDeath enemy) => 
-            Score += enemy.Value;
+        public void UpdateScore(int score) => 
+            Score += score;
     }
 }

@@ -1,26 +1,22 @@
 ﻿using Assets.Scripts.Enemy.UtilityAi;
 using Assets.Scripts.Logic;
 using UnityEngine;
-using UnityEngine.AI;
 using Action = Assets.Scripts.Enemy.UtilityAi.Action;
 
 namespace Assets.Scripts.Enemy
 {
     public class EnemyBehavior : MonoBehaviour
     {
-        public EnemyMoveToPlayer Mover;
-        public IHealth PlayerHealth;
+        public EnemyMoveToPlayer Mover { get; private set; }
+        public IHealth PlayerHealth { get; set; }
         public Action[] ActionsAvailable;
 
-        private AiBrain _aiBrain;
-        private EnemyAttack _attacker;
+        [SerializeField] private AiBrain _aiBrain;
+        [SerializeField] private EnemyAttack _attacker;
 
         private void Start()
         {
             Mover = GetComponent<EnemyMoveToPlayer>();
-            PlayerHealth = Mover.PlayerTransform.GetComponent<IHealth>();
-            _aiBrain = GetComponent<AiBrain>();
-            _attacker = GetComponent<EnemyAttack>();
             _attacker.Completed += Completed;
             Mover.Completed += Completed;
             _aiBrain.Decided += ExecuteAction;

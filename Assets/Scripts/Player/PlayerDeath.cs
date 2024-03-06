@@ -1,56 +1,63 @@
-﻿using System;
-using Assets.Scripts.Infrastructure.Services.PersistentProgress;
+﻿using Mirror;
+using System;
 using UnityEngine;
 using UnityEngine.AI;
+using NetworkServer = Mirror.NetworkServer;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerDeath : MonoBehaviour
+    public class PlayerDeath : NetworkBehaviour
     {
-        public NavMeshAgent Agent;
-        public PlayerHealth Health;
-        public PlayerMovement Move;
-        public PlayerRotation Rotate;
-        public PlayerShooter Attack;
-        public PlayerAnimator Animator;
-        public GameObject DeathFx;
+        public event Action<PlayerDeath> Happened;
 
-        public event Action Happened;
+        private const string DeadTag = "Dead";
 
-        private IPersistentProgressService _progressService;
+        [SerializeField] private NavMeshAgent _agent;
+        [SerializeField] private PlayerHealth _health;
+        [SerializeField] private PlayerMovement _move;
+        [SerializeField] private PlayerRotation _rotate;
+        [SerializeField] private PlayerShooter _attack;
+        [SerializeField] private PlayerAnimator _animator;
+        [SerializeField] private GameObject _deathFx;
+        
         private bool _isDead;
 
-        public void Construct(IPersistentProgressService progressService) => 
-            _progressService = progressService;
-
-        private void Start() => 
-            Health.HealthChanged += HealthChanged;
+        private void Start() =>
+            _health.HealthChanged += HealthChanged;
 
         private void OnDestroy() => 
-            Health.HealthChanged -= HealthChanged;
+            _health.HealthChanged -= HealthChanged;
 
         private void HealthChanged()
         {
-            if (!_isDead && Health.Current <= 0) Die();
+            if (!_isDead && _health.Current <= 0) RpcDie();
         }
 
-        private void Die()
+        [ClientRpc]
+        private void RpcDie()
         {
             _isDead = true;
-            Move.enabled = false;
-            Rotate.enabled = false;
-            Attack.enabled = false;
-            Animator.PlayDeath();
+            _move.enabled = false;
+            _rotate.enabled = false;
+            _attack.enabled = false;
+            _animator.PlayDeath();
+            tag = DeadTag;
+            Happened?.Invoke(this);
 
-            Happened?.Invoke();
+            SpawnEffect();
+        }
 
-            Instantiate(DeathFx, transform.position, Quaternion.identity);
+        [Server]
+        private void SpawnEffect()
+        {
+            var effect = Instantiate(_deathFx, transform.position, Quaternion.identity);
+            NetworkServer.Spawn(effect);
         }
 
 #pragma warning disable IDE0051
 
         private void OnDeath() => 
-            Agent.isStopped = true;
+            _agent.isStopped = true;
 #pragma warning restore IDE0051
     }
 }

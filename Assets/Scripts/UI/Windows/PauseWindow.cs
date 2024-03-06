@@ -1,12 +1,10 @@
 ﻿using Assets.Scripts.Data;
 using Assets.Scripts.Infrastructure;
 using Assets.Scripts.Infrastructure.States;
-using Assets.Scripts.Logic.EnemySpawners;
 using Assets.Scripts.Player;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Elements.Buttons;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.UI.Windows
@@ -15,9 +13,6 @@ namespace Assets.Scripts.UI.Windows
     {
         private const string PlayerTag = "Player";
         private const string ManagerTag = "WaveChanger";
-        public ConfirmButton ConfirmButton;
-        public RestartButton RestartButton;
-        public MenuReturnButton ReturnButton;
 
         private SceneLoader _sceneLoader;
         private GameObject _player;
@@ -25,6 +20,9 @@ namespace Assets.Scripts.UI.Windows
         private PlayerMovement _playerMovement;
         private PlayerRotation _playerRotation;
         private PlayerShooter _playerShooter;
+        [SerializeField] private ConfirmButton _confirmButton;
+        [SerializeField] private RestartButton _restartButton;
+        [SerializeField] private MenuReturnButton _returnButton;
         [SerializeField] private Slider _masterSlider;
         [SerializeField] private Slider _musicSlider;
         [SerializeField] private Slider _effectsSlider;
@@ -50,6 +48,8 @@ namespace Assets.Scripts.UI.Windows
             if (_playerMovement) _playerMovement.enabled = true;
             if (_playerRotation) _playerRotation.enabled = true;
             if (_playerShooter) _playerShooter.enabled = true;
+            _restartButton.Clicked -= ProcessRestartClick;
+            _returnButton.Clicked -= ProcessReturnClick;
             Cursor.visible = false;
             Time.timeScale = 1;
         }
@@ -57,7 +57,7 @@ namespace Assets.Scripts.UI.Windows
         public override void Init()
         {
             AudioService.UpdateSliders(_masterSlider, _musicSlider, _effectsSlider);
-            ConfirmButton.Construct(SaveLoadService, AudioService, SettingsService);
+            _confirmButton.Construct(SaveLoadService, AudioService, SettingsService);
         }
 
         public void SetLoader(SceneLoader sceneLoader) =>
@@ -65,14 +65,14 @@ namespace Assets.Scripts.UI.Windows
 
         protected override void Initialize()
         {
-            RestartButton.Clicked += ProcessRestartClick;
-            ReturnButton.Clicked += ProcessReturnClick;
+            _restartButton.Clicked += ProcessRestartClick;
+            _returnButton.Clicked += ProcessReturnClick;
         }
 
         private void ProcessReturnClick()
         {
             Time.timeScale = 1;
-            ReturnButton.Clicked -= ProcessReturnClick;
+            _returnButton.Clicked -= ProcessReturnClick;
             SettingsService.Settings = new Settings();
             AudioService.StoreVolume(SettingsService.Settings);
             SaveLoadService.SaveSettings();
@@ -83,14 +83,11 @@ namespace Assets.Scripts.UI.Windows
         private void ProcessRestartClick()
         {
             Time.timeScale = 1;
-            ReturnButton.Clicked -= ProcessRestartClick;
+            _restartButton.Clicked -= ProcessRestartClick;
             SettingsService.Settings = new Settings();
             AudioService.StoreVolume(SettingsService.Settings);
             SaveLoadService.SaveSettings();
             _sceneLoader.Load("InitialScene", OnLoaded);
-            //Destroy(_player);
-            //foreach (var point in FindObjectsByType<SpawnPoint>(FindObjectsSortMode.None)) Destroy(point);
-            //Destroy(gameObject);
         }
 
         private void OnLoaded() => 

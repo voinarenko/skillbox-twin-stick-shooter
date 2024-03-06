@@ -4,11 +4,11 @@ namespace Assets.Scripts.Enemy
 {
     public class EnemyAudio : MonoBehaviour
     {
-        private EnemyAttack EnemyAttack => GetComponent<EnemyAttack>();
+        [SerializeField] private EnemyAttack _enemyAttack;
 
         public void FootStep()
         {
-            switch (EnemyAttack.Type)
+            switch (_enemyAttack.Type)
             {
                 case EnemyType.SmallMelee:
                     FMODUnity.RuntimeManager.PlayOneShot("event:/Enemies/SmallMeleeEnemy/Move/SmallEnemyFootStep", GetComponent<Transform>().position);
@@ -24,7 +24,7 @@ namespace Assets.Scripts.Enemy
 
         public void Attack()
         {
-            switch (EnemyAttack.Type)
+            switch (_enemyAttack.Type)
             {
                 case EnemyType.SmallMelee:
                     FMODUnity.RuntimeManager.PlayOneShot("event:/Enemies/SmallMeleeEnemy/Attack/SmallEnemyAttack", GetComponent<Transform>().position);

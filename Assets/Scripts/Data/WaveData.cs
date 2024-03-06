@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Assets.Scripts.Infrastructure;
+using System;
+using UnityEngine;
 
 namespace Assets.Scripts.Data
 {
@@ -6,23 +8,19 @@ namespace Assets.Scripts.Data
     public class WaveData
     {
         public int Encountered;
-        public Action WaveChanged;
-        public Action EnemyAdded;
-        public Action EnemyRemoved;
+        public event Action EnemyRemoved;
 
+        private const string WaveChangerTag = "WaveChanger";
         private int _currentEnemies;
 
         public void NextWave()
         {
             Encountered++;
-            WaveChanged?.Invoke();
+            if (Encountered > 1) UpdateHudData();
         }
- 
-        public void AddEnemy()
-        {
+
+        public void AddEnemy() => 
             _currentEnemies++;
-            EnemyAdded?.Invoke();
-        }
 
         public void RemoveEnemy()
         {
@@ -31,5 +29,12 @@ namespace Assets.Scripts.Data
         }
 
         public int GetEnemies() => _currentEnemies;
+
+        private void UpdateHudData()
+        {
+            var hudConnectors = GameObject.FindWithTag(WaveChangerTag).GetComponent<PlayersWatcher>().GetConnectors();
+            foreach (var hudConnector in hudConnectors) 
+                hudConnector.WaveNumber = Encountered;
+        }
     }
 }

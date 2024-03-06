@@ -16,7 +16,12 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 0b0f43dc6d9d602459e285563c790e47
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 10916be22639e8c459612759b0b63f47
+    m_Address: Assets/Prefabs/MousePointer.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 5a2cfc119625f364aa6dd44b593d717d, type: 2}
   m_SchemaSet:

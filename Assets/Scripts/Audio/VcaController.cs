@@ -5,6 +5,7 @@ namespace Assets.Scripts.Audio
     public class VcaController : MonoBehaviour
     {
         public string VcaName;
+
         private FMOD.Studio.VCA _vca;
 
         private void Start() => 

@@ -1,19 +1,21 @@
 using System.Collections;
+using Mirror;
 using UnityEngine;
 
 namespace Assets.Scripts.Bullet
 {
-    public class BulletMove : MonoBehaviour
+    public class BulletMove : NetworkBehaviour
     {
-        public BulletTrailScriptableObject TrailConfig;
-
         private const string DoDisableMethodName = "DoDisable";
+        private const float TimeToDestroy = 3;
+
+        [SerializeField] private BulletTrailScriptableObject _trailConfig;
+        [SerializeField] private Renderer _renderer;
+
+        [SerializeField] private float _speed;
+
         private TrailRenderer _trail;
 
-#pragma warning disable CS0649
-        [SerializeField] private float _speed;
-        [SerializeField] private Renderer _renderer;
-#pragma warning restore CS0649
 
         protected virtual void OnEnable()
         {
@@ -22,17 +24,12 @@ namespace Assets.Scripts.Bullet
             StartCoroutine(DestroyTimer());
         }
 
-        private IEnumerator DestroyTimer()
-        {
-            yield return new WaitForSeconds(3);
-            Destroy(gameObject);
-        }
-
         private void Awake() => 
             _trail = GetComponent<TrailRenderer>();
 
         private void Update()
         {
+            if (!isServer) return;
             if (transform == null) return; 
             transform.position += transform.forward * _speed;
         }
@@ -41,23 +38,36 @@ namespace Assets.Scripts.Bullet
         {
             CancelInvoke(DoDisableMethodName);
             _renderer.enabled = false;
-            if (_trail != null && TrailConfig != null)
-                Invoke(DoDisableMethodName, TrailConfig.Time);
+            if (_trail != null && _trailConfig != null)
+                Invoke(DoDisableMethodName, _trailConfig.Time);
             else
                 DoDisable();
         }
 
         private void DoDisable()
         {
-            if (_trail != null && TrailConfig != null) 
+            if (_trail != null && _trailConfig != null) 
                 _trail.Clear();
             gameObject.SetActive(false);
         }
 
         private void ConfigureTrail()
         {
-            if (_trail != null && TrailConfig != null) 
-                TrailConfig.SetupTrail(_trail);
+            if (_trail != null && _trailConfig != null) 
+                _trailConfig.SetupTrail(_trail);
+        }
+
+        private IEnumerator DestroyTimer()
+        {
+            yield return new WaitForSeconds(TimeToDestroy);
+            DestroySelf();
+        }
+
+        [Server]
+        private void DestroySelf()
+        {
+            if (NetworkServer.active) 
+                NetworkServer.Destroy(gameObject);
         }
     }
 }

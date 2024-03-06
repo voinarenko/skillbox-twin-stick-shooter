@@ -3126,9 +3126,19 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 615630079722879486, guid: c537a4d337fc14d418fee2ced4b58814,
+        type: 3}
+      propertyPath: _assetId
+      value: 3263762709
+      objectReference: {fileID: 0}
     - target: {fileID: 1740678622543289402, guid: c537a4d337fc14d418fee2ced4b58814,
         type: 3}
       propertyPath: ShootPoint
+      value: 
+      objectReference: {fileID: 3561177039936926879}
+    - target: {fileID: 1740678622543289402, guid: c537a4d337fc14d418fee2ced4b58814,
+        type: 3}
+      propertyPath: _shootPoint
       value: 
       objectReference: {fileID: 3561177039936926879}
     - target: {fileID: 1740678622543289402, guid: c537a4d337fc14d418fee2ced4b58814,
@@ -3172,6 +3182,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Size.z
       value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 8287807627213343045, guid: c537a4d337fc14d418fee2ced4b58814,
+        type: 3}
+      propertyPath: _assetId
+      value: 3263762709
       objectReference: {fileID: 0}
     - target: {fileID: 8448274562106646493, guid: c537a4d337fc14d418fee2ced4b58814,
         type: 3}

@@ -1,79 +1,59 @@
-﻿using Assets.Scripts.Data;
-using Assets.Scripts.Enemy;
-using System.Linq;
-using Assets.Scripts.Infrastructure.States;
-using Assets.Scripts.StaticData;
+﻿using Assets.Scripts.Infrastructure.States;
+using Assets.Scripts.Player;
 using Assets.Scripts.UI.Elements.Buttons;
 using TMPro;
+using UnityEngine;
 
 namespace Assets.Scripts.UI.Windows
 {
     public class EndGameWindow : BaseWindow
     {
-        public TextMeshProUGUI ScoreEarnedText;
-        public TextMeshProUGUI WavesSurvivedText;
-        public TextMeshProUGUI BulletsSpentText;
-        public TextMeshProUGUI ReloadsMadeText;
-        public TextMeshProUGUI SmallMeleesKilledText;
-        public TextMeshProUGUI BigMeleesKilledText;
-        public TextMeshProUGUI RangedKilledText;
-        public TextMeshProUGUI HealthPickedText;
-        public TextMeshProUGUI DefensePickedText;
-        public TextMeshProUGUI MoveSpeedPickedText;
-        public TextMeshProUGUI DamagePickedText;
-        public TextMeshProUGUI AttackSpeedPickedText;
+        [SerializeField] private TextMeshProUGUI _scoreEarnedText;
+        [SerializeField] private TextMeshProUGUI _wavesSurvivedText;
+        [SerializeField] private TextMeshProUGUI _bulletsSpentText;
+        [SerializeField] private TextMeshProUGUI _reloadsMadeText;
+        [SerializeField] private TextMeshProUGUI _smallMeleesKilledText;
+        [SerializeField] private TextMeshProUGUI _bigMeleesKilledText;
+        [SerializeField] private TextMeshProUGUI _rangedKilledText;
+        [SerializeField] private TextMeshProUGUI _healthPickedText;
+        [SerializeField] private TextMeshProUGUI _defensePickedText;
+        [SerializeField] private TextMeshProUGUI _moveSpeedPickedText;
+        [SerializeField] private TextMeshProUGUI _damagePickedText;
+        [SerializeField] private TextMeshProUGUI _attackSpeedPickedText;
 
-        public MenuReturnButton ReturnButton;
+        [SerializeField] private MenuReturnButton _returnButton;
+
+        private const string StorageTag = "Storage";
+        private DataStorage _storage;
 
         protected override void Initialize()
         {
-            ReturnButton.Clicked += ProcessClick;
+            _storage = GameObject.FindWithTag(StorageTag).GetComponent<DataStorage>();
+            _returnButton.Clicked += ProcessClick;
             DisplayStatistics();
         }
 
         private void ProcessClick()
         {
-            ReturnButton.Clicked -= ProcessClick;
+            _returnButton.Clicked -= ProcessClick;
+            Destroy(_storage.gameObject);
             StateMachine.Enter<BootstrapState>();
         }
 
         private void DisplayStatistics()
         {
-            ScoreEarnedText.text = $"{Progress.WorldData.ScoreData.Score}";
-            WavesSurvivedText.text = $"{Progress.WorldData.WaveData.Encountered - 1}";
-            BulletsSpentText.text = $"{Progress.WorldData.SpentData.Bullets}";
-            ReloadsMadeText.text = $"{Progress.WorldData.SpentData.Reloads}";
-            SmallMeleesKilledText.text = $"{GetValue(EnemyType.SmallMelee)}";
-            BigMeleesKilledText.text = $"{GetValue(EnemyType.BigMelee)}";
-            RangedKilledText.text = $"{GetValue(EnemyType.Ranged)}";
-            HealthPickedText.text = $"{GetValue(ConsumableTypeId.Health)}";
-            DefensePickedText.text = $"{GetValue(PerkTypeId.Defense)}";
-            MoveSpeedPickedText.text = $"{GetValue(PerkTypeId.MoveSpeed)}";
-            DamagePickedText.text = $"{GetValue(PerkTypeId.Damage)}";
-            AttackSpeedPickedText.text = $"{GetValue(PerkTypeId.AttackSpeed)}";
-        }
-
-        private int GetValue(EnemyType type)
-        {
-            var result = 0;
-            foreach (var pair in Progress.WorldData.KillData.Killed.Where(x => x.Key == type))
-                result = pair.Value;
-            return result;
-        }
-
-        private int GetValue(ConsumableTypeId type)
-        {
-            var result = 0;
-            foreach (var pair in Progress.WorldData.ConsumableData.Collected.Where(x => x.Key == type))
-                result = pair.Value;
-            return result;
-        }
-        private int GetValue(PerkTypeId type)
-        {
-            var result = 0;
-            foreach (var pair in Progress.WorldData.PerkData.Collected.Where(x => x.Key == type))
-                result = pair.Value;
-            return result;
+            _scoreEarnedText.text = $"{_storage.PlayerDynamicData.ScoreData.Score}";
+            _wavesSurvivedText.text = $"{_storage.WavesEncountered - 1}";
+            _bulletsSpentText.text = $"{_storage.PlayerDynamicData.SpentData.Bullets}";
+            _reloadsMadeText.text = $"{_storage.PlayerDynamicData.SpentData.Reloads}";
+            _smallMeleesKilledText.text = $"{_storage.SmallMeleeEnemyKilled}";
+            _bigMeleesKilledText.text = $"{_storage.BigMeleeEnemyKilled}";
+            _rangedKilledText.text = $"{_storage.RangedEnemyKilled}";
+            _healthPickedText.text = $"{_storage.HealthCollected}";
+            _defensePickedText.text = $"{_storage.DefenseCollected}";
+            _moveSpeedPickedText.text = $"{_storage.MoveSpeedCollected}";
+            _damagePickedText.text = $"{_storage.DamageCollected}";
+            _attackSpeedPickedText.text = $"{_storage.AttackSpeedCollected}";
         }
     }
 }

@@ -1,21 +1,21 @@
-﻿using System;
-using Assets.Scripts.Data;
-using Assets.Scripts.Infrastructure.Services.PersistentProgress;
+﻿using Assets.Scripts.Data;
 using Assets.Scripts.Logic;
+using Mirror;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
-    [RequireComponent(typeof(PlayerAnimator))]
-    public class PlayerHealth : MonoBehaviour, ISavedProgress, IHealth
+    [RequireComponent(typeof(PlayerAnimator), typeof(PlayerHudConnector))]
+    public class PlayerHealth : NetworkBehaviour, IHealth
     {
+        public event Action HealthChanged;
+
         public float Max
         {
             get => _state.MaxHealth;
             set => _state.MaxHealth = value;
         }
-
-        public event Action HealthChanged;
 
         public float Current
         {
@@ -24,34 +24,35 @@ namespace Assets.Scripts.Player
             {
                 _state.CurrentHealth = value;
                 HealthChanged?.Invoke();
+                _hudConnector.PlayerHealth = value;
             }
         }
 
-        public PlayerAnimator Animator;
         public float Defense = 1;
 
-        private State _state;
+        private readonly State _state = new();
 
-        public void LoadProgress(PlayerProgress progress)
+        [SerializeField] private PlayerAnimator _animator;
+        [SerializeField] private PlayerHudConnector _hudConnector;
+        
+        [ClientRpc]
+        public void RpcSetHealth(float maxHealth)
         {
-            _state = progress.PlayerState;
-            HealthChanged?.Invoke();
+            _state.MaxHealth = maxHealth;
+            _state.ResetHealth();
+            _hudConnector.PlayerHealth = maxHealth;
         }
 
-        public void UpdateProgress(PlayerProgress progress)
-        {
-            progress.PlayerState.CurrentHealth = Current;
-            progress.PlayerState.MaxHealth = Max;
-        }
-
-        public void TakeDamage(float damage)
+        [ClientRpc]
+        public void RpcTakeDamage(float damage)
         {
             if (Current <= 0) return;
             Current -= damage / Defense;
-            Animator.PlayHit();
+            _animator.PlayHit();
         }
 
-        public void Heal(float cure)
+        [ClientRpc]
+        public void RpcHeal(float cure)
         {
             Current += cure;
             if (Current > Max) Current = Max;
