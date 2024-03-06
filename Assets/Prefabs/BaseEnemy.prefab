@@ -370,8 +370,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   Animator: {fileID: 9193984182133261566}
-  _current: 20
-  _max: 20
 --- !u!114 &8558893123410710316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -875,6 +873,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7911707740520376959, guid: b0b18504be066a048af23c5d04d23e61,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

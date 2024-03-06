@@ -47,7 +47,7 @@ namespace Assets.Scripts.Infrastructure
             if (!bootstrapper)
             {
                 bootstrapper = Instantiate(BootstrapperPrefab);
-                bootstrapper.Construct(_staticData, _progressService, _saveLoadService, _gameFactory, _uiFactory, _windowService, _waveService);
+                bootstrapper.Construct(_staticData, _progressService, _gameFactory, _uiFactory, _windowService, _waveService);
             }
 
             var audioManager = FindAnyObjectByType<AudioManager>();

@@ -64,7 +64,10 @@ namespace Assets.Scripts.Bullet
         }
 
         [Server]
-        private void DestroySelf() => 
-            NetworkServer.Destroy(gameObject);
+        private void DestroySelf()
+        {
+            if (NetworkServer.active) 
+                NetworkServer.Destroy(gameObject);
+        }
     }
 }

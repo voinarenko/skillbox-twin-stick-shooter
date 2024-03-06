@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts.Data;
-using Assets.Scripts.Enemy;
+using Assets.Scripts.Infrastructure;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Elements;
 using Mirror;
@@ -15,18 +15,23 @@ namespace Assets.Scripts.Player
         public event Action<int> OnPlayerAmmoChanged;
         public event Action<float, float> OnPlayerHealthChanged;
 
+        private const string WaveChangerTag = "WaveChanger";
         [SerializeField] private Transform _perkParent;
         [SerializeField] private GameObject _perkTimer;
 
+
         [Header("Perk Data")]
         [SerializeField] private List<Sprite> _sprites;
+
         [SerializeField] private float _duration = 60f;
         [SerializeField] private float _multiplier = 1.2f;
+
 
         [Header("Player Data")]
         [SerializeField] private float _playerMaxHealth;
 
-        private Perk _perk;
+        private static WaveChanger Changer => GameObject.FindWithTag(WaveChangerTag).GetComponent<WaveChanger>();
+
         private int _playerAmmo;
 
         public int PlayerAmmo
@@ -79,6 +84,13 @@ namespace Assets.Scripts.Player
             OnWaveNumberChanged?.Invoke(WaveNumber);
         }
 
+        private void OnDestroy()
+        {
+            var timers = FindObjectsByType<PerkTimer>(FindObjectsSortMode.None);
+            foreach (var timer in timers) 
+                timer.Completed -= RemovePerk;
+        }
+
         [ClientRpc]
         public void RpcGetPerk(int id)
         {
@@ -87,7 +99,6 @@ namespace Assets.Scripts.Player
                 var timer = Instantiate(_perkTimer, _perkParent).GetComponent<PerkTimer>();
 
                 timer.Type = (PerkTypeId)id;
-                print($"perk: |{id}|");
                 timer.Icon = _sprites[id];
                 timer.Duration = _duration;
                 timer.Multiplier = _multiplier;
@@ -178,6 +189,16 @@ namespace Assets.Scripts.Player
 
             timer.Completed -= RemovePerk;
             Destroy(timer.gameObject);
+        }
+
+        [ClientRpc]
+        public void RpcGameOver()
+        {
+            if (isLocalPlayer)
+            {
+                print("game over");
+                Changer.GameOver();
+            }
         }
     }
 }

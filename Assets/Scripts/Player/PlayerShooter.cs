@@ -9,7 +9,7 @@ namespace Assets.Scripts.Player
     public class PlayerShooter : NetworkBehaviour
     {
         public DataStorage Storage;
-        public PlayerDynamicData PlayerDynamicData;
+        private PlayerDynamicData _playerDynamicData;
         public float Damage;
         public float ShootDelay;
         public float ReloadDelay;
@@ -45,14 +45,14 @@ namespace Assets.Scripts.Player
         private void Start()
         {
             Storage = GameObject.FindWithTag(StorageTag).GetComponent<DataStorage>();
-            PlayerDynamicData = Storage.PlayerDynamicData;
-            PlayerDynamicData.AmmoData.Available = _initialAmmo;
+            _playerDynamicData = Storage.PlayerDynamicData;
+            _playerDynamicData.AmmoData.Available = _initialAmmo;
             _playerAudio = GetComponent<PlayerAudio>();
             _playerAnimator = GetComponent<PlayerAnimator>();
             _controls = new PlayerControls();
             _controls.Enable();
             _ammo.Value = AmmoConsumption;
-            _hudConnector.PlayerAmmo = PlayerDynamicData.AmmoData.Available;
+            _hudConnector.PlayerAmmo = _playerDynamicData.AmmoData.Available;
         }
 
         private void Update()
@@ -89,11 +89,9 @@ namespace Assets.Scripts.Player
             if (!(Time.time < _reloadTime + ReloadDelay))
             {
                 _reloadTime = Time.time;
-                PlayerDynamicData.SpentData.Reloads++;
-                _playerAnimator.Reload(true);
-                _playerAudio.Reload();
-                PlayerDynamicData.AmmoData.Available = _initialAmmo;
-                _hudConnector.PlayerAmmo = PlayerDynamicData.AmmoData.Available;
+                ReplenishAmmo();
+                OnReload();
+                _hudConnector.PlayerAmmo = _playerDynamicData.AmmoData.Available;
                 _reload = 0;
             }
             else _playerAnimator.Reload(false);
@@ -102,7 +100,7 @@ namespace Assets.Scripts.Player
         private void Shoot()
         {
             if (Time.time < _shootTime + ShootDelay) return;
-            if (PlayerDynamicData.AmmoData.Available <= 0) return;
+            if (_playerDynamicData.AmmoData.Available <= 0) return;
 
             _shootTime = Time.time;
             CmdFire();
@@ -110,11 +108,19 @@ namespace Assets.Scripts.Player
             _shoot = 0;
         }
 
+        private void ReplenishAmmo()
+        {
+            if(!isLocalPlayer) return;
+            _playerDynamicData.SpentData.Reloads++;
+            Storage.PlayerDynamicData.AmmoData.Available = _initialAmmo;
+        }
+
         private void ConsumeAmmo()
         {
-            PlayerDynamicData.AmmoData.Available -= _ammo.Value;
-            PlayerDynamicData.SpentData.Bullets++;
-            _hudConnector.PlayerAmmo = PlayerDynamicData.AmmoData.Available;
+            if(!isLocalPlayer) return;
+            Storage.PlayerDynamicData.AmmoData.Available -= _ammo.Value;
+            Storage.PlayerDynamicData.SpentData.Bullets++;
+            _hudConnector.PlayerAmmo = _playerDynamicData.AmmoData.Available;
         }
 
         [Command]
@@ -143,6 +149,12 @@ namespace Assets.Scripts.Player
         {
             _playerAnimator.Shoot();
             _playerAudio.Shoot();
+        }
+
+        private void OnReload()
+        {
+            _playerAnimator.Reload(true);
+            _playerAudio.Reload();
         }
     }
 }

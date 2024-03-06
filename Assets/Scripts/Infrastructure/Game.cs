@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Infrastructure.Factory;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
-using Assets.Scripts.Infrastructure.Services.SaveLoad;
 using Assets.Scripts.Infrastructure.Services.StaticData;
 using Assets.Scripts.Infrastructure.Services.Wave;
 using Assets.Scripts.Infrastructure.States;
@@ -15,9 +14,8 @@ namespace Assets.Scripts.Infrastructure
         public readonly GameStateMachine StateMachine;
 
         public Game(ICoroutineRunner coroutineRunner, LoadingCurtain curtain, IStaticDataService staticData,
-            IPersistentProgressService progressService, ISaveLoadService saveLoadService, IGameFactory gameFactory,
+            IPersistentProgressService progressService, IGameFactory gameFactory,
             IUiFactory uiFactory, IWindowService windowService, IWaveService waveService) =>
-            StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), curtain, staticData, progressService,
-                saveLoadService, gameFactory, uiFactory, windowService, waveService);
+            StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), curtain, staticData, progressService, gameFactory, uiFactory, windowService, waveService);
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Infrastructure.Factory;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
-using Assets.Scripts.Infrastructure.Services.SaveLoad;
 using Assets.Scripts.Infrastructure.Services.StaticData;
 using Assets.Scripts.Infrastructure.Services.Wave;
 using Assets.Scripts.Logic;
@@ -17,7 +16,7 @@ namespace Assets.Scripts.Infrastructure.States
         private IExitableState _activeState;
 
         public GameStateMachine(SceneLoader sceneLoader, LoadingCurtain loadingCurtain, IStaticDataService staticData,
-            IPersistentProgressService progressService, ISaveLoadService saveLoadService, IGameFactory gameFactory,
+            IPersistentProgressService progressService, IGameFactory gameFactory,
             IUiFactory uiFactory, IWindowService windowService, IWaveService waveService)
         {
             _states = new Dictionary<Type, IExitableState>
@@ -26,7 +25,7 @@ namespace Assets.Scripts.Infrastructure.States
                 [typeof(LoadMenuState)] = new LoadMenuState(this, uiFactory, loadingCurtain, windowService),
                 [typeof(MenuLoopState)] = new MenuLoopState(),
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, progressService, gameFactory, loadingCurtain, staticData, uiFactory, waveService),
-                [typeof(LoadProgressState)] = new LoadProgressState(this, progressService, saveLoadService),
+                [typeof(LoadProgressState)] = new LoadProgressState(this, progressService),
                 [typeof(GameLoopState)] = new GameLoopState(sceneLoader, windowService, waveService),
                 [typeof(LoadStatsState)] = new LoadStatsState(this, uiFactory, loadingCurtain, windowService),
                 [typeof(StatsLoopState)] = new StatsLoopState()

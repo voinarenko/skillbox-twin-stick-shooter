@@ -29,10 +29,11 @@ namespace Assets.Scripts.Player
 
         private void HealthChanged()
         {
-            if (!_isDead && _health.Current <= 0) Die();
+            if (!_isDead && _health.Current <= 0) RpcDie();
         }
 
-        private void Die()
+        [ClientRpc]
+        private void RpcDie()
         {
             _isDead = true;
             _move.enabled = false;

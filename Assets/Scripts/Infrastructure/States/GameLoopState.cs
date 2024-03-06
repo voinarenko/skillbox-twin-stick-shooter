@@ -19,7 +19,7 @@ namespace Assets.Scripts.Infrastructure.States
         }
 
         public void Exit() => 
-            _waveService.SpawnPoints.Clear();
+            _waveService.SpawnPoints?.Clear();
 
         public void Enter()
         {

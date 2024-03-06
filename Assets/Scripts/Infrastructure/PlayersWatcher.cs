@@ -1,30 +1,30 @@
-﻿using Assets.Scripts.Player;
+﻿using Assets.Scripts.Enemy;
+using Assets.Scripts.Infrastructure.Services.PersistentProgress;
+using Assets.Scripts.Player;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.Infrastructure
 {
     public class PlayersWatcher : MonoBehaviour
     {
-        private const string StorageTag = "Storage";
+        public int Players => _playerDeaths.Count;
+
         [SerializeField] private List<PlayerDeath> _playerDeaths = new();
         [SerializeField] private List<PlayerHudConnector> _playerHudConnectors = new();
-        [SerializeField] private List<PlayerShooter> _playerShooters = new();
+        [SerializeField] private List<PlayerScore> _playerScores = new();
 
-        private DataStorage _storage;
-        private WaveChanger _waveChanger;
+        private IPersistentProgressService _progressService;
 
-        private void Start()
-        {
-            _storage = GameObject.FindWithTag(StorageTag).GetComponent<DataStorage>();
-            _waveChanger = GetComponent<WaveChanger>();
-        }
+        public void Construct(IPersistentProgressService progressService) => 
+            _progressService = progressService;
 
         public void AddPlayer(PlayerDeath player)
         {
             _playerDeaths.Add(player);
             _playerHudConnectors.Add(player.GetComponent<PlayerHudConnector>());
-            _playerShooters.Add(player.GetComponent<PlayerShooter>());
+            _playerScores.Add(player.GetComponent<PlayerScore>());
             player.Happened += RemovePlayer;
         }
 
@@ -33,21 +33,45 @@ namespace Assets.Scripts.Infrastructure
 
         public void UpdateScore(int score)
         {
-            foreach (var shooter in _playerShooters) 
-                shooter.PlayerDynamicData.ScoreData.UpdateScore(score/_playerShooters.Count);
+            foreach (var playerScore in _playerScores) 
+                playerScore.UpdateScore(score/_playerScores.Count);
         }
 
         private void RemovePlayer(PlayerDeath player)
         {
             _playerDeaths.Remove(player);
             _playerHudConnectors.Remove(player.GetComponent<PlayerHudConnector>());
-            var shooter = player.GetComponent<PlayerShooter>();
-            _storage.PlayerDynamicData = shooter.PlayerDynamicData;
-            _playerShooters.Remove(shooter);
+            var playerScore = player.GetComponent<PlayerScore>();
+            _playerScores.Remove(playerScore);
 
             player.Happened -= RemovePlayer;
-            if (_playerDeaths.Count <= 0) 
-                _waveChanger.GameOver();
+            if (_playerDeaths.Count <= 0)
+            {
+                var players = FindObjectsByType<PlayerHudConnector>(FindObjectsSortMode.None);
+                foreach (var connector in players.Where(c => c.isClient)) 
+                    PerformEndGameProcedure(connector);
+                foreach (var connector in players.Where(c => c.isServer)) 
+                    PerformEndGameProcedure(connector);
+            }
+
+            return;
+
+            void PerformEndGameProcedure(PlayerHudConnector connector)
+            {
+                connector.GetComponent<PlayerScore>().RpcUpdateGlobalData(_progressService.Progress.WorldData.WaveData.Encountered,
+                    GetValue(EnemyType.SmallMelee),
+                    GetValue(EnemyType.BigMelee),
+                    GetValue(EnemyType.Ranged));
+                connector.RpcGameOver();
+            }
+        
+            int GetValue(EnemyType type)
+            {
+                var result = 0;
+                foreach (var pair in _progressService.Progress.WorldData.KillData.Killed.Where(x => x.Key == type))
+                    result = pair.Value;
+                return result;
+            }
         }
     }
 }

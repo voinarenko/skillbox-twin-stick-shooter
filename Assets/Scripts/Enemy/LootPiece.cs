@@ -68,7 +68,6 @@ namespace Assets.Scripts.Enemy
         {
             if (_picked) return;
             _picked = true;
-            print($"pickup: |{player}|");
             UpdatePlayerData(player);
 
             RpcHideSphere();
@@ -77,13 +76,13 @@ namespace Assets.Scripts.Enemy
             RpcShowText();
             
             if (_isConsumable) _lootService.Process(_consumable, player);
-            else player.GetComponent<PlayerHudConnector>().RpcGetPerk(_currentPerkMaterialId);//_lootService.Process(Perk, player, player.GetComponent<PlayerHudConnector>().PerkParent);
+            else player.GetComponent<PlayerHudConnector>().RpcGetPerk(_currentPerkMaterialId);
 
             StartCoroutine(DestroyTimer());
         }
 
         private void UpdatePlayerData(GameObject player) => 
-            player.GetComponent<PlayerLooter>().UpdateCollected(_isConsumable ? _currentConsumableMaterialId : _currentPerkMaterialId);
+            player.GetComponent<PlayerLooter>().RpcUpdateCollected(_isConsumable ? _currentConsumableMaterialId : _currentPerkMaterialId + 1);
 
         [ClientRpc]
         private void RpcHideSphere() => 

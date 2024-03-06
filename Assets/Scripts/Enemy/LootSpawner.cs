@@ -30,7 +30,7 @@ namespace Assets.Scripts.Enemy
         private void OnDestroy() =>
             _enemyDeath.Happened -= CmdSpawnLoot;
 
-        [Command(requiresAuthority = false)]
+        [Server]
         private async void CmdSpawnLoot()
         {
             if (!isServer) return;
@@ -77,10 +77,9 @@ namespace Assets.Scripts.Enemy
 
         private bool SpawnAllowed()
         {
-            return true;
-            //var target = (BoostFactor + BoostFactor * (_progressService.Progress.WorldData.WaveData.Encountered - 1)) * 100;
-            //var random = _random.Next(0, 100);
-            //return random >= 0 && random <= target;
+            var target = (BoostFactor + BoostFactor * (_progressService.Progress.WorldData.WaveData.Encountered - 1)) * 100;
+            var random = _random.Next(0, 100);
+            return random >= 0 && random <= target;
         }
     }
 }

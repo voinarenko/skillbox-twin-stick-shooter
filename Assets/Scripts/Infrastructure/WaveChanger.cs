@@ -22,6 +22,7 @@ namespace Assets.Scripts.Infrastructure
             _waveService = waveService;
             _waveData = progressService.Progress.WorldData.WaveData;
             _waveData.EnemyRemoved += CheckEnemies;
+            DontDestroyOnLoad(this);
         }
 
         private void OnDestroy()

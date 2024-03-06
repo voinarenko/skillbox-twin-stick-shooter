@@ -19,6 +19,7 @@ TagManager:
   - Dead
   - Storage
   - PerkArea
+  - NetManager
   layers:
   - Default
   - TransparentFX

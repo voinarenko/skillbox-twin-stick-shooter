@@ -538,7 +538,6 @@ Transform:
   - {fileID: 3003378806229343330}
   - {fileID: 1303459066}
   - {fileID: 2091425282}
-  - {fileID: 2076767272}
   - {fileID: 1586840537}
   - {fileID: 1156056486}
   m_Father: {fileID: 0}
@@ -7784,7 +7783,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1184719603}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88c37d3deca7a834d80cfd8d3cfcc510, type: 3}
   m_Name: 
@@ -7797,7 +7796,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1184719603}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c761308e733c51245b2e8bb4201f46dc, type: 3}
   m_Name: 
@@ -7859,7 +7858,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1184719603}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6442dc8070ceb41f094e44de0bf87274, type: 3}
   m_Name: 
@@ -16640,6 +16639,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38a4c4be125b2e346b8936a4fecdf324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerDynamicData:
+    AmmoData:
+      Available: 0
+    ScoreData:
+      Score: 0
+    SpentData:
+      Bullets: 0
+      Reloads: 0
+  WavesEncountered: 0
+  SmallMeleeEnemyKilled: 0
+  BigMeleeEnemyKilled: 0
+  RangedEnemyKilled: 0
+  HealthCollected: 0
+  DefenseCollected: 0
+  MoveSpeedCollected: 0
+  DamageCollected: 0
+  AttackSpeedCollected: 0
 --- !u!1001 &1805871856
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17599,12 +17615,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2076767271}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 67883802}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2076767273
 MonoBehaviour:
@@ -17618,9 +17634,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70ba558fadd0c694c8a0e5615f643531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
 --- !u!114 &2076767274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17647,7 +17660,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerDeaths: []
   _playerHudConnectors: []
-  _playerShooters: []
+  _playerScores: []
 --- !u!1001 &2078322564
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18740,3 +18753,4 @@ SceneRoots:
   - {fileID: 850795972}
   - {fileID: 1184719609}
   - {fileID: 1799616853}
+  - {fileID: 2076767272}

@@ -1,12 +1,10 @@
 ﻿using Assets.Scripts.Data;
 using Assets.Scripts.Infrastructure;
 using Assets.Scripts.Infrastructure.States;
-using Assets.Scripts.Logic.EnemySpawners;
 using Assets.Scripts.Player;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI.Elements.Buttons;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.UI.Windows
@@ -50,6 +48,8 @@ namespace Assets.Scripts.UI.Windows
             if (_playerMovement) _playerMovement.enabled = true;
             if (_playerRotation) _playerRotation.enabled = true;
             if (_playerShooter) _playerShooter.enabled = true;
+            RestartButton.Clicked -= ProcessRestartClick;
+            ReturnButton.Clicked -= ProcessReturnClick;
             Cursor.visible = false;
             Time.timeScale = 1;
         }
@@ -83,14 +83,11 @@ namespace Assets.Scripts.UI.Windows
         private void ProcessRestartClick()
         {
             Time.timeScale = 1;
-            ReturnButton.Clicked -= ProcessRestartClick;
+            RestartButton.Clicked -= ProcessRestartClick;
             SettingsService.Settings = new Settings();
             AudioService.StoreVolume(SettingsService.Settings);
             SaveLoadService.SaveSettings();
             _sceneLoader.Load("InitialScene", OnLoaded);
-            //Destroy(_player);
-            //foreach (var point in FindObjectsByType<SpawnPoint>(FindObjectsSortMode.None)) Destroy(point);
-            //Destroy(gameObject);
         }
 
         private void OnLoaded() => 

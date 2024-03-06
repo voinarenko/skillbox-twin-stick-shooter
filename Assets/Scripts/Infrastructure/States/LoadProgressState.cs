@@ -1,23 +1,19 @@
 ﻿using Assets.Scripts.Data;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
-using Assets.Scripts.Infrastructure.Services.SaveLoad;
 using Assets.Scripts.StaticData;
 
 namespace Assets.Scripts.Infrastructure.States
 {
     public class LoadProgressState : IPayloadedState<PlayerStaticData>
     {
-        private const string InitialLevel = "MainScene";
         private readonly GameStateMachine _gameStateMachine;
         private readonly IPersistentProgressService _progressService;
-        private readonly ISaveLoadService _saveLoadService;
         private PlayerStaticData _playerStaticData;
 
-        public LoadProgressState(GameStateMachine gameStateMachine, IPersistentProgressService progressService, ISaveLoadService saveLoadService)
+        public LoadProgressState(GameStateMachine gameStateMachine, IPersistentProgressService progressService)
         {
             _gameStateMachine = gameStateMachine;
             _progressService = progressService;
-            _saveLoadService = saveLoadService;
         }
 
         public void Enter(PlayerStaticData payload)

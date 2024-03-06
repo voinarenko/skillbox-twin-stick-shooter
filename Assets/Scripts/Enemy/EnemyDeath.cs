@@ -93,7 +93,7 @@ namespace Assets.Scripts.Enemy
         [Command(requiresAuthority = false)]
         private void CmdShowText()
         {
-            _lootText.text = $"{Value}";
+            _lootText.text = $"{Value/_watcher.Players}";
             _pickupPopup.SetActive(true);
         }
 

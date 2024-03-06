@@ -1,12 +1,17 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerLooter : MonoBehaviour
+    public class PlayerLooter : NetworkBehaviour
     {
         [SerializeField] private PlayerShooter _shooter;
 
-        public void UpdateCollected(int id) => 
+        [ClientRpc]
+        public void RpcUpdateCollected(int id)
+        {
+            if (!isLocalPlayer) return;
             _shooter.Storage.UpdateCollected(id);
+        }
     }
 }
